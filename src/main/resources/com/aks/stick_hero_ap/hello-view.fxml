@@ -1,16 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-
 <?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.aks.stick_hero_ap.HelloController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.approject.HomeScreenController">
+   <children>
+      <ImageView fx:id="backgroundImageView" fitHeight="500.0" fitWidth="300.0" focusTraversable="true" pickOnBounds="true" />
+      <Circle fx:id="twoPlayer" fill="#2072bf" layoutX="150.0" layoutY="351.0" radius="59.0" stroke="BLACK" strokeType="INSIDE" />
+      <Circle fx:id="singlePlayer" fill="#bd2121" layoutX="150.0" layoutY="205.0" radius="59.0" stroke="BLACK" strokeType="INSIDE" />
+      <Label fx:id="stickLabel" alignment="CENTER" layoutY="30.0" prefHeight="18.0" prefWidth="300.0" text="STICK" textFill="#e7e7e7">
+         <font>
+            <Font name="Corbel Bold" size="48.0" />
+         </font></Label>
+      <ImageView fx:id="muteUnmuteImageView" fitHeight="54.0" fitWidth="62.0" layoutX="14.0" layoutY="432.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Sound.png" />
+         </image></ImageView>
+      <Label fx:id="heroLabel" alignment="CENTER" layoutY="82.0" prefHeight="18.0" prefWidth="300.0" text="HERO" textFill="#e7e7e7">
+         <font>
+            <Font name="Berlin Sans FB" size="41.0" />
+         </font>
+      </Label>
+      <Label fx:id="singlePlayerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="90.0" layoutY="146.0" prefHeight="118.0" prefWidth="118.0" text="SinglePlayer" textAlignment="CENTER">
+         <font>
+            <Font name="Elephant" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="twoPlayerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="91.0" layoutY="292.0" prefHeight="118.0" prefWidth="118.0" text="TwoPlayer" textAlignment="CENTER">
+         <font>
+            <Font name="Elephant" size="12.0" />
+         </font>
+      </Label>
+      <Button fx:id="singlePlayerButton" layoutX="91.0" layoutY="146.0" mnemonicParsing="false" onAction="#switchToSinglePlayerHomeScreen" opacity="0.0" prefHeight="118.0" prefWidth="118.0" text="SinglePlayer" />
+      <Button fx:id="muteUnmuteButton" layoutX="14.0" layoutY="432.0" mnemonicParsing="false" onAction="#muteUnmute" opacity="0.0" prefHeight="54.0" prefWidth="54.0" text="MuteUnmute" />
+   </children>
+</AnchorPane>
