@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="500.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aks.stick_hero_ap.SinglePlayerHomeScreenController">
+   <children>
+      <ImageView fx:id="backgroundImageView" fitHeight="500.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ed46d2" height="100.0" layoutX="100.0" layoutY="100.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ed9646" height="100.0" layoutX="100.0" layoutY="242.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+      <Label fx:id="newGameLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="101.0" layoutY="100.0" prefHeight="100.0" prefWidth="100.0" text="NewGame" textAlignment="CENTER">
+         <font>
+            <Font name="Corbel Bold" size="25.0" />
+         </font>
+      </Label>
+      <Label fx:id="loadGameLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="101.0" layoutY="242.0" prefHeight="100.0" prefWidth="100.0" text="LoadGame" textAlignment="CENTER">
+         <font>
+            <Font name="Corbel Bold" size="25.0" />
+         </font>
+      </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8e8e8e" height="45.0" layoutX="129.0" layoutY="418.0" opacity="0.27" stroke="BLACK" strokeType="INSIDE" width="45.0" />
+      <ImageView fx:id="homeScreenButtonImageView" fitHeight="45.0" fitWidth="45.0" layoutX="128.0" layoutY="418.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Home-Black.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="homeScreenButton" layoutX="129.0" layoutY="418.0" mnemonicParsing="false" onAction="#switchToHomeScreen" opacity="0.0" prefHeight="45.0" prefWidth="45.0" text="HomeScreenButton" />
+      <Button fx:id="loadGameButton" layoutX="100.0" layoutY="242.0" mnemonicParsing="false" onAction="#switchToLoadScreen" opacity="0.0" prefHeight="100.0" prefWidth="100.0" text="LoadGameButton" />
+      <Button fx:id="newGameButton" layoutX="101.0" layoutY="100.0" mnemonicParsing="false" onAction="#switchToSinglePlayerGameScreen" opacity="0.0" prefHeight="100.0" prefWidth="100.0" text="NewGameButton" />
+   </children>
+</AnchorPane>
