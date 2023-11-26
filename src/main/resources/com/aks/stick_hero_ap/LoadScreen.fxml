@@ -18,7 +18,7 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d7d7d7" height="56.0" layoutX="9.0" layoutY="331.0" stroke="BLACK" strokeType="INSIDE" width="283.0" />
       <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="130.0" layoutY="446.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Back%20Button.png" />
+            <Image url="@Back Button.png" />
          </image>
       </ImageView>
       <Rectangle fill="#b7b7b7" height="40.0" layoutX="27.0" layoutY="93.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
@@ -93,42 +93,42 @@
       </Label>
       <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="188.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Play%20Button.png" />
+            <Image url="@Play Button.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="240.0" layoutY="93.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Remove%20Button.png" />
+            <Image url="@Remove Button.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="189.0" layoutY="176.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Play%20Button.png" />
+            <Image url="@Play Button.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="241.0" layoutY="174.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Remove%20Button.png" />
+            <Image url="@Remove Button.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="190.0" layoutY="259.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Play%20Button.png" />
+            <Image url="@Play Button.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="242.0" layoutY="257.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Remove%20Button.png" />
+            <Image url="@Remove Button.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="192.0" layoutY="339.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Play%20Button.png" />
+            <Image url="@Play Button.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="246.0" layoutY="340.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Remove%20Button.png" />
+            <Image url="@Remove Button.png" />
          </image>
       </ImageView>
       <Button fx:id="pauseScreenButton" layoutX="130.0" layoutY="446.0" mnemonicParsing="false" onAction="#switchToSinglePlayerHomeScreen" opacity="0.0" prefHeight="40.0" prefWidth="40.0" text="pauseScreenButton" />
