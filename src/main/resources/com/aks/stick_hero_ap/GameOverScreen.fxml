@@ -8,7 +8,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.approject.GameOverController">
+<AnchorPane prefHeight="500.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aks.stick_hero_ap.GameOverController">
    <children>
       <ImageView fx:id="backgroundImageView" fitHeight="500.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#383838" height="73.0" layoutY="38.0" opacity="0.4" stroke="BLACK" strokeType="INSIDE" width="300.0" />
