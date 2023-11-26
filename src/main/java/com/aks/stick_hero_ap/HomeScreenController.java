@@ -14,6 +14,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -24,16 +25,32 @@ public class HomeScreenController extends HomeScreen implements MusicPlayer,Disp
     private Parent root;
     private boolean mute;
     private int totalCherries;
-
     private Media media;
     private MediaPlayer mediaPlayer;
 
-    Image image= new Image(getClass().getResourceAsStream("BG-1st.jpg"));
+    public boolean getMute() {
+        return mute;
+    }
 
+    public void setMute(boolean mute) {
+        this.mute = mute;
+    }
+
+    public int getTotalCherries() {
+        return totalCherries;
+    }
+
+    public void setTotalCherries(int totalCherries) {
+        this.totalCherries = totalCherries;
+    }
+
+    String music = "Deck the Halls Jazz Loop.mp3";
+    Media sound = new Media(new File(music).toURI().toString());
+    MediaPlayer mediaPlayer2 = new MediaPlayer(sound);
+
+    Image image= new Image(getClass().getResourceAsStream("BG-1st.jpg"));
     Image unmuteImage=new Image(getClass().getResourceAsStream("Sound.png"));
     Image muteImage=new Image(getClass().getResourceAsStream("Mute.png"));
-
-    boolean isMuted=false;
 
     @FXML
     ImageView backgroundImageView;
@@ -47,9 +64,6 @@ public class HomeScreenController extends HomeScreen implements MusicPlayer,Disp
     @FXML
     Label twoPlayerLabel;
 
-
-
-
     double targetWidth=300;
     double targetHeight=500;
 
@@ -57,25 +71,16 @@ public class HomeScreenController extends HomeScreen implements MusicPlayer,Disp
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-
+        setMute(false);
         backgroundImageView.setFitWidth(image.getWidth()*scaleFactor);
         backgroundImageView.setFitHeight(targetHeight);
-        //backgroundImageView.setPreserveRatio(true);
-
-        //backgroundImageView.setViewport(new javafx.geometry.Rectangle2D(174,0,targetWidth,targetHeight));
         backgroundImageView.setImage(image);
-
         singlePlayerLabel.setText("Single\nPlayer");
         twoPlayerLabel.setText("Two\nPlayer");
-
-
-
     }
 
 
     public void switchToSinglePlayerHomeScreen(ActionEvent event) throws IOException {
-
         Parent root= FXMLLoader.load(getClass().getResource("SinglePlayerHomeScreen.fxml"));
         stage=(Stage)((Node)event.getSource()).getScene().getWindow();
         scene=new Scene(root,300,500);
@@ -85,14 +90,16 @@ public class HomeScreenController extends HomeScreen implements MusicPlayer,Disp
     }
 
     public void muteUnmute() {
-
-        if(isMuted==false){
+        if(!getMute()){
             muteUnmuteImageView.setImage(muteImage);
-            isMuted=true;
+            setMute(true);
+            mediaPlayer2.play();
         }
+
         else{
             muteUnmuteImageView.setImage(unmuteImage);
-            isMuted=false;
+            setMute(true);
+            mediaPlayer2.pause();
         }
     }
 
