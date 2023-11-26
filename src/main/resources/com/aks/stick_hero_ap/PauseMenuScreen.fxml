@@ -26,7 +26,7 @@
       </ImageView>
       <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="211.0" layoutY="300.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Restart%20Button.png" />
+            <Image url="@Restart Button.png" />
          </image>
       </ImageView>
       <Button fx:id="resumeButton" layoutX="127.0" layoutY="66.0" mnemonicParsing="false" onAction="#switchToSinglePlayerGameScreen" opacity="0.0" prefHeight="66.0" prefWidth="47.0" text="ResumeButton" />
