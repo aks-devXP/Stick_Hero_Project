@@ -28,5 +28,7 @@ public class HomeScreen extends Application {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+        System.out.println(System.getProperty("java.version"));
+        System.out.println(System.getProperty("javafx.version"));
     }
 }
