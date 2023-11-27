@@ -5,6 +5,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 public class Player{
     private double positionX;
     private double positionY;
@@ -154,34 +156,76 @@ public class Player{
         this.platformPosition = platformPosition;
     }
 
+    public double randomWidth(){
+        double upperBound = 500; // upper bound of Width of Platform
+        double lowerBound = 100; // lower bound of Width of Platform
+        return ThreadLocalRandom.current().nextDouble(lowerBound, upperBound + 1); // Used ThreadLocalRandom as it may be required in thread pool by multiple processes
+    }
+
+    public double randomPos(){
+        double upperBound = 500; // upper bound of Position of Platform
+        double lowerBound = 100; // lower bound of Position of Platform
+        return ThreadLocalRandom.current().nextDouble(lowerBound, upperBound + 1); // Used ThreadLocalRandom as it may be required in thread pool by multiple processes
+    }
+
+    public double randomCherryX(){
+        double upperBound = 500; // upper bound of Position of Cherry - X axis
+        double lowerBound = 100; // lower bound of Position of Cherry - X axis
+        return ThreadLocalRandom.current().nextDouble(lowerBound, upperBound + 1); // Used ThreadLocalRandom as it may be required in thread pool by multiple processes
+    }
+
+    public double randomCherryY(){
+        double upperBound = 500; // upper bound of Position of Cherry - Y axis
+        double lowerBound = 100; // lower bound of Position of Cherry - Y axis
+        return ThreadLocalRandom.current().nextDouble(lowerBound, upperBound + 1); // Used ThreadLocalRandom as it may be required in thread pool by multiple processes
+    }
+
     //Initialise Both Platforms with Random Values
     void initPlatforms(){
-        //firstPlatform = new Platform();
-        //secondPlatform = new Platform();
+        double width1 = randomWidth(); // Generating Random Width of Platform 1
+        double width2 = randomWidth(); // For Platform 2 (Random Width)
+        double start1 = randomPos(); // Generating Random Starting for Platform 1
+        double start2 = randomPos(); // For Platform 2 (Random Starting)
+        double end1 = randomPos();
+        double end2 = randomPos();
+        double height = 20; // Fixed Height of All platforms
+        firstPlatform = new Platform(width1,height,start1,end1);
+        secondPlatform = new Platform(width2,height,start2,end2);
+    }
+
+    // Initialising Second Platform After Moving
+    void newPlatform(){
+        double width = randomWidth();
+        double start = randomPos();
+        double end = randomPos();
+        double height = 20; // Fixed Height for All Platforms
+        firstPlatform = secondPlatform; // Second Platform becomes First Platform after Moving towards it
+        secondPlatform = new Platform(width,height,start,end); // Second Platform is Re-Generated with Random Values
     }
 
     //Initialise Random Positions for Cherry
     void initCherry(){
-        //setCherryX();
-        //setCherryY();
+        setCherryX(randomCherryX()); // Generating Value for X-axis of Cherry
+        setCherryY(randomCherryY()); // Generating Value for Y-axis of Cherry
     }
+
+    //Implementing Logics for Moving Player after Drawing Stick-Pole
     void movePlayer(){
-        while(!isFallen()){
-            while(getPoleLength() >= getPositionX()) {
-                setPositionX(getPositionX()+0.1); //increments X-axis of player while X < (Pole Length)
-            }
+        while(!isFallen()){ // While Player has not fallen down, it would move
+            while(getPoleLength() >= getPositionX()) setPositionX(getPositionX()+0.1); //increments X-axis of player, upto Pole-Length Created by Player
             if(getPositionX() < platformDistance) setFallen(true); // if Pos-X is lesser than platform distance, player would fall down
-            else{
-                while(getPositionX() < secondPlatform.getWidth()){
+
+            else{ // Player has reached the Second Platform
+                while(getPositionX() < secondPlatform.getWidth()){ // Moving Player upto End-point of Second Platform
                     setPositionX(getPositionX()+0.1); //increments X-axis of player while X < Width of Second Platform
                 }
             }
         }
-    };
-
-    void flipPlayer(){
-        setFlipped(!isFlipped()); //flips player to opposite of whatever the current status is
     }
+
+    // Flips the Player whenever Function is Called
+    void flipPlayer() {setFlipped(!isFlipped());}
+
 //    void drawLine(){
 //        startExtendingPole();
 //    };
@@ -199,22 +243,8 @@ public class Player{
     void setFallenStatus(){};
     void setScore(){};
 
-//    public void KeyTime(KeyEvent key){
-//        long keyPressTime = 0;
-//        getScene().setOnKeyPressed(keyEvent -> {
-//            if(key.getCode().isWhitespaceKey()) keyPressTime = (System.currentTimeMillis());
-//        });
-//
-//        getScene().setOnKeyReleased(keyEvent -> {
-//            long keyReleaseTime = 0;
-//            if(key.getCode().isWhitespaceKey()) keyReleaseTime = (System.currentTimeMillis());
-//            System.out.println(keyReleaseTime - keyPressTime);
-//
-//        });
-//    }
-
     boolean mouseReleasedStatus = false;
-    public void mousereleased(){
+    public void mouseReleased(){
         getScene().setOnMouseReleased(mouseEvent -> {
             mouseReleasedStatus = true;
             stopExtendingPole();
@@ -230,22 +260,25 @@ public class Player{
         getScene().setOnMousePressed(mouseEvent -> {
             while(!mouseReleasedStatus){
                 poleLength += 0.1;
-                mousereleased();
+                mouseReleased();
             }
         });
     };
     void stopExtendingPole(){
         setPoleStatus(false);
+        //System.out.println("Completed");
     };
 //    void generatePillar(){
 //        if(!getPoleStatus()) startExtendingPole();
 //    };
     void rotatePole(){
-        if(!getPoleStatus() & getPoleLength()!= 0){
-            this.poleY = getPoleLength();
-            float x = this.poleX;
-            float y = this.poleY;
-            while(this.poleZ != getPoleLength()){
+        if(!getPoleStatus() & getPoleLength()!= 0){ // if Pole Length is non-zero & Pole has been Initialised
+            this.poleY = getPoleLength(); // Y-axis of Pole is set to Length of Pole
+            float x = this.poleX; // Temporary Storage of Pole-X
+            float y = this.poleY; // Temp Storage of Pole-Y
+            while(x != getPoleLength() & y!= 0){ // X has not reached Pole Length and Y has not reached Base Level (Assuming 0 for now)
+                x += 0.1; // Pole changes Temporary Coordinates
+                y -= 0.1;
                 this.poleZ = (float) Math.sqrt(Math.pow(x+0.5,2) + Math.pow(y-0.5,2));
             }
         }

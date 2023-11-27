@@ -65,12 +65,12 @@ public class PauseController extends GameController implements DisplayScreens,Mu
 
     }
 
+    // Assuming Serial is from 1-4 always
     public void saveGame(int serial){
-        addsaveGame(serial,getPlayer());
+        addsaveGame(serial-1,getPlayer());
     }
-
     public void removeGame(int serial){
-        removeSaveGame(serial);
+        removeSaveGame(serial-1);
     }
 
     public void switchToSinglePlayerGameScreen(ActionEvent event) throws IOException {
