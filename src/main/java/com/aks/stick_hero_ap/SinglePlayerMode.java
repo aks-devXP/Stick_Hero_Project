@@ -14,7 +14,7 @@ public class SinglePlayerMode extends GameController implements DisplayScreens,M
     }
 
     void save_Game(int serial){
-        saveGame(serial,this.player);
+        addsaveGame(serial,this.player);
     }
 
     void removeSave(int serial){
