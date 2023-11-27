@@ -44,7 +44,7 @@ public class GameController extends Player implements DisplayScreens, MusicPlaye
         this.saveSlots = saveSlots;
     }
 
-    void saveGame(int serial,Player player1){
+    void addsaveGame(int serial,Player player1){
         getSaveSlots()[serial] = player1; //Save new Player into Save Slot Array
     };
 
