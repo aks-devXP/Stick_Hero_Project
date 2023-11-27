@@ -22,7 +22,6 @@ public class SaveScreenController extends PauseController{
     private int score;
     private int cherry;
 
-
     Image image= new Image(getClass().getResourceAsStream("BG-Save.jpg"));
 
     @FXML
@@ -115,8 +114,4 @@ public class SaveScreenController extends PauseController{
     public void setCherry(int cherry) {
         this.cherry = cherry;
     }
-
-    void saveGame(){};
-
-    void removeSaveGame(){};
 }

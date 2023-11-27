@@ -10,9 +10,11 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class HomeScreen extends Application {
-
     public static void main(String[] args) {
         launch(args);
     }
@@ -23,7 +25,6 @@ public class HomeScreen extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(HomeScreen.class.getResource("HomeScreen.fxml"));
         //Parent root=fxmlLoader.load();
         Scene scene = new Scene(fxmlLoader.load());
-
         stage.setTitle("Stick Hero");
         stage.setScene(scene);
         stage.setResizable(false);

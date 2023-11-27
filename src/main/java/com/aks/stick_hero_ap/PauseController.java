@@ -65,6 +65,14 @@ public class PauseController extends GameController implements DisplayScreens,Mu
 
     }
 
+    public Player getSavePlayer(int serial){
+        return getSaves()[serial];
+    }
+
+    public Player[] getSave(){
+        return getSaves();
+    }
+
     public void switchToSinglePlayerGameScreen(ActionEvent event) throws IOException {
 
         Parent root= FXMLLoader.load(getClass().getResource("SinglePlayerGameScreen.fxml"));
@@ -248,12 +256,12 @@ public class PauseController extends GameController implements DisplayScreens,Mu
     }
 
     @Override
-    public void startMusic() {
+    public void startMusic(MediaPlayer mediaPlayer) {
 
     }
 
     @Override
-    public void stopMusic() {
+    public void stopMusic(MediaPlayer mediaPlayer) {
 
     }
 }

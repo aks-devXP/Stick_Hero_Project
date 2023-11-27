@@ -21,6 +21,7 @@ public class LoadScreenController extends HomeScreenController implements Initia
     private Parent root;
     private int score;
     private int cherry;
+    private Player player;
 
     Image image= new Image(getClass().getResourceAsStream("BG-Load.jpg"));
 
@@ -48,14 +49,12 @@ public class LoadScreenController extends HomeScreenController implements Initia
         //gamePane.setVisible(false);
 
         backgroundImageView.setImage(image);
-
         backgroundImageView.setFitWidth(targetWidth);
         backgroundImageView.setFitHeight(targetHeight);
         backgroundImageView.setPreserveRatio(false);
 
 //        BoxBlur blur=new BoxBlur(10,10,3);
 //        gamePane.setEffect(blur);
-
 
     }
 
@@ -119,6 +118,7 @@ public class LoadScreenController extends HomeScreenController implements Initia
         this.cherry = cherry;
     }
 
-    void loadSave(){};
+    void loadSave(int serial){
+    };
     void deleteSave(){};
 }
