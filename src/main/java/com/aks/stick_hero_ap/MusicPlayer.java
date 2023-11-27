@@ -3,6 +3,6 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
 public interface MusicPlayer {
-    void startMusic();
-    void stopMusic();
+    void startMusic(MediaPlayer mediaPlayer);
+    void stopMusic(MediaPlayer mediaPlayer);
 }

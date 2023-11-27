@@ -4,6 +4,22 @@ public class Platform extends Player {
     private double width;
     private double height;
     private double startPosition;
+    private double endPosition;
+
+    public Platform(double width, double height, double startPosition, double endPosition) {
+        this.width = width;
+        this.height = height;
+        this.startPosition = startPosition;
+        this.endPosition = endPosition;
+    }
+
+    public double getEndPosition() {
+        return endPosition;
+    }
+
+    public void setEndPosition(double endPosition) {
+        this.endPosition = endPosition;
+    }
 
     public double getWidth() {
         return width;

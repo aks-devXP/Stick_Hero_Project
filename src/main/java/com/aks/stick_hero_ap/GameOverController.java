@@ -60,12 +60,12 @@ public class GameOverController extends GameController implements MusicPlayer,Di
     void showScores(){};
 
     @Override
-    public void startMusic() {
+    public void startMusic(MediaPlayer mediaPlayer) {
 
     }
 
     @Override
-    public void stopMusic() {
+    public void stopMusic(MediaPlayer mediaPlayer) {
 
     }
 }

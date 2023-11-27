@@ -44,9 +44,11 @@ public class HomeScreenController extends HomeScreen implements MusicPlayer,Disp
         this.totalCherries = totalCherries;
     }
 
-    String music = "Deck the Halls Jazz Loop.mp3";
-    Media sound = new Media(new File(music).toURI().toString());
-    MediaPlayer mediaPlayer2 = new MediaPlayer(sound);
+    public void initialiseSound(){
+        media = new Media(getClass().getResource("starting.mp3").toExternalForm());
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.play();
+    }
 
     Image image= new Image(getClass().getResourceAsStream("BG-1st.jpg"));
     Image unmuteImage=new Image(getClass().getResourceAsStream("Sound.png"));
@@ -77,6 +79,8 @@ public class HomeScreenController extends HomeScreen implements MusicPlayer,Disp
         backgroundImageView.setImage(image);
         singlePlayerLabel.setText("Single\nPlayer");
         twoPlayerLabel.setText("Two\nPlayer");
+        initialiseSound();
+        setTotalCherries(0);
     }
 
 
@@ -93,13 +97,13 @@ public class HomeScreenController extends HomeScreen implements MusicPlayer,Disp
         if(!getMute()){
             muteUnmuteImageView.setImage(muteImage);
             setMute(true);
-            mediaPlayer2.play();
+            mediaPlayer.pause();
         }
 
         else{
             muteUnmuteImageView.setImage(unmuteImage);
             setMute(true);
-            mediaPlayer2.pause();
+            mediaPlayer.play();
         }
     }
 
@@ -109,7 +113,6 @@ public class HomeScreenController extends HomeScreen implements MusicPlayer,Disp
 
     @Override
     public void display() {
-
     }
 
     @Override
@@ -123,12 +126,12 @@ public class HomeScreenController extends HomeScreen implements MusicPlayer,Disp
     }
 
     @Override
-    public void startMusic() {
-
+    public void startMusic(MediaPlayer mediaPlayer) {
+        mediaPlayer.play();
     }
 
     @Override
-    public void stopMusic() {
-
+    public void stopMusic(MediaPlayer mediaPlayer) {
+        mediaPlayer.pause();
     }
 }
