@@ -21,7 +21,7 @@ public class GameController extends Player implements DisplayScreens, MusicPlaye
     private Player player;
     private MediaPlayer mediaPlayer;
     void startSinglePlayer(){ //Implement Logics for Single Player Mode
-        while(!isFallen()){
+        while(!isFallen()){ // Incomplete Function
             initPlatforms();
             initCherry();
             startExtendingPole();
@@ -44,12 +44,13 @@ public class GameController extends Player implements DisplayScreens, MusicPlaye
         this.saveSlots = saveSlots;
     }
 
+    //Assuming that we would always put 1-4 in serial
     void addsaveGame(int serial,Player player1){
-        getSaveSlots()[serial] = player1; //Save new Player into Save Slot Array
+        getSaveSlots()[serial-1] = player1; //Save new Player into Save Slot Array
     };
 
     void removeSaveGame(int serial){
-        getSaveSlots()[serial] = null; //Change Save Slot back to null
+        getSaveSlots()[serial-1] = null; //Change Save Slot back to null
     };
 
     public Player getPlayer(){

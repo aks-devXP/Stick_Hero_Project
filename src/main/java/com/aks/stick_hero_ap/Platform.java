@@ -6,6 +6,7 @@ public class Platform extends Player {
     private double startPosition;
     private double endPosition;
 
+    //Constructor for Platform
     public Platform(double width, double height, double startPosition, double endPosition) {
         this.width = width;
         this.height = height;

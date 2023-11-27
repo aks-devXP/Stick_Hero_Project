@@ -9,16 +9,18 @@ public class SinglePlayerMode extends GameController implements DisplayScreens,M
     private Scene scene;
     private Parent root;
     private Player player;
+
+    // Assuming Serial is from 1-4 always
     void loadGame(int serial){
-        this.player = getSaveSlots()[serial];
+        this.player = getSaveSlots()[serial-1];
     }
 
     void save_Game(int serial){
-        addsaveGame(serial,this.player);
+        addsaveGame(serial-1,this.player);
     }
 
     void removeSave(int serial){
-        removeSaveGame(serial);
+        removeSaveGame(serial-1);
     }
     void startPlayer(){
         startSinglePlayer();
