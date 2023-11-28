@@ -4,7 +4,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class SinglePlayerMode extends GameController implements DisplayScreens,MusicPlayer{
+public class SinglePlayerMode extends GameController implements DisplayScreens,MusicPlayer,SaveData{
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -14,16 +14,23 @@ public class SinglePlayerMode extends GameController implements DisplayScreens,M
     void loadGame(int serial){
         this.player = getSaveSlots()[serial-1];
     }
-
-    void save_Game(int serial){
-        addsaveGame(serial-1,this.player);
-    }
-
-    void removeSave(int serial){
-        removeSaveGame(serial-1);
-    }
     void startPlayer(){
         startSinglePlayer();
     };
     void showResult(){};
+
+    @Override
+    public void addSaveGame(int serial, Player player) {
+        addSaveSlot(serial,player);
+    }
+
+    @Override
+    public void removeSaveGame(int serial) {
+        removeSaveSlot(serial);
+    }
+
+    @Override
+    public Player getSaveGame(int serial) {
+        return getSaveSlots()[serial-1];
+    }
 }

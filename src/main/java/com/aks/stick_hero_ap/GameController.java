@@ -45,13 +45,13 @@ public class GameController extends Player implements DisplayScreens, MusicPlaye
     }
 
     //Assuming that we would always put 1-4 in serial
-    void addsaveGame(int serial,Player player1){
+    public void addSaveSlot(int serial, Player player1) {
         getSaveSlots()[serial-1] = player1; //Save new Player into Save Slot Array
-    };
+    }
 
-    void removeSaveGame(int serial){
+    public void removeSaveSlot(int serial){
         getSaveSlots()[serial-1] = null; //Change Save Slot back to null
-    };
+    }
 
     public Player getPlayer(){
         return player;
@@ -89,4 +89,6 @@ public class GameController extends Player implements DisplayScreens, MusicPlaye
     public void stopMusic(MediaPlayer mediaPlayer) {
         mediaPlayer.pause();
     }
+
+
 }

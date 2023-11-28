@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LoadScreenController extends HomeScreenController implements Initializable {
+public class LoadScreenController extends GameController implements Initializable,SaveData{
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -117,8 +117,18 @@ public class LoadScreenController extends HomeScreenController implements Initia
     public void setCherry(int cherry) {
         this.cherry = cherry;
     }
+    @Override // Add Save Game won't be used in Load Screen
+    public void addSaveGame(int serial, Player player) {
+        addSaveSlot(serial,player);
+    }
 
-    void loadSave(int serial){
-    };
-    void deleteSave(){};
+    @Override // Removing the Save Game from Slot
+    public void removeSaveGame(int serial) {
+        removeSaveSlot(serial);
+    }
+
+    @Override // Retrieve Save Game from the Slots, Works like Load Game
+    public Player getSaveGame(int serial) {
+        return getSaveSlots()[serial-1];
+    }
 }
