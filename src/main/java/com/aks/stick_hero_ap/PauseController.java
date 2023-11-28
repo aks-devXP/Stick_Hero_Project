@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class PauseController extends GameController implements DisplayScreens,MusicPlayer, Initializable {
+public class PauseController extends GameController implements DisplayScreens,MusicPlayer,Initializable,SaveData {
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -63,14 +63,6 @@ public class PauseController extends GameController implements DisplayScreens,Mu
 
 
 
-    }
-
-    // Assuming Serial is from 1-4 always
-    public void saveGame(int serial){
-        addsaveGame(serial-1,getPlayer());
-    }
-    public void removeGame(int serial){
-        removeSaveGame(serial-1);
     }
 
     public void switchToSinglePlayerGameScreen(ActionEvent event) throws IOException {
@@ -143,97 +135,6 @@ public class PauseController extends GameController implements DisplayScreens,Mu
         this.mediaPlayer = mediaPlayer;
     }
 
-    public int getSavePoleLength() {
-        return savePoleLength;
-    }
-
-    public void setSavePoleLength(int savePoleLength) {
-        this.savePoleLength = savePoleLength;
-    }
-
-    public boolean isSaveIsMoving() {
-        return saveIsMoving;
-    }
-
-    public void setSaveIsMoving(boolean saveIsMoving) {
-        this.saveIsMoving = saveIsMoving;
-    }
-
-    public boolean isSaveIsFlipped() {
-        return saveIsFlipped;
-    }
-
-    public void setSaveIsFlipped(boolean saveIsFlipped) {
-        this.saveIsFlipped = saveIsFlipped;
-    }
-
-    public boolean isSaveIsGameOver() {
-        return saveIsGameOver;
-    }
-
-    public void setSaveIsGameOver(boolean saveIsGameOver) {
-        this.saveIsGameOver = saveIsGameOver;
-    }
-
-    public int getSaveCherriesCollected() {
-        return saveCherriesCollected;
-    }
-
-    public void setSaveCherriesCollected(int saveCherriesCollected) {
-        this.saveCherriesCollected = saveCherriesCollected;
-    }
-
-    public int getSaveScore() {
-        return saveScore;
-    }
-
-    public void setSaveScore(int saveScore) {
-        this.saveScore = saveScore;
-    }
-
-    public Platform getSaveFirstPlatform() {
-        return saveFirstPlatform;
-    }
-
-    public void setSaveFirstPlatform(Platform saveFirstPlatform) {
-        this.saveFirstPlatform = saveFirstPlatform;
-    }
-
-    public Platform getSaveSecondPlatform() {
-        return saveSecondPlatform;
-    }
-
-    public void setSaveSecondPlatform(Platform saveSecondPlatform) {
-        this.saveSecondPlatform = saveSecondPlatform;
-    }
-
-    public double getSavePlatformDistance() {
-        return savePlatformDistance;
-    }
-
-    public void setSavePlatformDistance(double savePlatformDistance) {
-        this.savePlatformDistance = savePlatformDistance;
-    }
-
-    public double getSavePlayerPosition() {
-        return savePlayerPosition;
-    }
-
-    public void setSavePlayerPosition(double savePlayerPosition) {
-        this.savePlayerPosition = savePlayerPosition;
-    }
-
-    private int savePoleLength;
-    private boolean saveIsMoving;
-    private boolean saveIsFlipped;
-    private boolean saveIsGameOver;
-    private int saveCherriesCollected;
-    private int saveScore;
-    private Platform saveFirstPlatform;
-    private Platform saveSecondPlatform;
-    private double savePlatformDistance;
-    private double savePlayerPosition;
-
     void pause(){};
     void unpause(){};
 
@@ -263,5 +164,20 @@ public class PauseController extends GameController implements DisplayScreens,Mu
     @Override
     public void stopMusic(MediaPlayer mediaPlayer) {
 
+    }
+
+    @Override // Save Game in the slots
+    public void addSaveGame(int serial, Player player){
+        addSaveSlot(serial,player);
+    }
+
+    @Override // Deleting the Save Game from Slots
+    public void removeSaveGame(int serial) {
+        removeSaveSlot(serial);
+    }
+
+    @Override // Load Game from Slots (Would not be used here)
+    public Player getSaveGame(int serial) {
+        return getSaveSlots()[serial-1];
     }
 }

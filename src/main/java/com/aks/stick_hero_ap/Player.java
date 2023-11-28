@@ -11,7 +11,7 @@ public class Player{
     private double positionX;
     private double positionY;
     private int cherriesCollected;
-    private boolean isMoving;
+    private boolean isAlive;
     private boolean isFlipped;
     private int currentScore;
     private boolean isFallen;
@@ -99,12 +99,12 @@ public class Player{
         this.cherriesCollected = cherriesCollected;
     }
 
-    public boolean isMoving() {
-        return isMoving;
+    public boolean isAlive() {
+        return isAlive;
     }
 
-    public void setMoving(boolean moving) {
-        isMoving = moving;
+    public void setAlive(boolean alive) {
+        isAlive = alive;
     }
 
     public int getCurrentScore() {
@@ -211,9 +211,12 @@ public class Player{
 
     //Implementing Logics for Moving Player after Drawing Stick-Pole
     void movePlayer(){
-        while(!isFallen()){ // While Player has not fallen down, it would move
+        while(!isFallen() & isAlive()){ // While Player has not fallen down & alive, it would move
             while(getPoleLength() >= getPositionX()) setPositionX(getPositionX()+0.1); //increments X-axis of player, upto Pole-Length Created by Player
-            if(getPositionX() < platformDistance) setFallen(true); // if Pos-X is lesser than platform distance, player would fall down
+            if(getPositionX() < platformDistance) {
+                setFallen(true); // if Pos-X is lesser than platform distance, player would fall down
+                setAlive(false);
+            }
 
             else{ // Player has reached the Second Platform
                 while(getPositionX() < secondPlatform.getWidth()){ // Moving Player upto End-point of Second Platform
@@ -236,12 +239,17 @@ public class Player{
     int getCherry(){
         return 0;
     };
-    void getFallenStatus(){};
 
     void setPosition(double X, double Y){};
     void setCherry(){};
     void setFallenStatus(){};
     void setScore(){};
+
+    void revivePlayer(){
+        if(!isAlive()){
+            setAlive(true);
+        }
+    }
 
     boolean mouseReleasedStatus = false;
     public void mouseReleased(){
