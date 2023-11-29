@@ -77,7 +77,7 @@ public class SinglePlayerHomeScreenController extends SinglePlayerMode implement
         stage=(Stage)((Node)event.getSource()).getScene().getWindow();
         scene=new Scene(root,300,500);
         HomeScreenController homeScreenController=fxmlLoader.getController();
-        homeScreenController.muteUnmute();
+        //homeScreenController.muteUnmute();
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
