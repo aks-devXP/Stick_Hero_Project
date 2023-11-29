@@ -28,6 +28,8 @@ public class HomeScreenController extends HomeScreen implements MusicPlayer,Disp
     private Media media;
     private MediaPlayer mediaPlayer;
 
+    private boolean soundInitialised=false;
+
     public boolean getMute() {
         return mute;
     }
@@ -79,7 +81,12 @@ public class HomeScreenController extends HomeScreen implements MusicPlayer,Disp
         backgroundImageView.setImage(image);
         singlePlayerLabel.setText("Single\nPlayer");
         twoPlayerLabel.setText("Two\nPlayer");
-        initialiseSound();
+
+        if(soundInitialised==false){
+            initialiseSound();
+            soundInitialised=true;
+        }
+
         setTotalCherries(0);
     }
 
@@ -102,7 +109,7 @@ public class HomeScreenController extends HomeScreen implements MusicPlayer,Disp
 
         else{
             muteUnmuteImageView.setImage(unmuteImage);
-            setMute(true);
+            setMute(false);
             mediaPlayer.play();
         }
     }

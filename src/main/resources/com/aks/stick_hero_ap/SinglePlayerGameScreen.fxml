@@ -5,11 +5,10 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Arc?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="gamePane" prefHeight="500.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aks.stick_hero_ap.SinglePlayerGameScreenController">
+<AnchorPane fx:id="gamePane" prefHeight="500.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aks.stick_hero_ap.SinglePlayerGameScreenController">
    <children>
       <ImageView fx:id="backgroundImageView" fitHeight="500.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
@@ -27,15 +26,16 @@
             <Font name="Corbel Bold" size="27.0" />
          </font>
       </Label>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="56.0" layoutX="104.0" layoutY="102.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="94.0" />
-      <Arc fill="DODGERBLUE" layoutX="97.0" layoutY="146.0" length="180.0" radiusX="28.0" radiusY="32.0" rotate="-90.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="0.0" type="ROUND" />
-      <Arc fill="DODGERBLUE" layoutX="206.0" layoutY="146.0" length="180.0" radiusX="28.0" radiusY="32.0" rotate="90.0" stroke="BLACK" strokeLineCap="ROUND" strokeType="INSIDE" strokeWidth="0.0" type="ROUND" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="104.0" layoutY="102.0" prefHeight="56.0" prefWidth="94.0" text="7" textAlignment="CENTER">
+      <Rectangle arcHeight="21.0" arcWidth="23.0" fill="#2a3640" height="56.0" layoutX="104.0" layoutY="80.0" opacity="0.3" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="94.0" />
+      <Label fx:id="CurrentScoreLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="104.0" layoutY="78.0" prefHeight="56.0" prefWidth="94.0" text="7" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Cooper Black" size="38.0" />
          </font>
       </Label>
-      <Button fx:id="gameOverButton" mnemonicParsing="false" onAction="#switchToGameOverScreen" opacity="0.0" prefHeight="500.0" prefWidth="300.0" text="GameOverButton" />
+      <Button fx:id="FullScreenLineExtensionButton" mnemonicParsing="false" opacity="0.0" prefHeight="500.0" prefWidth="300.0" text="FullScreenLineExtensionButton" />
       <Button fx:id="pauseButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#switchToPauseMenuScreen" opacity="0.0" prefHeight="40.0" prefWidth="40.0" text="PauseButton" />
+      <Rectangle fx:id="platform1" arcHeight="5.0" arcWidth="5.0" height="200.0" layoutY="300.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+      <Rectangle fx:id="platform2" arcHeight="5.0" arcWidth="5.0" height="200.0" layoutY="300.0" opacity="0.31" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+      <fx:include fx:id="gameCharacterPane" layoutY="257.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="10.0" prefWidth="10.0" scaleX="0.15" scaleY="0.15" source="GameCharacter.fxml" />
    </children>
 </AnchorPane>
