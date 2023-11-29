@@ -202,7 +202,7 @@ public class Player{
     //Initialise Random Positions for Cherry
     void initCherry(){
         setCherryX(randomCherryX()); // Generating Value for X-axis of Cherry
-        setCherryY(randomCherryY()); // Generating Value for Y-axis of Cherry
+
     }
 
     //Implementing Logics for Moving Player after Drawing Stick-Pole
