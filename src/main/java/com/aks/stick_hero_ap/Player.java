@@ -174,11 +174,7 @@ public class Player{
         return ThreadLocalRandom.current().nextDouble(lowerBound, upperBound + 1); // Used ThreadLocalRandom as it may be required in thread pool by multiple processes
     }
 
-    public double randomCherryY(){
-        double upperBound = 500; // upper bound of Position of Cherry - Y axis
-        double lowerBound = 100; // lower bound of Position of Cherry - Y axis
-        return ThreadLocalRandom.current().nextDouble(lowerBound, upperBound + 1); // Used ThreadLocalRandom as it may be required in thread pool by multiple processes
-    }
+
 
     //Initialise Both Platforms with Random Values
     void initPlatforms(){
