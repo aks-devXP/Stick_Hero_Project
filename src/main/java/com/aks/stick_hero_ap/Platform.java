@@ -6,13 +6,38 @@ public class Platform extends Player {
     private double startPosition;
     private double endPosition;
 
+    @Override
+    public double getPositionX() {
+        return positionX;
+    }
+
+    @Override
+    public void setPositionX(double positionX) {
+        this.positionX = positionX;
+    }
+
+    @Override
+    public double getPositionY() {
+        return positionY;
+    }
+
+    @Override
+    public void setPositionY(double positionY) {
+        this.positionY = positionY;
+    }
+
+    private double positionX;      //These are both supposed to be layoutX and
+    private double positionY;      // LayoutY
+
     //Constructor for Platform
-    public Platform(double width, double height, double startPosition, double endPosition) {
+    public Platform(double width, double height, double positionX, double positionY) {
         this.width = width;
         this.height = height;
-        this.startPosition = startPosition;
-        this.endPosition = endPosition;
+        this.positionX=positionX;
+        this.positionY=positionY;
     }
+
+    public Platform(){}       //empty constructor
 
     public double getEndPosition() {
         return endPosition;

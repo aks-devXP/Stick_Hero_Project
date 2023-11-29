@@ -58,9 +58,12 @@ public class SinglePlayerHomeScreenController extends SinglePlayerMode implement
 
     public void switchToSinglePlayerGameScreen(ActionEvent event) throws IOException {
 
-        Parent root= FXMLLoader.load(getClass().getResource("SinglePlayerGameScreen.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SinglePlayerGameScreen.fxml"));
+        Parent root= fxmlLoader.load();
         stage=(Stage)((Node)event.getSource()).getScene().getWindow();
         scene=new Scene(root,300,500);
+        SinglePlayerGameScreenController gameController=fxmlLoader.getController();
+        gameController.getTheRootFromPreviousScene(root);
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
@@ -68,10 +71,13 @@ public class SinglePlayerHomeScreenController extends SinglePlayerMode implement
 
 
     public void switchToHomeScreen(ActionEvent event) throws IOException {
-
-        Parent root= FXMLLoader.load(getClass().getResource("HomeScreen.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("HomeScreen.fxml"));
+        //Parent root= FXMLLoader.load(getClass().getResource("HomeScreen.fxml"));
+        Parent root=fxmlLoader.load();
         stage=(Stage)((Node)event.getSource()).getScene().getWindow();
         scene=new Scene(root,300,500);
+        HomeScreenController homeScreenController=fxmlLoader.getController();
+        homeScreenController.muteUnmute();
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
