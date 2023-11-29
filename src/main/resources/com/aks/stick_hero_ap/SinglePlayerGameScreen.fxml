@@ -32,10 +32,10 @@
             <Font name="Cooper Black" size="38.0" />
          </font>
       </Label>
-      <Button fx:id="FullScreenLineExtensionButton" mnemonicParsing="false" opacity="0.0" prefHeight="500.0" prefWidth="300.0" text="FullScreenLineExtensionButton" />
+      <Button fx:id="fullScreenLineExtensionButton" mnemonicParsing="false" opacity="0.0" prefHeight="500.0" prefWidth="300.0" text="FullScreenLineExtensionButton" />
       <Button fx:id="pauseButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#switchToPauseMenuScreen" opacity="0.0" prefHeight="40.0" prefWidth="40.0" text="PauseButton" />
       <Rectangle fx:id="platform1" arcHeight="5.0" arcWidth="5.0" height="200.0" layoutY="300.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
       <Rectangle fx:id="platform2" arcHeight="5.0" arcWidth="5.0" height="200.0" layoutY="300.0" opacity="0.31" stroke="BLACK" strokeType="INSIDE" width="200.0" />
-      <fx:include fx:id="gameCharacterPane" layoutY="257.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="10.0" prefWidth="10.0" scaleX="0.15" scaleY="0.15" source="GameCharacter.fxml" />
+      <fx:include fx:id="gameCharacterPane" layoutY="275.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" scaleX="0.08" scaleY="0.08" source="GameCharacter.fxml" />
    </children>
 </AnchorPane>

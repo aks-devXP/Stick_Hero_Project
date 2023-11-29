@@ -12,7 +12,7 @@
       <Rectangle arcHeight="54.0" arcWidth="50.0" height="200.0" layoutX="86.0" layoutY="2.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="166.0" />
       <Circle fill="WHITE" layoutX="206.0" layoutY="68.0" radius="33.0" stroke="BLACK" strokeType="INSIDE" />
       <Rectangle arcHeight="8.0" arcWidth="8.0" fill="#ff381d" height="47.0" layoutX="86.0" layoutY="15.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="166.0" />
-      <Polygon fill="#ff381d" layoutX="35.0" layoutY="30.0" points="11.399978637695312, 19.199996948242188, 51.00001525878906, -6.5000152587890625, -34.9999885559082, -16.800003051757812" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
-      <Polygon fill="#ff381d" layoutX="47.0" layoutY="79.0" points="39.00001525878906, 2.8000030517578125, 39.00001525878906, -31.599990844726562, -6.1999969482421875, 2.8000030517578125" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+      <Polygon fill="#ff381d" layoutX="35.0" layoutY="30.0" points="11.399978637695312, 19.199996948242188, 51.00001525878906, -6.5000152587890625, -34.9999885559082, -16.800003051757812" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
+      <Polygon fill="#ff381d" layoutX="47.0" layoutY="79.0" points="39.00001525878906, 2.8000030517578125, 39.00001525878906, -31.599990844726562, -6.1999969482421875, 2.8000030517578125" stroke="BLACK" strokeType="INSIDE" strokeWidth="2.0" />
    </children>
 </AnchorPane>
