@@ -19,13 +19,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class PauseController extends GameController implements DisplayScreens,MusicPlayer,Initializable,SaveData {
+public class PauseController extends GameController implements DisplayScreens,Initializable,SaveData,Sound {
     private Stage stage;
     private Scene scene;
     private Parent root;
 
-    private Media media;
-    private MediaPlayer mediaPlayer;
+    private MusicController musicController;
 
     Image image= new Image(getClass().getResourceAsStream("Game Screenshot.jpg"));
 
@@ -57,6 +56,7 @@ public class PauseController extends GameController implements DisplayScreens,Mu
         backgroundImageView.setFitWidth(targetWidth);
         backgroundImageView.setFitHeight(targetHeight);
         backgroundImageView.setPreserveRatio(false);
+        initialiseSound();
 
 //        BoxBlur blur=new BoxBlur(10,10,3);
 //        gamePane.setEffect(blur);
@@ -72,26 +72,31 @@ public class PauseController extends GameController implements DisplayScreens,Mu
         scene=new Scene(root,300,500);
         stage.setScene(scene);
         stage.setResizable(false);
+        musicController.stopAudio(); // Stopping the current audio before changing scene
         stage.show();
     }
 
     public void switchToHomeScreen(ActionEvent event) throws IOException {
 
+        muteAudio();
         Parent root= FXMLLoader.load(getClass().getResource("HomeScreen.fxml"));
         stage=(Stage)((Node)event.getSource()).getScene().getWindow();
         scene=new Scene(root,300,500);
         stage.setScene(scene);
         stage.setResizable(false);
+        musicController.stopAudio(); // Stopping the current audio before changing scene
         stage.show();
     }
 
     public void switchToSaveGameScreen(ActionEvent event) throws IOException {
 
+        muteAudio();
         Parent root= FXMLLoader.load(getClass().getResource("SaveGameScreen.fxml"));
         stage=(Stage)((Node)event.getSource()).getScene().getWindow();
         scene=new Scene(root,300,500);
         stage.setScene(scene);
         stage.setResizable(false);
+        musicController.stopAudio(); // Stopping the current audio before changing scene
         stage.show();
     }
 
@@ -119,22 +124,6 @@ public class PauseController extends GameController implements DisplayScreens,Mu
         this.root = root;
     }
 
-    public Media getMedia() {
-        return media;
-    }
-
-    public void setMedia(Media media) {
-        this.media = media;
-    }
-
-    public MediaPlayer getMediaPlayer() {
-        return mediaPlayer;
-    }
-
-    public void setMediaPlayer(MediaPlayer mediaPlayer) {
-        this.mediaPlayer = mediaPlayer;
-    }
-
     void pause(){};
     void unpause(){};
 
@@ -156,16 +145,6 @@ public class PauseController extends GameController implements DisplayScreens,Mu
 
     }
 
-    @Override
-    public void startMusic(MediaPlayer mediaPlayer) {
-
-    }
-
-    @Override
-    public void stopMusic(MediaPlayer mediaPlayer) {
-
-    }
-
     @Override // Save Game in the slots
     public void addSaveGame(int serial, Player player){
         addSaveSlot(serial,player);
@@ -180,4 +159,22 @@ public class PauseController extends GameController implements DisplayScreens,Mu
     public Player getSaveGame(int serial) {
         return getSaveSlots()[serial-1];
     }
+
+    @Override
+    public void initialiseSound() {
+        musicController = new MusicController(getClass().getResource("paused.mp3").toExternalForm());
+        muteUnmute();
+    }
+
+    @Override
+    public void muteUnmute() {
+        if(AudioManager.isMuted()) { // if sound is muted
+            musicController.stopAudio(); // stops the audio
+        }
+        else {
+            musicController.playAudio(); //plays the audio
+        }
+    }
+
+    public void muteAudio(){musicController.stopAudio();}
 }

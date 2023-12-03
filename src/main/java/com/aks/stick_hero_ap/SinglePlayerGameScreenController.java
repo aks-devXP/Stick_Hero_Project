@@ -23,13 +23,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class SinglePlayerGameScreenController extends SinglePlayerMode implements Initializable {
+public class SinglePlayerGameScreenController extends SinglePlayerMode implements Initializable,Sound {
 
     private Stage stage;
     private Scene scene;
     private Parent root;
 
     private Line line=new Line();
+    private MusicController musicController;
 
     @FXML
     private Button fullScreenLineExtensionButton;
@@ -78,17 +79,13 @@ public class SinglePlayerGameScreenController extends SinglePlayerMode implement
 
     Timeline timeline;
 
-
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         //pausePane.setVisible(true);
         //gamePane.setVisible(false);
-
+        initialiseSound(); // Setting up Sound
         backgroundImageView.setImage(image);
-
         backgroundImageView.setFitWidth(targetWidth);
         backgroundImageView.setFitHeight(targetHeight);
         backgroundImageView.setPreserveRatio(false);
@@ -127,16 +124,10 @@ public class SinglePlayerGameScreenController extends SinglePlayerMode implement
             if(!clickReleased){
                 poleExtendingTrue();
             }
-
-
         });
         fullScreenLineExtensionButton.setOnMouseReleased(event -> {
             poleExtendingFalse();
         });
-
-
-
-
     }
 
     public void getTheRootFromPreviousScene(Parent root){
@@ -151,6 +142,7 @@ public class SinglePlayerGameScreenController extends SinglePlayerMode implement
         scene=new Scene(root,300,500);
         stage.setScene(scene);
         stage.setResizable(false);
+        musicController.stopAudio(); // stopping audio before changing scene
         stage.show();
     }
 
@@ -162,10 +154,9 @@ public class SinglePlayerGameScreenController extends SinglePlayerMode implement
         scene=new Scene(root,300,500);
         stage.setScene(scene);
         stage.setResizable(false);
+        musicController.stopAudio(); // stopping audio before changing scene
         stage.show();
     }
-
-
 
 
     public void poleExtendingTrue(){
@@ -194,7 +185,18 @@ public class SinglePlayerGameScreenController extends SinglePlayerMode implement
     }
 
 
+    @Override
+    public void initialiseSound() {
+        musicController = new MusicController(getClass().getResource("game1.mp3").toExternalForm());
+        muteUnmute();
+    }
 
-
-
+    public void muteUnmute() {
+        if(AudioManager.isMuted()) { // if sound is muted
+            musicController.stopAudio(); // stops the audio
+        }
+        else {
+            musicController.playAudio(); //plays the audio
+        }
+    }
 }

@@ -19,23 +19,18 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class HomeScreenController extends HomeScreen implements MusicPlayer,DisplayScreens, Initializable {
+public class HomeScreenController extends HomeScreen implements Sound,DisplayScreens, Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
-    private boolean mute;
     private int totalCherries;
-    private Media media;
-    private MediaPlayer mediaPlayer;
-
-    private boolean soundInitialised=false;
-
-    public boolean getMute() {
-        return mute;
+    private MusicController musicController;
+    public MusicController getMusicController() {
+        return musicController;
     }
 
-    public void setMute(boolean mute) {
-        this.mute = mute;
+    public void setMusicController(MusicController musicController) {
+        this.musicController = musicController;
     }
 
     public int getTotalCherries() {
@@ -46,10 +41,12 @@ public class HomeScreenController extends HomeScreen implements MusicPlayer,Disp
         this.totalCherries = totalCherries;
     }
 
-    public void initialiseSound(){
-        media = new Media(getClass().getResource("starting.mp3").toExternalForm());
-        mediaPlayer = new MediaPlayer(media);
-        mediaPlayer.play();
+    @Override
+    public void initialiseSound(){ //setting up the sound
+        musicController = new MusicController(getClass().getResource("starting.mp3").toExternalForm());
+        if(!AudioManager.isMuted()) musicController.playAudio();
+        else musicController.stopAudio();
+        setSoundImage();
     }
 
     Image image= new Image(getClass().getResourceAsStream("BG-1st.jpg"));
@@ -75,15 +72,13 @@ public class HomeScreenController extends HomeScreen implements MusicPlayer,Disp
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        setMute(false);
+        //setMute(false);
         backgroundImageView.setFitWidth(image.getWidth()*scaleFactor);
         backgroundImageView.setFitHeight(targetHeight);
         backgroundImageView.setImage(image);
         singlePlayerLabel.setText("Single\nPlayer");
         twoPlayerLabel.setText("Two\nPlayer");
         initialiseSound();
-
-
         setTotalCherries(0);
     }
 
@@ -94,21 +89,26 @@ public class HomeScreenController extends HomeScreen implements MusicPlayer,Disp
         scene=new Scene(root,300,500);
         stage.setScene(scene);
         stage.setResizable(false);
+        musicController.stopAudio();
         stage.show();
     }
 
+    @Override
     public void muteUnmute() {
-        if(!getMute()){
-            muteUnmuteImageView.setImage(muteImage);
-            setMute(true);
-            mediaPlayer.pause();
+        AudioManager.setMuted(!AudioManager.isMuted()); //changes the state of the state of current Sound
+        if(AudioManager.isMuted()) { // if sound is muted
+            setSoundImage(); //set Sound image to mute
+            musicController.stopAudio(); // stops the audio
         }
+        else {
+            setSoundImage(); // Set sound image to Sound
+            musicController.playAudio(); //plays the audio
+        }
+    }
 
-        else{
-            muteUnmuteImageView.setImage(unmuteImage);
-            setMute(false);
-            mediaPlayer.play();
-        }
+    public void setSoundImage(){
+        if(AudioManager.isMuted()) muteUnmuteImageView.setImage(muteImage);
+        else muteUnmuteImageView.setImage(unmuteImage);
     }
 
     //void muteUnmute(){};
@@ -127,15 +127,5 @@ public class HomeScreenController extends HomeScreen implements MusicPlayer,Disp
     @Override
     public void prevDisplay() {
 
-    }
-
-    @Override
-    public void startMusic(MediaPlayer mediaPlayer) {
-        mediaPlayer.play();
-    }
-
-    @Override
-    public void stopMusic(MediaPlayer mediaPlayer) {
-        mediaPlayer.pause();
     }
 }
