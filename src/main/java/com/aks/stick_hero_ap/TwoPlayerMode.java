@@ -4,7 +4,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class TwoPlayerMode extends GameController implements MusicPlayer,DisplayScreens{
+public class TwoPlayerMode extends GameController implements DisplayScreens{
     private Stage stage;
     private Scene scene;
     private Parent root;

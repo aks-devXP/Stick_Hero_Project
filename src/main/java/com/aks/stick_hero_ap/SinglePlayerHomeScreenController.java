@@ -16,10 +16,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class SinglePlayerHomeScreenController extends SinglePlayerMode implements Initializable {
+public class SinglePlayerHomeScreenController implements Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
+    private MusicController musicController;
 
     //@FXML
     Image image= new Image(getClass().getResourceAsStream("Reference.png"));
@@ -40,20 +41,26 @@ public class SinglePlayerHomeScreenController extends SinglePlayerMode implement
 
     double scaleFactor=targetHeight/ image.getHeight();
 
+    public void muteUnmute() {
+        if(AudioManager.isMuted()) { // if sound is muted
+            musicController.stopAudio(); // stops the audio
+        }
+        else {
+            musicController.playAudio(); //plays the audio
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-
+        musicController = new MusicController(getClass().getResource("starting.mp3").toExternalForm()); //Setting up Music Controller for Home Screen
         backgroundImageView.setFitWidth(image.getWidth()*scaleFactor);
         backgroundImageView.setFitHeight(targetHeight);
         //backgroundImageView.setPreserveRatio(true);
-
         //backgroundImageView.setViewport(new javafx.geometry.Rectangle2D(174,0,targetWidth,targetHeight));
         backgroundImageView.setImage(image);
         newGameLabel.setText("New\nGame");
         loadGameLabel.setText("Load\nGame");
-
-
+        muteUnmute(); //Setting Mute-Condition as per selected by Player
     }
 
     public void switchToSinglePlayerGameScreen(ActionEvent event) throws IOException {
@@ -66,6 +73,7 @@ public class SinglePlayerHomeScreenController extends SinglePlayerMode implement
         gameController.getTheRootFromPreviousScene(root);
         stage.setScene(scene);
         stage.setResizable(false);
+        musicController.stopAudio(); // Stopping the current audio before changing scene
         stage.show();
     }
 
@@ -77,9 +85,11 @@ public class SinglePlayerHomeScreenController extends SinglePlayerMode implement
         stage=(Stage)((Node)event.getSource()).getScene().getWindow();
         scene=new Scene(root,300,500);
         HomeScreenController homeScreenController=fxmlLoader.getController();
-        //homeScreenController.muteUnmute();
+        homeScreenController.getMusicController().stopAudio();
+        homeScreenController.initialiseSound();
         stage.setScene(scene);
         stage.setResizable(false);
+        musicController.stopAudio(); // Stopping the current audio before changing scene
         stage.show();
     }
 
@@ -90,6 +100,7 @@ public class SinglePlayerHomeScreenController extends SinglePlayerMode implement
         scene=new Scene(root,300,500);
         stage.setScene(scene);
         stage.setResizable(false);
+        musicController.stopAudio(); // Stopping the current audio before changing scene
         stage.show();
     }
 

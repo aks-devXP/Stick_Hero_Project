@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
-public class GameController extends Player implements DisplayScreens, MusicPlayer{
+public class GameController extends Player implements DisplayScreens{
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -79,16 +79,4 @@ public class GameController extends Player implements DisplayScreens, MusicPlaye
     public void prevDisplay() {
 
     }
-
-    @Override
-    public void startMusic(MediaPlayer mediaPlayer) {
-        mediaPlayer.play();
-    }
-
-    @Override
-    public void stopMusic(MediaPlayer mediaPlayer) {
-        mediaPlayer.pause();
-    }
-
-
 }

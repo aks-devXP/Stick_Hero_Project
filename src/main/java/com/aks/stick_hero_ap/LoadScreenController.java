@@ -15,13 +15,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LoadScreenController extends GameController implements Initializable,SaveData{
+public class LoadScreenController extends GameController implements Initializable,SaveData,Sound{
     private Stage stage;
     private Scene scene;
     private Parent root;
     private int score;
     private int cherry;
     private Player player;
+    private MusicController musicController;
 
     Image image= new Image(getClass().getResourceAsStream("BG-Load.jpg"));
 
@@ -47,6 +48,7 @@ public class LoadScreenController extends GameController implements Initializabl
 
         //pausePane.setVisible(true);
         //gamePane.setVisible(false);
+        initialiseSound(); //Setting up-Sound for this Scene
 
         backgroundImageView.setImage(image);
         backgroundImageView.setFitWidth(targetWidth);
@@ -65,6 +67,7 @@ public class LoadScreenController extends GameController implements Initializabl
         scene=new Scene(root,300,500);
         stage.setScene(scene);
         stage.setResizable(false);
+        musicController.stopAudio(); // stopping audio before changing scene
         stage.show();
     }
 
@@ -75,6 +78,7 @@ public class LoadScreenController extends GameController implements Initializabl
         scene=new Scene(root,300,500);
         stage.setScene(scene);
         stage.setResizable(false);
+        musicController.stopAudio(); // stopping audio before changing scene
         stage.show();
     }
 
@@ -130,5 +134,20 @@ public class LoadScreenController extends GameController implements Initializabl
     @Override // Retrieve Save Game from the Slots, Works like Load Game
     public Player getSaveGame(int serial) {
         return getSaveSlots()[serial-1];
+    }
+
+    @Override
+    public void initialiseSound() {
+        musicController = new MusicController(getClass().getResource("data.mp3").toExternalForm());
+        muteUnmute();
+    }
+
+    public void muteUnmute() {
+        if(AudioManager.isMuted()) { // if sound is muted
+            musicController.stopAudio(); // stops the audio
+        }
+        else {
+            musicController.playAudio(); //plays the audio
+        }
     }
 }

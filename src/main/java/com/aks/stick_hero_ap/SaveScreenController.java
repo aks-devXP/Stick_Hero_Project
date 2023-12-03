@@ -21,6 +21,7 @@ public class SaveScreenController extends PauseController{
 
     private int score;
     private int cherry;
+    private MusicController musicController;
 
     Image image= new Image(getClass().getResourceAsStream("BG-Save.jpg"));
 
@@ -44,11 +45,10 @@ public class SaveScreenController extends PauseController{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        initialiseSound(); // Setting up-Sound
         //pausePane.setVisible(true);
         //gamePane.setVisible(false);
-
         backgroundImageView.setImage(image);
-
         backgroundImageView.setFitWidth(targetWidth);
         backgroundImageView.setFitHeight(targetHeight);
         backgroundImageView.setPreserveRatio(false);
@@ -66,7 +66,23 @@ public class SaveScreenController extends PauseController{
         scene=new Scene(root,300,500);
         stage.setScene(scene);
         stage.setResizable(false);
+        musicController.stopAudio(); // Stopping audio before changing scene
         stage.show();
+    }
+
+    @Override
+    public void initialiseSound() {
+        musicController = new MusicController(getClass().getResource("data.mp3").toExternalForm());
+        muteUnmute();
+    }
+
+    public void muteUnmute() {
+        if(AudioManager.isMuted()) { // if sound is muted
+            musicController.stopAudio(); // stops the audio
+        }
+        else {
+            musicController.playAudio(); //plays the audio
+        }
     }
 
     @Override
