@@ -105,7 +105,7 @@ public class SinglePlayerGameScreenController extends SinglePlayerMode implement
         //System.out.println(platform1.getY());
         gameCharacterPane.setPrefWidth(0);
         gameCharacterPane.setPrefHeight(0);
-        gameCharacterPane.setLayoutX(40);    //-10 as 10 is the width of the character
+        gameCharacterPane.setLayoutX(35);    //-15 as 10 is the width of the character + 5 for proper gap between stick and player
         gameCharacterPane.setLayoutY(330);   //-20 as 20 is the height of the character
 
         startPoleX=currentPlatformDetails.getPositionX()+currentPlatformDetails.getWidth();
@@ -182,6 +182,10 @@ public class SinglePlayerGameScreenController extends SinglePlayerMode implement
         line.setStartY(startPoleY);
         line.setEndX(endPoleX);
         line.setEndY(endPoleY);
+    }
+
+    public void rotatePole(){
+
     }
 
 
