@@ -26,9 +26,7 @@ public class GameController extends Player implements DisplayScreens{
             initCherry();
             startExtendingPole();
             movePlayer();
-
         }
-
     };
     void startTwoPlayer(){ //Implement Logics for Two Player Mode
 
@@ -57,6 +55,10 @@ public class GameController extends Player implements DisplayScreens{
         return player;
     }
 
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
     public Scene getScene() {
         return scene;
     }
@@ -67,7 +69,6 @@ public class GameController extends Player implements DisplayScreens{
 
     @Override
     public void display() {
-
     }
 
     @Override

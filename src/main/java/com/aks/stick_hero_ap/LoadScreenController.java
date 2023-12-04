@@ -11,11 +11,16 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
-public class LoadScreenController extends GameController implements Initializable,SaveData,Sound{
+public class LoadScreenController extends GameController implements Initializable,Sound{
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -121,19 +126,29 @@ public class LoadScreenController extends GameController implements Initializabl
     public void setCherry(int cherry) {
         this.cherry = cherry;
     }
-    @Override // Add Save Game won't be used in Load Screen
-    public void addSaveGame(int serial, Player player) {
-        addSaveSlot(serial,player);
+
+    public Player getSaveGame(int serial){ // Pass values from 1-4
+        Player player = null;
+        ObjectInputStream in = null;
+        String val = String.valueOf(serial);
+        try{
+            in = new ObjectInputStream(new FileInputStream(val+".txt"));
+            player = (Player) in.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Unable to Retrieve Save Game File due to: " + e.getMessage());
+        }
+        return player;
     }
 
-    @Override // Removing the Save Game from Slot
-    public void removeSaveGame(int serial) {
-        removeSaveSlot(serial);
-    }
-
-    @Override // Retrieve Save Game from the Slots, Works like Load Game
-    public Player getSaveGame(int serial) {
-        return getSaveSlots()[serial-1];
+    public void removeSaveGame(int serial){
+        String saveFile = "Saves\\" + serial +".txt";
+        Path savePath = Paths.get(saveFile);
+        try{
+            Files.deleteIfExists(savePath);
+//            System.out.println("Save File for Slot" + serial + " Deleted Successfully");
+        } catch (IOException e) {
+            System.out.println("Unable to Delete Save Game due to: " + e.getMessage());
+        }
     }
 
     @Override
