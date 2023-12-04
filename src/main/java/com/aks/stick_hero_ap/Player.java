@@ -5,9 +5,10 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
+import java.io.Serializable;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Player{
+public class Player implements Serializable {
     private double positionX;
     private double positionY;
     private int cherriesCollected;

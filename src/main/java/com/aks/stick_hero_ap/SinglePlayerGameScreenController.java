@@ -29,7 +29,7 @@ public class SinglePlayerGameScreenController extends SinglePlayerMode implement
     private Scene scene;
     private Parent root;
 
-    private Line line=new Line();
+    private Line line = new Line();
     private MusicController musicController;
 
     @FXML
@@ -52,7 +52,7 @@ public class SinglePlayerGameScreenController extends SinglePlayerMode implement
 
     Platform currentPlatformDetails;
 
-    private int activePlatform=1; //This is used to check which platform the player is standing on,
+    private int activePlatform = 1; //This is used to check which platform the player is standing on,
                                   //then it is also used to check the alignment of the pole with the platform.
 
     //double platform2Width=200,platform2PositionX=1000,platform2PositionY=1000;
@@ -134,7 +134,6 @@ public class SinglePlayerGameScreenController extends SinglePlayerMode implement
         this.root=root;
     }
 
-
     public void switchToPauseMenuScreen(ActionEvent event) throws IOException {
 
         Parent root= FXMLLoader.load(getClass().getResource("PauseMenuScreen.fxml"));
@@ -158,6 +157,10 @@ public class SinglePlayerGameScreenController extends SinglePlayerMode implement
         stage.show();
     }
 
+    public void initPlayer(int serial){ // Initialising the Player by checking if it's load save is present
+        if(getSaveGame(serial)==null | serial == 0) setPlayer(new Player());
+        else setPlayer(getSaveGame(serial));
+    }
 
     public void poleExtendingTrue(){
 

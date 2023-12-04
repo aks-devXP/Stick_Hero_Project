@@ -10,28 +10,29 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
-public class SaveScreenController extends PauseController{
+public class SaveScreenController extends PauseController {
     private Stage stage;
     private Scene scene;
     private Parent root;
 
-    private int score;
-    private int cherry;
     private MusicController musicController;
 
-    Image image= new Image(getClass().getResourceAsStream("BG-Save.jpg"));
+    Image image = new Image(getClass().getResourceAsStream("BG-Save.jpg"));
 
     @FXML
     ImageView backgroundImageView;
 
-    double targetWidth=300;
-    double targetHeight=500;
+    double targetWidth = 300;
+    double targetHeight = 500;
 
-    double scaleFactor=targetWidth/ image.getWidth();
+    double scaleFactor = targetWidth / image.getWidth();
 
     //@FXML
     //AnchorPane pausePane;
@@ -41,6 +42,30 @@ public class SaveScreenController extends PauseController{
 
     //@FXML
     //Polygon resumeButton;
+
+    public void saveGame(int serial){ // Pass values from 1-4 so that 1.txt to 4.txt is generated
+        Player player = getPlayer();
+        ObjectOutputStream out = null;
+        String val = String.valueOf(serial);
+        try{
+            out = new ObjectOutputStream(new FileOutputStream("Saves\\" + val + ".txt"));
+            out.writeObject(player);
+//            System.out.println("Saved Successfully in " + val + ".txt");
+        } catch (IOException e) {
+            System.out.println("Unable to Save Game due to: " + e.getMessage());
+        }
+    }
+
+    public void removeSaveGame(int serial){
+        String saveFile = "";
+        Path savePath = Paths.get(saveFile);
+        try{
+            Files.deleteIfExists(savePath);
+//            System.out.println("Save File for Slot" + serial + " Deleted Successfully");
+        } catch (IOException e) {
+            System.out.println("Unable to Delete Save Game due to: " + e.getMessage());
+        }
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -61,9 +86,9 @@ public class SaveScreenController extends PauseController{
 
     public void switchToPauseMenuScreen(ActionEvent event) throws IOException {
 
-        Parent root= FXMLLoader.load(getClass().getResource("PauseMenuScreen.fxml"));
-        stage=(Stage)((Node)event.getSource()).getScene().getWindow();
-        scene=new Scene(root,300,500);
+        Parent root = FXMLLoader.load(getClass().getResource("PauseMenuScreen.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root, 300, 500);
         stage.setScene(scene);
         stage.setResizable(false);
         musicController.stopAudio(); // Stopping audio before changing scene
@@ -77,10 +102,9 @@ public class SaveScreenController extends PauseController{
     }
 
     public void muteUnmute() {
-        if(AudioManager.isMuted()) { // if sound is muted
+        if (AudioManager.isMuted()) { // if sound is muted
             musicController.stopAudio(); // stops the audio
-        }
-        else {
+        } else {
             musicController.playAudio(); //plays the audio
         }
     }
@@ -113,21 +137,5 @@ public class SaveScreenController extends PauseController{
     @Override
     public void setRoot(Parent root) {
         this.root = root;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    public int getCherry() {
-        return cherry;
-    }
-
-    public void setCherry(int cherry) {
-        this.cherry = cherry;
     }
 }
