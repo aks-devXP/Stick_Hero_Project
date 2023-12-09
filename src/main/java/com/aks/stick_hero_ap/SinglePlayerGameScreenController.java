@@ -104,7 +104,9 @@ public class SinglePlayerGameScreenController extends GameController implements 
     private ImageView cherryImageView;
 
     @FXML
-    private Button restartButton;
+    private Button restartButton,pauseButton;
+
+
 
     double cherryPosition;
 
@@ -133,6 +135,7 @@ public class SinglePlayerGameScreenController extends GameController implements 
         initialiseSound(); // Setting up Sound
         //gameOverScreenAnchorPane.setLayoutX(-1000);
         //gameOverScreenAnchorPane.
+        //pauseMenuAnchorPane.setLayoutX(-1000);
         backgroundImageView.setImage(image);
         backgroundImageView.setFitWidth(targetWidth);
         backgroundImageView.setFitHeight(targetHeight);
@@ -194,6 +197,11 @@ public class SinglePlayerGameScreenController extends GameController implements 
             poleExtendingFalse();
 
         });
+
+//        pauseButton.setOnMouseClicked(mouseEvent -> {
+//            pauseMenuAnchorPane.setLayoutX(0);
+//        });
+
     }
 
     public void getTheRootFromPreviousScene(Parent root){

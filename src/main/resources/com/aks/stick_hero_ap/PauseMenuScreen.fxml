@@ -9,21 +9,23 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="gamePane" prefHeight="500.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aks.stick_hero_ap.PauseController">
+<AnchorPane fx:id="gamePane" prefHeight="500.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aks.stick_hero_ap.PauseController">
    <children>
       <ImageView fx:id="backgroundImageView" fitHeight="500.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#e1e1e1" height="69.0" layoutX="50.0" layoutY="163.0" stroke="BLACK" strokeType="INSIDE" width="201.0" />
-      <Polygon fill="#a2a7ac" layoutX="149.0" layoutY="83.0" opacity="0.54" points="-31.600013732910156, 40.0, 34.800018310546875, 40.0, -1.999969482421875, -6.799995422363281" rotate="90.0" stroke="BLACK" strokeType="INSIDE" />
+      <Polygon fill="#1e1e1e" layoutX="149.0" layoutY="83.0" points="-31.600013732910156, 40.0, 34.800018310546875, 40.0, -1.999969482421875, -6.799995422363281" rotate="90.0" stroke="BLACK" strokeType="INSIDE" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="163.0" prefHeight="69.0" prefWidth="201.0" text="SaveGame" textAlignment="CENTER">
          <font>
             <Font name="Bell MT Bold" size="17.0" />
          </font>
       </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="40.0" layoutX="50.0" layoutY="300.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
       <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="50.0" layoutY="300.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Home-Black.png" />
          </image>
       </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="40.0" layoutX="211.0" layoutY="300.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
       <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="211.0" layoutY="300.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Restart Button.png" />
