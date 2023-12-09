@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
@@ -24,10 +25,33 @@ public class GameOverController extends GameController implements DisplayScreens
 
     private MusicController musicController;
     private MusicAdapter musicAdapter;
-    Image image = new Image(getClass().getResourceAsStream("Player Fell Down.jpg"));
+
+    public int getNumberOfCherries() {
+        return numberOfCherries;
+    }
+
+    public void setNumberOfCherries(int numberOfCherries) {
+        this.numberOfCherries = numberOfCherries;
+    }
+
+    @Override
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    private int numberOfCherries=0,score=0,bestScore=0;
+
+    Image image = new Image(getClass().getResourceAsStream("BackgroundImage1.jpg"));
 
     @FXML
     ImageView backgroundImageView;
+
+    @FXML
+    private Label currentScoreLabel,bestScoreLabel,cherriesLabel;
 
     double targetWidth = 300;
     double targetHeight = 500;
@@ -80,7 +104,9 @@ public class GameOverController extends GameController implements DisplayScreens
         backgroundImageView.setFitWidth(targetWidth);
         backgroundImageView.setFitHeight(targetHeight);
         backgroundImageView.setPreserveRatio(false);
-        backgroundImageView.setOpacity(0);
+        backgroundImageView.setOpacity(1);
+        //currentScoreLabel.setText("Current: "+String.valueOf(score));
+
         initialiseSound();
 
 //        BoxBlur blur=new BoxBlur(10,10,3);
@@ -90,8 +116,14 @@ public class GameOverController extends GameController implements DisplayScreens
 
     public void switchToSinglePlayerGameScreen(ActionEvent event) throws IOException {
 
-        Parent root = FXMLLoader.load(getClass().getResource("SinglePlayerGameScreen.fxml"));
+        FXMLLoader fxmlLoader =new FXMLLoader(getClass().getResource("SinglePlayerGameScreen.fxml"));
+
+        //Parent root = FXMLLoader.load(getClass().getResource("SinglePlayerGameScreen.fxml"));
+        Parent root=fxmlLoader.load();
+        SinglePlayerGameScreenController singlePlayerGameScreenController=fxmlLoader.getController();
+        singlePlayerGameScreenController.setBestScore(bestScore);
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
         scene = new Scene(root, 300, 500);
         stage.setScene(scene);
         stage.setResizable(false);
@@ -108,6 +140,21 @@ public class GameOverController extends GameController implements DisplayScreens
         stage.setResizable(false);
         musicAdapter.muteSound();
         stage.show();
+    }
+
+    public void setCurrentScoreLabel(int score){
+        this.score=score;
+        currentScoreLabel.setText("Current: "+String.valueOf(score));
+    }
+
+    public void setCherries(int numCherry){
+        this.numberOfCherries=numCherry;
+        cherriesLabel.setText("Cherries: "+String.valueOf(numberOfCherries));
+    }
+
+    public void setBestScore(int bestScore){
+        this.bestScore=bestScore;
+        bestScoreLabel.setText("Best: "+bestScore);
     }
 
     public void setMusicAdapter(){
