@@ -20,14 +20,6 @@ public class GameController extends Player implements DisplayScreens{
     private Media media;
     private Player player;
     private MediaPlayer mediaPlayer;
-    void startSinglePlayer(){ //Implement Logics for Single Player Mode
-        while(!isFallen()){ // Incomplete Function
-            initPlatforms();
-            initCherry();
-            startExtendingPole();
-            movePlayer();
-        }
-    };
     void startTwoPlayer(){ //Implement Logics for Two Player Mode
 
     };

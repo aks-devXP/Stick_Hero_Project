@@ -27,7 +27,7 @@
          </font>
       </Label>
       <Rectangle arcHeight="21.0" arcWidth="23.0" fill="#2a3640" height="56.0" layoutX="104.0" layoutY="80.0" opacity="0.3" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="94.0" />
-      <Label fx:id="CurrentScoreLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="104.0" layoutY="78.0" prefHeight="56.0" prefWidth="94.0" text="7" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="currentScoreLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="104.0" layoutY="78.0" prefHeight="56.0" prefWidth="94.0" text="7" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Cooper Black" size="38.0" />
          </font>

@@ -1,21 +1,22 @@
 package com.aks.stick_hero_ap;
 
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Point3D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -30,27 +31,44 @@ public class SinglePlayerGameScreenController extends SinglePlayerMode implement
     private Parent root;
 
     private Line line = new Line();
+    private RotateTransition rotatePole;
+
+    private Timeline rotateTimeline;
+
+    private Rotate lineRotation;
     private MusicController musicController;
 
     @FXML
     private Button fullScreenLineExtensionButton;
 
-    private double startPoleX, startPoleY, endPoleX, endPoleY;
+    private double startPoleX, startPoleY, endPoleX, endPoleY, poleLength=0;
 
-    private boolean clickHeld=false,clickReleased=false;
+    private boolean clickHeld=false,clickReleased=false, poleRotated=false, characterFlipped=false;
+
+    private boolean gameOver=false; //This gameOver will be used in movingCharacter function
 
     @FXML
     Rectangle platform1,platform2;
 
+    Rectangle currentPlatform;
+
+    int currentPlatformNumber=0;
+
     int platformHeight=150;
+    double gap=25;
 
     //double platform1Width=100,platform1PositionX=0,platform1PositionY=300;
 
     Platform platform1Details=new Platform(60,platformHeight,0,350);
 
-    Platform platform2Details=new Platform(80,platformHeight,1000,1000);
+    Platform platform2Details=new Platform(80,platformHeight,70,350);
 
     Platform currentPlatformDetails;
+
+
+    double nextPlatformWidth,nextPlatformPosition;
+
+
 
     private int activePlatform = 1; //This is used to check which platform the player is standing on,
                                   //then it is also used to check the alignment of the pole with the platform.
@@ -77,6 +95,11 @@ public class SinglePlayerGameScreenController extends SinglePlayerMode implement
     @FXML
     private AnchorPane gameCharacterPane;
 
+    @FXML
+    private Label currentScoreLabel;
+
+    private int currentScore=0;
+
     Timeline timeline;
 
     @Override
@@ -90,18 +113,26 @@ public class SinglePlayerGameScreenController extends SinglePlayerMode implement
         backgroundImageView.setFitHeight(targetHeight);
         backgroundImageView.setPreserveRatio(false);
         //root.getChildrenUnmodifiable().add(platform1);
+        currentScore=0;
+        currentScoreLabel.setText(Integer.toString(currentScore));
+
 
         platform1.setOpacity(1);
-        platform2.setOpacity(1);
-        platform2.setWidth(platform2Details.getWidth());
-        platform2.setHeight(platformHeight);
-        platform2.setX(platform2Details.getPositionX());
-        platform2.setY(platform2Details.getPositionY());
         platform1.setHeight(platformHeight);
         platform1.setWidth(platform1Details.getWidth());
         platform1.setLayoutX(platform1Details.getPositionX());
         platform1.setLayoutY(platform1Details.getPositionY());
         currentPlatformDetails=platform1Details;
+        currentPlatform=platform1;
+        currentPlatformNumber=1;
+        nextPlatformWidth= randomWidth(currentPlatformDetails.getWidth(),gap);
+        nextPlatformPosition=randomPos(currentPlatform.getWidth(),nextPlatformWidth,gap);
+        platform2.setOpacity(1);
+        platform2.setWidth(nextPlatformWidth);
+        platform2.setHeight(platformHeight);
+        platform2.setLayoutX(nextPlatformPosition);
+        platform2.setLayoutY(platform2Details.getPositionY());
+
         //System.out.println(platform1.getY());
         gameCharacterPane.setPrefWidth(0);
         gameCharacterPane.setPrefHeight(0);
@@ -112,6 +143,7 @@ public class SinglePlayerGameScreenController extends SinglePlayerMode implement
         startPoleY=currentPlatformDetails.getPositionY();
         endPoleX=startPoleX;
         endPoleY=startPoleY;
+        poleLength=0;
         line.setStartX(startPoleX);
         line.setStartY(startPoleY);
         line.setEndX(endPoleX);
@@ -119,14 +151,18 @@ public class SinglePlayerGameScreenController extends SinglePlayerMode implement
         line.setStrokeWidth(5);
         gamePane.getChildren().add(line);
 
+        System.out.println("pane length "+gameCharacterPane.getWidth());
+
         fullScreenLineExtensionButton.setOnMousePressed(event -> {
             clickHeld=true;
             if(!clickReleased){
                 poleExtendingTrue();
             }
+
         });
         fullScreenLineExtensionButton.setOnMouseReleased(event -> {
             poleExtendingFalse();
+
         });
     }
 
@@ -167,10 +203,12 @@ public class SinglePlayerGameScreenController extends SinglePlayerMode implement
         timeline=new Timeline(new KeyFrame(Duration.millis(50),event -> {
             if(clickHeld){
                 endPoleY-=4;
+                poleLength+=4;
                 drawLine();
             }
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
+
         timeline.play();
     }
 
@@ -178,6 +216,17 @@ public class SinglePlayerGameScreenController extends SinglePlayerMode implement
         clickHeld=false;
         clickReleased=true;
         timeline.stop();
+
+        if(!poleRotated){
+            poleRotated=true;
+            startRotatingPole();
+        }
+
+        //rotateTimeline.stop();
+
+        //rotateTimeline.stop();
+        //poleFallingAnimation();
+
 
     }
     private void drawLine() {
@@ -187,9 +236,258 @@ public class SinglePlayerGameScreenController extends SinglePlayerMode implement
         line.setEndY(endPoleY);
     }
 
-    public void rotatePole(){
+    public void startRotatingPole(){
+
+        lineRotation = new Rotate();
+        lineRotation.pivotXProperty().bind(line.startXProperty());
+        lineRotation.pivotYProperty().bind(line.startYProperty());
+
+        line.getTransforms().add(lineRotation);
+
+        rotateTimeline = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(lineRotation.angleProperty(), 0)),
+                new KeyFrame(Duration.seconds(1), new KeyValue(lineRotation.angleProperty(), 90)));
+
+        rotateTimeline.play();
+        rotateTimeline.setOnFinished(event -> {stopRotatingPole();});
+
 
     }
+    public void stopRotatingPole(){
+        rotateTimeline.stop();
+        characterFlipped=false;
+        if(currentPlatformNumber==1){
+            movingCharacter(poleLength,platform1,platform2);
+//            currentPlatformNumber=2;
+//            currentPlatform=platform2;
+            //moveCharacterAndPlatformToStart(platform1,platform2);
+        }else{
+            movingCharacter(poleLength,platform2,platform1);
+//            currentPlatformNumber=1;
+//            currentPlatform=platform1;
+            //moveCharacterAndPlatformToStart(platform2,platform1);
+        }
+    }
+
+
+    public void movingCharacter(double lineLength,Rectangle currentPlatform,Rectangle nextPlatform){
+        Timeline characterTranslateTimeline=new Timeline();
+        KeyFrame characterEnd = null;
+
+        double currentCharacterPosition=gameCharacterPane.getLayoutX();
+        if(startPoleX+lineLength<nextPlatform.getLayoutX()||startPoleX+lineLength>nextPlatform.getLayoutX()+nextPlatform.getWidth()){
+            characterEnd=new KeyFrame(Duration.millis(1000),new KeyValue(gameCharacterPane.layoutXProperty(),gameCharacterPane.getLayoutX()+lineLength));
+            gameOver=true;
+        }
+
+        else if(startPoleX+lineLength>=nextPlatform.getLayoutX()&&startPoleX+lineLength<=nextPlatform.getLayoutX()+nextPlatform.getWidth()){
+            characterEnd=new KeyFrame(Duration.millis(1000),new KeyValue(gameCharacterPane.layoutXProperty(),gameCharacterPane.getLayoutX()+lineLength));
+            //characterEnd=new KeyFrame(Duration.millis(1000),new KeyValue(gameCharacterPane.layoutXProperty(),currentCharacterPosition+nextPlatform.getLayoutX()+nextPlatform.getWidth()-100));
+            gameOver=false;
+
+        }
+//        if(characterFlipped && (gameCharacterPane.getLayoutX()+15)>=nextPlatform.getLayoutX()){
+//            gameOver=true;
+//            characterFall();
+//            return;
+//        }
+
+        fullScreenLineExtensionButton.setOnMouseClicked(mouseEvent -> {
+            double rectangleHeight = 20;
+            if(!characterFlipped){
+                if((gameCharacterPane.getLayoutX()>=currentPlatform.getWidth()-15)&& gameCharacterPane.getLayoutX()<nextPlatform.getLayoutX()){
+
+                    characterFlipped=true;
+//                    if(characterFlipped && (gameCharacterPane.getLayoutX()+15)>=nextPlatform.getLayoutX()){
+//                        gameOver=true;
+//
+//                    }
+                    gameCharacterPane.setRotationAxis(new Point3D(1,0,0));
+                    gameCharacterPane.setRotate(180);
+                    gameCharacterPane.setLayoutY(gameCharacterPane.getLayoutY()+2*rectangleHeight);
+                }
+            }
+
+            else{
+                if((gameCharacterPane.getLayoutX()>=currentPlatform.getWidth()-15)&& gameCharacterPane.getLayoutX()<nextPlatform.getLayoutX()){
+                    characterFlipped=false;
+                    gameCharacterPane.setRotationAxis(new Point3D(1,0,0));
+                    gameCharacterPane.setRotate(0);
+                    gameCharacterPane.setLayoutY(gameCharacterPane.getLayoutY()-2*rectangleHeight);
+                }
+                else if(gameCharacterPane.getLayoutX()>=nextPlatform.getLayoutX()){
+                    gameOver=true;
+
+                }
+
+            }
+
+        });
+
+        characterTranslateTimeline.getKeyFrames().add(characterEnd);
+        gameCharacterPane.layoutXProperty().addListener((obs, oldVal, newVal) -> {
+            double characterXPosition = newVal.doubleValue();
+            System.out.println("Character: "+gameCharacterPane.getLayoutX());
+            System.out.println("platform: "+nextPlatform.getLayoutX());
+            // Add your logic based on character's X position during animation here
+//            if (characterFlipped && (characterXPosition+15) >= nextPlatform.getLayoutX()) {
+//                gameOver = true;
+//                characterFall();
+//            }
+        });
+        characterTranslateTimeline.play();
+
+        characterTranslateTimeline.setOnFinished(event -> {
+            //fullScreenLineExtensionButton.setDisable(true);
+            if(currentPlatformNumber==1){
+                currentPlatformNumber=2;
+                this.currentPlatform=platform2;
+            }
+            else{
+                currentPlatformNumber=1;
+                this.currentPlatform=platform1;
+            }
+            System.out.println(gameCharacterPane.getLayoutX());
+            if(gameOver==true){
+                characterFall();
+            }
+            else{
+                moveCharacterAndPlatformToStart(currentPlatform,nextPlatform);
+            }
+
+        });
+
+
+    }
+
+
+    public void moveCharacterAndPlatformToStart(Rectangle previousPlatform,Rectangle currentPlatform){
+        line.setOpacity(0);
+        currentScore++;
+        Timeline previousPlatformTimeline = new Timeline();
+        KeyFrame previousPlatformEnd = new KeyFrame(Duration.millis(1000), new KeyValue(previousPlatform.layoutXProperty(), -1000));
+        previousPlatformTimeline.getKeyFrames().add(previousPlatformEnd);
+        previousPlatformTimeline.play();
+        currentScoreLabel.setText(Integer.toString(currentScore));
+        previousPlatformTimeline.setOnFinished(event -> {
+            System.out.println("previousPlatform="+previousPlatform.getLayoutX());
+        });
+
+
+        Timeline characterTimeline=new Timeline();
+        System.out.println(gameCharacterPane.getLayoutX());
+
+
+        if(currentPlatform.getWidth()>100){
+
+            Timeline timeline = new Timeline();
+            KeyFrame end = new KeyFrame(Duration.millis(1000), new KeyValue(currentPlatform.layoutXProperty(), 0-(currentPlatform.getWidth()-100)));
+            KeyFrame characterEnd=new KeyFrame(Duration.millis(1000),new KeyValue(gameCharacterPane.layoutXProperty(),(100-25)));
+            characterTimeline.getKeyFrames().add(characterEnd);
+            characterTimeline.play();
+            timeline.getKeyFrames().add(end);
+            timeline.play();
+            //characterTranslate.play();
+            timeline.setOnFinished(event -> {
+                System.out.println(currentPlatform.getLayoutX());
+                currentPlatform.setWidth(100);
+                currentPlatform.setLayoutX(0);
+                gameCharacterPane.setLayoutX(currentPlatform.getWidth()-25);
+                initEverything();
+                //System.out.println(currentPlatform.getWidth()+"+"+currentPlatform.getLayoutX());
+            });
+        }
+        else{
+            //characterTranslate.setByX(-1*(300-(300-currentPlatform.getLayoutX())));
+            Timeline timeline = new Timeline();
+            KeyFrame end = new KeyFrame(Duration.millis(1000), new KeyValue(currentPlatform.layoutXProperty(), 0));
+            KeyFrame characterEnd=new KeyFrame(Duration.millis(1000),new KeyValue(gameCharacterPane.layoutXProperty(),(currentPlatform.getWidth()-25)));
+            characterTimeline.getKeyFrames().add(characterEnd);
+            characterTimeline.play();
+            timeline.getKeyFrames().add(end);
+            timeline.play();
+            //characterTranslate.play();
+            timeline.setOnFinished(event -> {
+                System.out.println(currentPlatform.getLayoutX());
+                currentPlatform.setWidth(currentPlatform.getWidth());
+                currentPlatform.setLayoutX(0);
+                gameCharacterPane.setLayoutX(currentPlatform.getWidth()-25);
+                initEverything();
+            });
+        }
+
+
+
+        //currentPlatformTranslate.play();
+
+        //currentPlatformTranslate.setByX(-1*(300-currentPlatform.getWidth()-2*gap-30));
+
+
+    }
+
+    public void characterFall(){
+        Timeline characterFallTimeline=new Timeline();
+        KeyFrame characterFallEnd=new KeyFrame(Duration.millis(250),new KeyValue(gameCharacterPane.layoutYProperty(),500));
+        characterFallTimeline.getKeyFrames().add(characterFallEnd);
+        characterFallTimeline.play();
+    }
+
+
+    public void initEverything(){
+        startPoleX=currentPlatform.getLayoutX()+currentPlatform.getWidth();
+        startPoleY=currentPlatform.getLayoutY();
+        endPoleX=startPoleX;
+        endPoleY=startPoleY;
+        poleLength=0;
+        line.setStartX(startPoleX);
+        line.setStartY(startPoleY);
+        line.setEndX(endPoleX);
+        line.setEndY(endPoleY);
+        line.getTransforms().remove(lineRotation);
+        line.setRotate(0);
+        line.setOpacity(1);
+        if(currentPlatformNumber==1){
+            nextPlatformWidth= randomWidth(currentPlatform.getWidth(),gap);
+            nextPlatformPosition=randomPos(currentPlatform.getWidth(),nextPlatformWidth,gap);
+            platform2.setOpacity(1);
+            platform2.setWidth(nextPlatformWidth);
+            platform2.setHeight(platformHeight);
+            platform2.setLayoutX(nextPlatformPosition);
+            platform2.setLayoutY(platform2Details.getPositionY());
+        }
+        else{
+            nextPlatformWidth= randomWidth(currentPlatform.getWidth(),gap);
+            nextPlatformPosition=randomPos(currentPlatform.getWidth(),nextPlatformWidth,gap);
+
+            platform1.setOpacity(1);
+            platform1.setWidth(nextPlatformWidth);
+            platform1.setHeight(platformHeight);
+            platform1.setLayoutX(nextPlatformPosition);
+            platform1.setLayoutY(platform1Details.getPositionY());
+        }
+
+        fullScreenLineExtensionButton.setOnMousePressed(event -> {
+            clickHeld=true;
+            if(!clickReleased){
+                poleExtendingTrue();
+            }
+
+        });
+        fullScreenLineExtensionButton.setOnMouseReleased(event -> {
+            poleExtendingFalse();
+
+        });
+
+        clickHeld=false;
+        clickReleased=false;
+        poleRotated=false;
+        gameOver=false;
+
+    }
+
+
+
+
 
 
     @Override

@@ -15,7 +15,7 @@ public class SinglePlayerMode extends GameController implements DisplayScreens,S
         this.player = getSaveSlots()[serial-1];
     }
     void startPlayer(){
-        startSinglePlayer();
+        //startSinglePlayer();
     };
     void showResult(){};
 

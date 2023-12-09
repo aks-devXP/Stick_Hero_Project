@@ -4,6 +4,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Rectangle;
 
 import java.io.Serializable;
 import java.util.concurrent.ThreadLocalRandom;
@@ -157,15 +158,15 @@ public class Player implements Serializable {
         this.platformPosition = platformPosition;
     }
 
-    public double randomWidth(){
-        double upperBound = 500; // upper bound of Width of Platform
-        double lowerBound = 100; // lower bound of Width of Platform
+    public double randomWidth(double currentPlatformWidth,double gap){
+        double upperBound = 300-(4*gap)-currentPlatformWidth; // upper bound of Width of Platform
+        double lowerBound = 25; // lower bound of Width of Platform
         return ThreadLocalRandom.current().nextDouble(lowerBound, upperBound + 1); // Used ThreadLocalRandom as it may be required in thread pool by multiple processes
     }
 
-    public double randomPos(){
-        double upperBound = 500; // upper bound of Position of Platform
-        double lowerBound = 100; // lower bound of Position of Platform
+    public double randomPos(double currentPlatformWidth,double nextPlatformWidth,double gap){
+        double upperBound = 300-nextPlatformWidth-gap; // upper bound of Position of Platform
+        double lowerBound = currentPlatformWidth+10; // lower bound of Position of Platform
         return ThreadLocalRandom.current().nextDouble(lowerBound, upperBound + 1); // Used ThreadLocalRandom as it may be required in thread pool by multiple processes
     }
 
@@ -179,25 +180,25 @@ public class Player implements Serializable {
 
     //Initialise Both Platforms with Random Values
     void initPlatforms(){
-        double width1 = randomWidth(); // Generating Random Width of Platform 1
-        double width2 = randomWidth(); // For Platform 2 (Random Width)
-        double start1 = randomPos(); // Generating Random Starting for Platform 1
-        double start2 = randomPos(); // For Platform 2 (Random Starting)
-        double end1 = randomPos();
-        double end2 = randomPos();
+        //double width1 = randomWidth(); // Generating Random Width of Platform 1
+        //double width2 = randomWidth(); // For Platform 2 (Random Width)
+        //double start1 = randomPos(); // Generating Random Starting for Platform 1
+        //double start2 = randomPos(); // For Platform 2 (Random Starting)
+        //double end1 = randomPos();
+        //double end2 = randomPos();
         double height = 20; // Fixed Height of All platforms
-        firstPlatform = new Platform(width1,height,start1,end1);
-        secondPlatform = new Platform(width2,height,start2,end2);
+        //firstPlatform = new Platform(width1,height,start1,end1);
+        //secondPlatform = new Platform(width2,height,start2,end2);
     }
 
     // Initialising Second Platform After Moving
     void newPlatform(){
-        double width = randomWidth();
-        double start = randomPos();
-        double end = randomPos();
+        //double width = randomWidth();
+        //double start = randomPos();
+        //double end = randomPos();
         double height = 20; // Fixed Height for All Platforms
         firstPlatform = secondPlatform; // Second Platform becomes First Platform after Moving towards it
-        secondPlatform = new Platform(width,height,start,end); // Second Platform is Re-Generated with Random Values
+        //secondPlatform = new Platform(width,height,start,end); // Second Platform is Re-Generated with Random Values
     }
 
     //Initialise Random Positions for Cherry
