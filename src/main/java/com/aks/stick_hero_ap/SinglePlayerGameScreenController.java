@@ -24,7 +24,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class SinglePlayerGameScreenController extends SinglePlayerMode implements Initializable,Sound {
+public class SinglePlayerGameScreenController extends GameController implements Initializable,Sound {
 
     private Stage stage;
     private Scene scene;
