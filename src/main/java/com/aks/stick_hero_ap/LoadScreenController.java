@@ -99,34 +99,22 @@ public class LoadScreenController extends GameController implements Initializabl
                 //data = getSaveGame2(1);
                 if(p1 != null) { // If Save Game is Found then Load it into Player Object in Single Player Game Screen
                     isLoaded=true;
-                    System.out.println("geagsdgase");
                     //ActionEvent event=new ActionEvent();
                     FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("SinglePlayerGameScreen.fxml"));
                     //Parent root= FXMLLoader.load(getClass().getResource("SinglePlayerGameScreen.fxml"));
                     Parent root=fxmlLoader.load();
                     SinglePlayerGameScreenController controller = fxmlLoader.getController();
-
+                    controller.setCurrentScoreAndShow(p1.getCurrentScore());
+                    controller.setCherriesAndShow(p1.getCherriesCollected());
                     controller.setPlayer1(p1);
-//                    controller.setCherriesCollected(p1.getCherriesCollected());
-//                    controller.setCurrentScore(p1.getCurrentScore());
-//                    controller.
                     controller.setLoaded(true);
-
-//                    if(isLoaded()){
-////                        controller.setPlayer1(p1);
-////                        controller.setCherriesCollected(p1.getCherriesCollected());
-////                        controller.setCurrentScore(p1.getCurrentScore());
-////                        controller.setLoaded(true);
-//                    }
 
                     stage=(Stage)loadScreenAnchorPane.getScene().getWindow();
                     scene=new Scene(root,300,500);
                     stage.setScene(scene);
                     stage.setResizable(false);
-                    System.out.println("geagsdgase");
                     musicAdapter.muteSound(); // stopping audio before changing scene
                     stage.show();
-                    System.out.println("geagsdgase");
                 }
             }
             catch (Exception e){
@@ -144,6 +132,27 @@ public class LoadScreenController extends GameController implements Initializabl
             p1 = getSaveGame(2);
             if(p1 != null) { // If Save Game is Found then Load it into Player Object in Single Player Game Screen
                 isLoaded=true;
+                //ActionEvent event=new ActionEvent();
+                FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("SinglePlayerGameScreen.fxml"));
+                //Parent root= FXMLLoader.load(getClass().getResource("SinglePlayerGameScreen.fxml"));
+                Parent root= null;
+                try {
+                    root = fxmlLoader.load();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                SinglePlayerGameScreenController controller = fxmlLoader.getController();
+                controller.setCurrentScoreAndShow(p1.getCurrentScore());
+                controller.setCherriesAndShow(p1.getCherriesCollected());
+                controller.setPlayer1(p1);
+                controller.setLoaded(true);
+
+                stage=(Stage)loadScreenAnchorPane.getScene().getWindow();
+                scene=new Scene(root,300,500);
+                stage.setScene(scene);
+                stage.setResizable(false);
+                musicAdapter.muteSound(); // stopping audio before changing scene
+                stage.show();
             }
         });
         playImageView3.setOnMouseClicked(mouseEvent -> {
@@ -151,6 +160,22 @@ public class LoadScreenController extends GameController implements Initializabl
                 p1 = getSaveGame(3);
                 if(p1 != null) { // If Save Game is Found then Load it into Player Object in Single Player Game Screen
                     isLoaded=true;
+                    //ActionEvent event=new ActionEvent();
+                    FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("SinglePlayerGameScreen.fxml"));
+                    //Parent root= FXMLLoader.load(getClass().getResource("SinglePlayerGameScreen.fxml"));
+                    Parent root=fxmlLoader.load();
+                    SinglePlayerGameScreenController controller = fxmlLoader.getController();
+                    controller.setCurrentScoreAndShow(p1.getCurrentScore());
+                    controller.setCherriesAndShow(p1.getCherriesCollected());
+                    controller.setPlayer1(p1);
+                    controller.setLoaded(true);
+
+                    stage=(Stage)loadScreenAnchorPane.getScene().getWindow();
+                    scene=new Scene(root,300,500);
+                    stage.setScene(scene);
+                    stage.setResizable(false);
+                    musicAdapter.muteSound(); // stopping audio before changing scene
+                    stage.show();
                 }
             }
             catch (Exception e){
@@ -169,6 +194,27 @@ public class LoadScreenController extends GameController implements Initializabl
             p1 = getSaveGame(4);
             if(p1 != null) { // If Save Game is Found then Load it into Player Object in Single Player Game Screen
                 isLoaded=true;
+                //ActionEvent event=new ActionEvent();
+                FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("SinglePlayerGameScreen.fxml"));
+                //Parent root= FXMLLoader.load(getClass().getResource("SinglePlayerGameScreen.fxml"));
+                Parent root= null;
+                try {
+                    root = fxmlLoader.load();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                SinglePlayerGameScreenController controller = fxmlLoader.getController();
+                controller.setCurrentScoreAndShow(p1.getCurrentScore());
+                controller.setCherriesAndShow(p1.getCherriesCollected());
+                controller.setPlayer1(p1);
+                controller.setLoaded(true);
+
+                stage=(Stage)loadScreenAnchorPane.getScene().getWindow();
+                scene=new Scene(root,300,500);
+                stage.setScene(scene);
+                stage.setResizable(false);
+                musicAdapter.muteSound(); // stopping audio before changing scene
+                stage.show();
             }
         });
 
