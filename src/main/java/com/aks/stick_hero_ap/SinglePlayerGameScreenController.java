@@ -39,6 +39,15 @@ public class SinglePlayerGameScreenController extends GameController implements 
     private Rotate lineRotation;
     private MusicController musicController;
     private MusicAdapter musicAdapter;
+    private static Player player1;
+
+    public static Player getPlayer1() {
+        return player1;
+    }
+
+    public static void setPlayer1(Player player1) {
+        SinglePlayerGameScreenController.player1 = player1;
+    }
 
     @FXML
     private Button fullScreenLineExtensionButton;
@@ -48,6 +57,7 @@ public class SinglePlayerGameScreenController extends GameController implements 
     private boolean clickHeld=false,clickReleased=false, poleRotated=false, characterFlipped=false,cherryUpdated=false;
 
     private boolean gameOver=false; //This gameOver will be used in movingCharacter function
+    private boolean Loaded;
 
     @FXML
     Rectangle platform1,platform2;
@@ -67,10 +77,7 @@ public class SinglePlayerGameScreenController extends GameController implements 
 
     Platform currentPlatformDetails;
 
-
     double nextPlatformWidth,nextPlatformPosition;
-
-
 
     private int activePlatform = 1; //This is used to check which platform the player is standing on,
                                   //then it is also used to check the alignment of the pole with the platform.
@@ -127,12 +134,21 @@ public class SinglePlayerGameScreenController extends GameController implements 
     Timeline timeline;
     int numRun=1;
 
+    public boolean isLoaded() {
+        return Loaded;
+    }
+
+    public void setLoaded(boolean loaded) {
+        Loaded = loaded;
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         //pausePane.setVisible(true);
         //gamePane.setVisible(false);
         initialiseSound(); // Setting up Sound
+        if(!isLoaded()) setPlayer1(new Player());
         //gameOverScreenAnchorPane.setLayoutX(-1000);
         //gameOverScreenAnchorPane.
         //pauseMenuAnchorPane.setLayoutX(-1000);
@@ -231,11 +247,6 @@ public class SinglePlayerGameScreenController extends GameController implements 
         stage.show();
     }
 
-    public void initPlayer(int serial){ // Initialising the Player by checking if it's load save is present
-        if(getSaveGame(serial)==null | serial == 0) setPlayer(new Player());
-        else setPlayer(getSaveGame(serial));
-    }
-
     public void poleExtendingTrue(){
 
         timeline=new Timeline(new KeyFrame(Duration.millis(50),event -> {
@@ -248,6 +259,16 @@ public class SinglePlayerGameScreenController extends GameController implements 
         timeline.setCycleCount(Animation.INDEFINITE);
 
         timeline.play();
+    }
+
+    public void setCurrentScoreAndShow(int num){
+        setCurrentScore(num);
+        currentScoreLabel.setText(String.valueOf(num));
+    }
+
+    public void setCherriesAndShow(int cherries){
+        setCherriesCollected(cherries);
+        cheeryLabel.setText(String.valueOf(cherries));
     }
 
     public void poleExtendingFalse(){
@@ -409,7 +430,9 @@ public class SinglePlayerGameScreenController extends GameController implements 
             System.out.println("platform: "+nextPlatform.getLayoutX());
             if(characterFlipped && (characterXPosition>=cherryPosition && characterXPosition<=(cherryPosition+23))){
                 if(!cherryUpdated){
-                    numCherry++;
+                    numCherry = getPlayer1().getCherriesCollected()+1;
+                    getPlayer1().setCherriesCollected(getCherriesCollected()+1);
+                    //setCherriesCollected(getPlayer1().getCherriesCollected()+1);
                     cherryUpdated=true;
                 }
                 cherryImageView.setOpacity(0);
@@ -455,7 +478,10 @@ public class SinglePlayerGameScreenController extends GameController implements 
     public void moveCharacterAndPlatformToStart(Rectangle previousPlatform,Rectangle currentPlatform){
         cherryImageView.setOpacity(0);
         line.setOpacity(0);
-        currentScore++;
+
+        currentScore = (getPlayer1().getCurrentScore()+1);
+        getPlayer1().setCurrentScore(getCurrentScore()+1);
+
         if(getBestScore()<currentScore){
             setBestScore(currentScore);
         }
