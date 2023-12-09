@@ -147,7 +147,7 @@ public class PauseController extends GameController implements DisplayScreens,In
 
     @Override // Save Game in the slots
     public void addSaveGame(int serial, Player player){
-        addSaveSlot(serial,player);
+        //addSaveSlot(serial,player);
     }
 
     @Override // Deleting the Save Game from Slots

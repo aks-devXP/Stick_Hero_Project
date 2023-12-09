@@ -57,10 +57,10 @@ public class SaveScreenController extends PauseController {
     }
 
     public void removeSaveGame(int serial){
-        String saveFile = "";
-        Path savePath = Paths.get(saveFile);
+        String saveFile = "Saves\\" + serial + ".txt"; // To get Location of Save File
+        Path savePath = Paths.get(saveFile); // Store that into variable of Path
         try{
-            Files.deleteIfExists(savePath);
+            Files.deleteIfExists(savePath); //Delete the file if it exists
 //            System.out.println("Save File for Slot" + serial + " Deleted Successfully");
         } catch (IOException e) {
             System.out.println("Unable to Delete Save Game due to: " + e.getMessage());
