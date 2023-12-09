@@ -47,13 +47,14 @@ public class SaveScreenController extends PauseController {
     //Polygon resumeButton;
 
     public void saveGame(int serial){ // Pass values from 1-4 so that 1.txt to 4.txt is generated
-        Player player = getPlayer();
+        Player player = getPlayer1();
+        System.out.println(player.getCurrentScore());
         ObjectOutputStream out = null;
         String val = String.valueOf(serial);
         try{
             out = new ObjectOutputStream(new FileOutputStream("Saves\\" + val + ".txt"));
             out.writeObject(player);
-//            System.out.println("Saved Successfully in " + val + ".txt");
+            System.out.println("Saved Successfully in " + val + ".txt");
         } catch (IOException e) {
             System.out.println("Unable to Save Game due to: " + e.getMessage());
         }

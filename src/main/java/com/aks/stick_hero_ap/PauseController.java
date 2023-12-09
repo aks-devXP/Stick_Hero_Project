@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class PauseController extends GameController implements DisplayScreens,Initializable,SaveData,Sound {
+public class PauseController extends SinglePlayerGameScreenController implements DisplayScreens,Initializable,SaveData,Sound {
     private Stage stage;
     private Scene scene;
     private Parent root;
