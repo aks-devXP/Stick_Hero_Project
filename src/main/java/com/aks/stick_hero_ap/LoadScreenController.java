@@ -1,5 +1,6 @@
 package com.aks.stick_hero_ap;
 
+import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -33,6 +35,7 @@ public class LoadScreenController extends GameController implements Initializabl
     private Player player;
     private MusicController musicController;
     private MusicAdapter musicAdapter;
+    private SinglePlayerGameScreenController singlePlayerGameScreenController;
 
     Image image= new Image(getClass().getResourceAsStream("BG-Load.jpg"));
 
@@ -47,6 +50,21 @@ public class LoadScreenController extends GameController implements Initializabl
 
     @FXML
     private Rectangle saveGameLabelBackground;
+
+    @FXML
+    private AnchorPane loadScreenAnchorPane;
+
+    private Player p1=null;
+
+    public boolean isLoaded() {
+        return isLoaded;
+    }
+
+    public void setLoaded(boolean loaded) {
+        isLoaded = loaded;
+    }
+
+    private boolean isLoaded=false;
 
     double targetWidth=300;
     double targetHeight=500;
@@ -68,17 +86,48 @@ public class LoadScreenController extends GameController implements Initializabl
         //pausePane.setVisible(true);
         //gamePane.setVisible(false);
         initialiseSound(); //Setting up-Sound for this Scene
-
+        singlePlayerGameScreenController = new SinglePlayerGameScreenController();
         backgroundImageView.setImage(image);
         backgroundImageView.setFitWidth(targetWidth);
         backgroundImageView.setFitHeight(targetHeight);
         backgroundImageView.setPreserveRatio(false);
         saveGameNotFoundLabel.setLayoutX(1000);
         saveGameLabelBackground.setLayoutX(1000);
-
         playImageView1.setOnMouseClicked(mouseEvent -> {
             try{
-                getSaveGame(1);
+                p1 = getSaveGame(1);
+                //data = getSaveGame2(1);
+                if(p1 != null) { // If Save Game is Found then Load it into Player Object in Single Player Game Screen
+                    isLoaded=true;
+                    System.out.println("geagsdgase");
+                    //ActionEvent event=new ActionEvent();
+                    FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("SinglePlayerGameScreen.fxml"));
+                    //Parent root= FXMLLoader.load(getClass().getResource("SinglePlayerGameScreen.fxml"));
+                    Parent root=fxmlLoader.load();
+                    SinglePlayerGameScreenController controller = fxmlLoader.getController();
+
+                    controller.setPlayer1(p1);
+//                    controller.setCherriesCollected(p1.getCherriesCollected());
+//                    controller.setCurrentScore(p1.getCurrentScore());
+//                    controller.
+                    controller.setLoaded(true);
+
+//                    if(isLoaded()){
+////                        controller.setPlayer1(p1);
+////                        controller.setCherriesCollected(p1.getCherriesCollected());
+////                        controller.setCurrentScore(p1.getCurrentScore());
+////                        controller.setLoaded(true);
+//                    }
+
+                    stage=(Stage)loadScreenAnchorPane.getScene().getWindow();
+                    scene=new Scene(root,300,500);
+                    stage.setScene(scene);
+                    stage.setResizable(false);
+                    System.out.println("geagsdgase");
+                    musicAdapter.muteSound(); // stopping audio before changing scene
+                    stage.show();
+                    System.out.println("geagsdgase");
+                }
             }
             catch (Exception e){
                 FadeTransition labelFadeTransition=new FadeTransition();
@@ -92,11 +141,17 @@ public class LoadScreenController extends GameController implements Initializabl
             }
         });
         playImageView2.setOnMouseClicked(mouseEvent -> {
-            getSaveGame(2);
+            p1 = getSaveGame(2);
+            if(p1 != null) { // If Save Game is Found then Load it into Player Object in Single Player Game Screen
+                isLoaded=true;
+            }
         });
         playImageView3.setOnMouseClicked(mouseEvent -> {
             try{
-                getSaveGame(3);
+                p1 = getSaveGame(3);
+                if(p1 != null) { // If Save Game is Found then Load it into Player Object in Single Player Game Screen
+                    isLoaded=true;
+                }
             }
             catch (Exception e){
                 FadeTransition labelFadeTransition=new FadeTransition();
@@ -111,7 +166,10 @@ public class LoadScreenController extends GameController implements Initializabl
             }
         });
         playImageView4.setOnMouseClicked(mouseEvent -> {
-            getSaveGame(4);
+            p1 = getSaveGame(4);
+            if(p1 != null) { // If Save Game is Found then Load it into Player Object in Single Player Game Screen
+                isLoaded=true;
+            }
         });
 
         removeImageView1.setOnMouseClicked(mouseEvent -> {
@@ -133,8 +191,14 @@ public class LoadScreenController extends GameController implements Initializabl
     }
 
     public void switchToSinglePlayerGameScreen(ActionEvent event) throws IOException {
-
-        Parent root= FXMLLoader.load(getClass().getResource("SinglePlayerGameScreen.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("SinglePlayerGameScreen.fxml"));
+        //Parent root= FXMLLoader.load(getClass().getResource("SinglePlayerGameScreen.fxml"));
+        Parent root=fxmlLoader.load();
+        SinglePlayerGameScreenController controller = fxmlLoader.getController();
+        if(isLoaded()){
+            controller.setPlayer1(p1);
+            controller.setLoaded(true);
+        }
         stage=(Stage)((Node)event.getSource()).getScene().getWindow();
         scene=new Scene(root,300,500);
         stage.setScene(scene);
@@ -199,8 +263,9 @@ public class LoadScreenController extends GameController implements Initializabl
         ObjectInputStream in = null;
         String val = String.valueOf(serial);
         try{
-            in = new ObjectInputStream(new FileInputStream(val+".txt"));
+            in = new ObjectInputStream(new FileInputStream("Saves\\" + val + ".txt"));
             player = (Player) in.readObject();
+            System.out.println("Got the save game boi");
 
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Unable to Retrieve Save Game File due to: " + e.getMessage());
@@ -242,7 +307,7 @@ public class LoadScreenController extends GameController implements Initializabl
         Path savePath = Paths.get(saveFile);
         try{
             Files.deleteIfExists(savePath);
-//            System.out.println("Save File for Slot" + serial + " Deleted Successfully");
+            System.out.println("Save File for Slot" + serial + " Deleted Successfully");
         } catch (IOException e) {
             System.out.println("Unable to Delete Save Game due to: " + e.getMessage());
 
