@@ -37,6 +37,7 @@ public class SinglePlayerGameScreenController extends GameController implements 
 
     private Rotate lineRotation;
     private MusicController musicController;
+    private MusicAdapter musicAdapter;
 
     @FXML
     private Button fullScreenLineExtensionButton;
@@ -178,7 +179,7 @@ public class SinglePlayerGameScreenController extends GameController implements 
         scene=new Scene(root,300,500);
         stage.setScene(scene);
         stage.setResizable(false);
-        musicController.stopAudio(); // stopping audio before changing scene
+        musicAdapter.muteSound(); // stopping audio before changing scene
         stage.show();
     }
 
@@ -190,7 +191,7 @@ public class SinglePlayerGameScreenController extends GameController implements 
         scene=new Scene(root,300,500);
         stage.setScene(scene);
         stage.setResizable(false);
-        musicController.stopAudio(); // stopping audio before changing scene
+        musicAdapter.muteSound(); // stopping audio before changing scene
         stage.show();
     }
 
@@ -506,23 +507,17 @@ public class SinglePlayerGameScreenController extends GameController implements 
 
     }
 
-
-
-
-
+    public void setMusicAdapter(){
+        this.musicAdapter = new MusicAdapter(this.musicController,"game1.mp3");
+    }
 
     @Override
     public void initialiseSound() {
-        musicController = new MusicController(getClass().getResource("game1.mp3").toExternalForm());
-        muteUnmute();
+        setMusicAdapter();
+        musicAdapter.initialiseSound();
     }
 
     public void muteUnmute() {
-        if(AudioManager.isMuted()) { // if sound is muted
-            musicController.stopAudio(); // stops the audio
-        }
-        else {
-            musicController.playAudio(); //plays the audio
-        }
+        musicAdapter.muteUnmute();
     }
 }
