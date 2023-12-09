@@ -45,6 +45,15 @@ public class MusicController {
         }
     }
 
+    public void muteUnmute(){
+        if(AudioManager.isMuted()) { // if sound is muted
+            this.stopAudio(); // stops the audio
+        }
+        else {
+            this.playAudio(); //plays the audio
+        }
+    }
+
     public void stopAudio() {
         mediaPlayer.pause();
     }

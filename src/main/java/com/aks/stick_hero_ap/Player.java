@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Player implements Serializable {
+    private static Player player = null;
     private double positionX;
     private double positionY;
     private int cherriesCollected;
@@ -28,6 +29,13 @@ public class Player implements Serializable {
     private Platform secondPlatform;
     private double platformDistance;
     private double platformPosition;
+
+    public Player getPlayerInstance(){ //Singleton Method
+        if(player == null){
+            player = new Player();
+        }
+        return player;
+    }
 
     public boolean isFlipped() {
         return isFlipped;

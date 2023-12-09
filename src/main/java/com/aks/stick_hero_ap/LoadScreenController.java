@@ -28,6 +28,7 @@ public class LoadScreenController extends GameController implements Initializabl
     private int cherry;
     private Player player;
     private MusicController musicController;
+    private MusicAdapter musicAdapter;
 
     Image image= new Image(getClass().getResourceAsStream("BG-Load.jpg"));
 
@@ -72,7 +73,7 @@ public class LoadScreenController extends GameController implements Initializabl
         scene=new Scene(root,300,500);
         stage.setScene(scene);
         stage.setResizable(false);
-        musicController.stopAudio(); // stopping audio before changing scene
+        musicAdapter.muteSound(); // stopping audio before changing scene
         stage.show();
     }
 
@@ -83,7 +84,7 @@ public class LoadScreenController extends GameController implements Initializabl
         scene=new Scene(root,300,500);
         stage.setScene(scene);
         stage.setResizable(false);
-        musicController.stopAudio(); // stopping audio before changing scene
+        musicAdapter.muteSound(); // stopping audio before changing scene
         stage.show();
     }
 
@@ -151,18 +152,17 @@ public class LoadScreenController extends GameController implements Initializabl
         }
     }
 
+    public void setMusicAdapter(){
+        this.musicAdapter = new MusicAdapter(this.musicController,"data.mp3");
+    }
+
     @Override
     public void initialiseSound() {
-        musicController = new MusicController(getClass().getResource("data.mp3").toExternalForm());
-        muteUnmute();
+        setMusicAdapter();
+        musicAdapter.initialiseSound();
     }
 
     public void muteUnmute() {
-        if(AudioManager.isMuted()) { // if sound is muted
-            musicController.stopAudio(); // stops the audio
-        }
-        else {
-            musicController.playAudio(); //plays the audio
-        }
+        musicAdapter.muteUnmute();
     }
 }
