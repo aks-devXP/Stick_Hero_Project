@@ -23,6 +23,7 @@ public class GameOverController extends GameController implements DisplayScreens
     private Parent root;
 
     private MusicController musicController;
+    private MusicAdapter musicAdapter;
     Image image = new Image(getClass().getResourceAsStream("Player Fell Down.jpg"));
 
     @FXML
@@ -94,7 +95,7 @@ public class GameOverController extends GameController implements DisplayScreens
         scene = new Scene(root, 300, 500);
         stage.setScene(scene);
         stage.setResizable(false);
-        musicController.stopAudio();
+        musicAdapter.muteSound();
         stage.show();
     }
 
@@ -105,22 +106,21 @@ public class GameOverController extends GameController implements DisplayScreens
         scene = new Scene(root, 300, 500);
         stage.setScene(scene);
         stage.setResizable(false);
-        musicController.stopAudio();
+        musicAdapter.muteSound();
         stage.show();
+    }
+
+    public void setMusicAdapter(){
+        this.musicAdapter = new MusicAdapter(this.musicController,"data.mp3");
     }
 
     @Override
     public void initialiseSound() {
-        musicController = new MusicController(getClass().getResource("fallen.mp3").toExternalForm());
-        muteUnmute();
+        setMusicAdapter();
+        musicAdapter.initialiseSound();
     }
 
     public void muteUnmute() {
-        if(AudioManager.isMuted()) { // if sound is muted
-            musicController.stopAudio(); // stops the audio
-        }
-        else {
-            musicController.playAudio(); //plays the audio
-        }
+        musicAdapter.muteUnmute();
     }
 }

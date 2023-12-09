@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Player implements Serializable {
+    private static Player player = null;
     private double positionX;
     private double positionY;
     private int cherriesCollected;
@@ -28,6 +29,21 @@ public class Player implements Serializable {
     private Platform secondPlatform;
     private double platformDistance;
     private double platformPosition;
+
+    public static Player getPlayer() {
+        return player;
+    }
+
+    public static void setPlayer(Player player) {
+        Player.player = player;
+    }
+
+    public Player getPlayerInstance(){ //Singleton Method
+        if(player == null){
+            player = new Player();
+        }
+        return player;
+    }
 
     public boolean isFlipped() {
         return isFlipped;
@@ -67,14 +83,6 @@ public class Player implements Serializable {
 
     public void setCherryY(double cherryY) {
         this.cherryY = cherryY;
-    }
-
-    public boolean isMouserel() {
-        return mouseReleasedStatus;
-    }
-
-    public void setMouserel(boolean mouserel) {
-        this.mouseReleasedStatus = mouserel;
     }
 
     public double getPositionX() {
@@ -207,29 +215,8 @@ public class Player implements Serializable {
 
     }
 
-    //Implementing Logics for Moving Player after Drawing Stick-Pole
-    void movePlayer(){
-        while(!isFallen() & isAlive()){ // While Player has not fallen down & alive, it would move
-            while(getPoleLength() >= getPositionX()) setPositionX(getPositionX()+0.1); //increments X-axis of player, upto Pole-Length Created by Player
-            if(getPositionX() < platformDistance) {
-                setFallen(true); // if Pos-X is lesser than platform distance, player would fall down
-                setAlive(false);
-            }
-
-            else{ // Player has reached the Second Platform
-                while(getPositionX() < secondPlatform.getWidth()){ // Moving Player upto End-point of Second Platform
-                    setPositionX(getPositionX()+0.1); //increments X-axis of player while X < Width of Second Platform
-                }
-            }
-        }
-    }
-
     // Flips the Player whenever Function is Called
     void flipPlayer() {setFlipped(!isFlipped());}
-
-//    void drawLine(){
-//        startExtendingPole();
-//    };
     void getPosition(){};
     int getScore(){
         return 0;
@@ -248,46 +235,8 @@ public class Player implements Serializable {
             setAlive(true);
         }
     }
-
-    boolean mouseReleasedStatus = false;
-    public void mouseReleased(){
-        getScene().setOnMouseReleased(mouseEvent -> {
-            mouseReleasedStatus = true;
-            stopExtendingPole();
-        });
-    }
-
     private Scene getScene() {
         return new Scene(new StackPane());
     }
-
-    void startExtendingPole(){
-        setPoleStatus(true);
-        getScene().setOnMousePressed(mouseEvent -> {
-            while(!mouseReleasedStatus){
-                poleLength += 0.1;
-                mouseReleased();
-            }
-        });
-    };
-    void stopExtendingPole(){
-        setPoleStatus(false);
-        //System.out.println("Completed");
-    };
-//    void generatePillar(){
-//        if(!getPoleStatus()) startExtendingPole();
-//    };
-    void rotatePole(){
-        if(!getPoleStatus() & getPoleLength()!= 0){ // if Pole Length is non-zero & Pole has been Initialised
-            this.poleY = getPoleLength(); // Y-axis of Pole is set to Length of Pole
-            float x = this.poleX; // Temporary Storage of Pole-X
-            float y = this.poleY; // Temp Storage of Pole-Y
-            while(x != getPoleLength() & y!= 0){ // X has not reached Pole Length and Y has not reached Base Level (Assuming 0 for now)
-                x += 0.1; // Pole changes Temporary Coordinates
-                y -= 0.1;
-                this.poleZ = (float) Math.sqrt(Math.pow(x+0.5,2) + Math.pow(y-0.5,2));
-            }
-        }
-    };
 
 }

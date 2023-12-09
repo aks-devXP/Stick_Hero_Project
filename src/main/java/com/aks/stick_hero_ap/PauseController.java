@@ -25,6 +25,7 @@ public class PauseController extends GameController implements DisplayScreens,In
     private Parent root;
 
     private MusicController musicController;
+    private MusicAdapter musicAdapter;
 
     Image image= new Image(getClass().getResourceAsStream("Game Screenshot.jpg"));
 
@@ -72,31 +73,29 @@ public class PauseController extends GameController implements DisplayScreens,In
         scene=new Scene(root,300,500);
         stage.setScene(scene);
         stage.setResizable(false);
-        musicController.stopAudio(); // Stopping the current audio before changing scene
+        musicAdapter.muteSound(); // Stopping the current audio before changing scene
         stage.show();
     }
 
     public void switchToHomeScreen(ActionEvent event) throws IOException {
-
-        muteAudio();
+        musicAdapter.muteSound();
         Parent root= FXMLLoader.load(getClass().getResource("HomeScreen.fxml"));
         stage=(Stage)((Node)event.getSource()).getScene().getWindow();
         scene=new Scene(root,300,500);
         stage.setScene(scene);
         stage.setResizable(false);
-        musicController.stopAudio(); // Stopping the current audio before changing scene
+        musicAdapter.muteSound(); // Stopping the current audio before changing scene
         stage.show();
     }
 
     public void switchToSaveGameScreen(ActionEvent event) throws IOException {
-
-        muteAudio();
+        musicAdapter.muteSound();
         Parent root= FXMLLoader.load(getClass().getResource("SaveGameScreen.fxml"));
         stage=(Stage)((Node)event.getSource()).getScene().getWindow();
         scene=new Scene(root,300,500);
         stage.setScene(scene);
         stage.setResizable(false);
-        musicController.stopAudio(); // Stopping the current audio before changing scene
+        musicAdapter.muteSound(); // Stopping the current audio before changing scene
         stage.show();
     }
 
@@ -160,21 +159,17 @@ public class PauseController extends GameController implements DisplayScreens,In
         return getSaveSlots()[serial-1];
     }
 
+    public void setMusicAdapter(){
+        this.musicAdapter = new MusicAdapter(this.musicController,"paused.mp3");
+    }
+
     @Override
     public void initialiseSound() {
-        musicController = new MusicController(getClass().getResource("paused.mp3").toExternalForm());
-        muteUnmute();
+        setMusicAdapter();
+        musicAdapter.initialiseSound();
     }
 
-    @Override
     public void muteUnmute() {
-        if(AudioManager.isMuted()) { // if sound is muted
-            musicController.stopAudio(); // stops the audio
-        }
-        else {
-            musicController.playAudio(); //plays the audio
-        }
+        musicAdapter.muteUnmute();
     }
-
-    public void muteAudio(){musicController.stopAudio();}
 }
