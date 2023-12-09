@@ -142,13 +142,23 @@ public class SinglePlayerGameScreenController extends GameController implements 
         Loaded = loaded;
     }
 
+    public static Player getPlayerInstance1(){
+        if(getPlayer1() == null){
+            setPlayer1(new Player());
+        }
+        return getPlayer1();
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         //pausePane.setVisible(true);
         //gamePane.setVisible(false);
         initialiseSound(); // Setting up Sound
-        if(!isLoaded()) setPlayer1(new Player());
+        if(!isLoaded()) {
+            //setPlayer1(new Player());
+            getPlayerInstance1();
+        };
         //gameOverScreenAnchorPane.setLayoutX(-1000);
         //gameOverScreenAnchorPane.
         //pauseMenuAnchorPane.setLayoutX(-1000);
@@ -430,7 +440,8 @@ public class SinglePlayerGameScreenController extends GameController implements 
             System.out.println("platform: "+nextPlatform.getLayoutX());
             if(characterFlipped && (characterXPosition>=cherryPosition && characterXPosition<=(cherryPosition+23))){
                 if(!cherryUpdated){
-                    numCherry = getPlayer1().getCherriesCollected()+1;
+                    if(isLoaded()) numCherry = getPlayer1().getCherriesCollected()+1;
+                    else numCherry++;
                     getPlayer1().setCherriesCollected(getCherriesCollected()+1);
                     //setCherriesCollected(getPlayer1().getCherriesCollected()+1);
                     cherryUpdated=true;
@@ -478,8 +489,11 @@ public class SinglePlayerGameScreenController extends GameController implements 
     public void moveCharacterAndPlatformToStart(Rectangle previousPlatform,Rectangle currentPlatform){
         cherryImageView.setOpacity(0);
         line.setOpacity(0);
+        if(isLoaded()){
+            currentScore = (getPlayer1().getCurrentScore()+1);
 
-        currentScore = (getPlayer1().getCurrentScore()+1);
+        }
+        else currentScore++;
         getPlayer1().setCurrentScore(getCurrentScore()+1);
 
         if(getBestScore()<currentScore){
