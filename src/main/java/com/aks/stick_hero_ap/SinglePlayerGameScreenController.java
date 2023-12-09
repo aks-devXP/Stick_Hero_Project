@@ -611,6 +611,16 @@ public class SinglePlayerGameScreenController extends GameController implements 
 
     }
 
+
+    public void setNumCherryAndLabel(int numCherry){
+        this.numCherry=numCherry;
+        cheeryLabel.setText(String.valueOf(numCherry));
+    }
+    public void setCurrentScoreAndLabel(int currentScore){
+        this.currentScore=currentScore;
+        currentScoreLabel.setText(String.valueOf(currentScore));
+    }
+
     public void setMusicAdapter(){
         this.musicAdapter = new MusicAdapter(this.musicController,"game1.mp3");
     }

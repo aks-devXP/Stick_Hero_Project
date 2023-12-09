@@ -131,6 +131,27 @@ public class GameOverController extends GameController implements DisplayScreens
         stage.show();
     }
 
+    public void switchToSinglePlayerReviveScreen(ActionEvent event) throws IOException {
+
+        FXMLLoader fxmlLoader =new FXMLLoader(getClass().getResource("SinglePlayerGameScreen.fxml"));
+
+        //Parent root = FXMLLoader.load(getClass().getResource("SinglePlayerGameScreen.fxml"));
+        Parent root=fxmlLoader.load();
+        SinglePlayerGameScreenController singlePlayerGameScreenController=fxmlLoader.getController();
+        singlePlayerGameScreenController.setBestScore(bestScore);
+        singlePlayerGameScreenController.setCurrentScoreAndLabel(score);
+        if(numberOfCherries>=5){
+            singlePlayerGameScreenController.setNumCherryAndLabel(numberOfCherries-5);
+            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            scene = new Scene(root, 300, 500);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            musicAdapter.muteSound();
+            stage.show();
+        }
+    }
+
     public void switchToHomeScreen(ActionEvent event) throws IOException {
 
         Parent root = FXMLLoader.load(getClass().getResource("HomeScreen.fxml"));
