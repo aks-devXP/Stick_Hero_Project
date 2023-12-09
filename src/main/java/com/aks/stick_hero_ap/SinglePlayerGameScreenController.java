@@ -279,12 +279,12 @@ public class SinglePlayerGameScreenController extends SinglePlayerMode implement
 
         double currentCharacterPosition=gameCharacterPane.getLayoutX();
         if(startPoleX+lineLength<nextPlatform.getLayoutX()||startPoleX+lineLength>nextPlatform.getLayoutX()+nextPlatform.getWidth()){
-            characterEnd=new KeyFrame(Duration.millis(1000),new KeyValue(gameCharacterPane.layoutXProperty(),gameCharacterPane.getLayoutX()+lineLength));
+            characterEnd=new KeyFrame(Duration.millis(900),new KeyValue(gameCharacterPane.layoutXProperty(),gameCharacterPane.getLayoutX()+lineLength));
             gameOver=true;
         }
 
         else if(startPoleX+lineLength>=nextPlatform.getLayoutX()&&startPoleX+lineLength<=nextPlatform.getLayoutX()+nextPlatform.getWidth()){
-            characterEnd=new KeyFrame(Duration.millis(1000),new KeyValue(gameCharacterPane.layoutXProperty(),gameCharacterPane.getLayoutX()+lineLength));
+            characterEnd=new KeyFrame(Duration.millis(900),new KeyValue(gameCharacterPane.layoutXProperty(),gameCharacterPane.getLayoutX()+lineLength));
 
 //            if(numRun==1||nextPlatform.getLayoutX()-currentPlatform.getWidth()<85){
 //                characterEnd=new KeyFrame(Duration.millis(1000),new KeyValue(gameCharacterPane.layoutXProperty(),gameCharacterPane.getLayoutX()+nextPlatform.getLayoutX()-50));
@@ -444,7 +444,7 @@ public class SinglePlayerGameScreenController extends SinglePlayerMode implement
 
     public void characterFall(){
         Timeline characterFallTimeline=new Timeline();
-        KeyFrame characterFallEnd=new KeyFrame(Duration.millis(250),new KeyValue(gameCharacterPane.layoutYProperty(),500));
+        KeyFrame characterFallEnd=new KeyFrame(Duration.millis(250),new KeyValue(gameCharacterPane.layoutYProperty(),800));
         characterFallTimeline.getKeyFrames().add(characterFallEnd);
         characterFallTimeline.play();
     }

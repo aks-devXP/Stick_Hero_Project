@@ -166,7 +166,7 @@ public class Player implements Serializable {
 
     public double randomPos(double currentPlatformWidth,double nextPlatformWidth,double gap){
         double upperBound = 300-nextPlatformWidth-gap; // upper bound of Position of Platform
-        double lowerBound = currentPlatformWidth+10; // lower bound of Position of Platform
+        double lowerBound = currentPlatformWidth+gap; // lower bound of Position of Platform
         return ThreadLocalRandom.current().nextDouble(lowerBound, upperBound + 1); // Used ThreadLocalRandom as it may be required in thread pool by multiple processes
     }
 
