@@ -8,7 +8,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aks.stick_hero_ap.SaveScreenController">
+<AnchorPane prefHeight="500.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aks.stick_hero_ap.SaveScreenController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5e5e5e" height="40.0" layoutX="130.0" layoutY="446.0" opacity="0.33" stroke="BLACK" strokeType="INSIDE" width="40.0" />
       <ImageView fx:id="backgroundImageView" fitHeight="500.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
@@ -91,42 +91,42 @@
             <Font name="KohinoorLatin-Black" size="17.0" />
          </font>
       </Label>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="188.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="saveImageView1" fitHeight="40.0" fitWidth="40.0" layoutX="188.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Save Button.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="240.0" layoutY="93.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="removeImageView1" fitHeight="40.0" fitWidth="40.0" layoutX="240.0" layoutY="93.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Remove Button.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="189.0" layoutY="176.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="saveImageView2" fitHeight="40.0" fitWidth="40.0" layoutX="189.0" layoutY="176.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Save Button.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="241.0" layoutY="174.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="removeImageView2" fitHeight="40.0" fitWidth="40.0" layoutX="241.0" layoutY="174.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Remove Button.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="190.0" layoutY="259.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="saveImageView3" fitHeight="40.0" fitWidth="40.0" layoutX="190.0" layoutY="259.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Save Button.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="242.0" layoutY="257.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="removeImageView3" fitHeight="40.0" fitWidth="40.0" layoutX="242.0" layoutY="257.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Remove Button.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="194.0" layoutY="339.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="saveImageView4" fitHeight="40.0" fitWidth="40.0" layoutX="194.0" layoutY="339.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Save Button.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="246.0" layoutY="340.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="removeImageView4" fitHeight="40.0" fitWidth="40.0" layoutX="246.0" layoutY="340.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Remove Button.png" />
          </image>
