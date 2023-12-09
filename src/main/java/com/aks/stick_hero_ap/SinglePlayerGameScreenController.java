@@ -22,6 +22,7 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.EventObject;
 import java.util.ResourceBundle;
 
 public class SinglePlayerGameScreenController extends GameController implements Initializable,Sound {
@@ -38,6 +39,15 @@ public class SinglePlayerGameScreenController extends GameController implements 
     private Rotate lineRotation;
     private MusicController musicController;
     private MusicAdapter musicAdapter;
+    private static Player player1;
+
+    public static Player getPlayer1() {
+        return player1;
+    }
+
+    public static void setPlayer1(Player player1) {
+        SinglePlayerGameScreenController.player1 = player1;
+    }
 
     @FXML
     private Button fullScreenLineExtensionButton;
@@ -47,6 +57,7 @@ public class SinglePlayerGameScreenController extends GameController implements 
     private boolean clickHeld=false,clickReleased=false, poleRotated=false, characterFlipped=false,cherryUpdated=false;
 
     private boolean gameOver=false; //This gameOver will be used in movingCharacter function
+    private boolean Loaded;
 
     @FXML
     Rectangle platform1,platform2;
@@ -65,8 +76,6 @@ public class SinglePlayerGameScreenController extends GameController implements 
     Platform platform2Details=new Platform(80,platformHeight,70,350);
 
     Platform currentPlatformDetails;
-
-    private static Player player1;
 
     double nextPlatformWidth,nextPlatformPosition;
 
@@ -93,7 +102,7 @@ public class SinglePlayerGameScreenController extends GameController implements 
     AnchorPane gamePane;
 
     @FXML
-    private AnchorPane gameCharacterPane,gameOverScreenAnchorPane;
+    private AnchorPane gameCharacterPane;
 
     @FXML
     private Label currentScoreLabel,cheeryLabel;
@@ -101,22 +110,34 @@ public class SinglePlayerGameScreenController extends GameController implements 
     @FXML
     private ImageView cherryImageView;
 
+    @FXML
+    private Button restartButton;
+
     double cherryPosition;
 
-    private int numCherry=0;
+    int numCherry=0;
 
     private int currentScore=0;
 
+    public int getBestScore() {
+        return bestScore;
+    }
+
+    public void setBestScore(int bestScore) {
+        this.bestScore = bestScore;
+    }
+
+    private int bestScore=0;
+
     Timeline timeline;
     int numRun=1;
-    private boolean loaded = false;
 
     public boolean isLoaded() {
-        return loaded;
+        return Loaded;
     }
 
     public void setLoaded(boolean loaded) {
-        this.loaded = loaded;
+        Loaded = loaded;
     }
 
     @Override
@@ -125,31 +146,18 @@ public class SinglePlayerGameScreenController extends GameController implements 
         //pausePane.setVisible(true);
         //gamePane.setVisible(false);
         initialiseSound(); // Setting up Sound
-        gameOverScreenAnchorPane.setLayoutX(-1000);
+        if(!isLoaded()) setPlayer1(new Player());
+        //gameOverScreenAnchorPane.setLayoutX(-1000);
         //gameOverScreenAnchorPane.
         backgroundImageView.setImage(image);
         backgroundImageView.setFitWidth(targetWidth);
         backgroundImageView.setFitHeight(targetHeight);
         backgroundImageView.setPreserveRatio(false);
-
-        if(!isLoaded()){
-//            setCurrentScore(0); // If new Game is being called
-//            setNumCherry(0);
-            setPlayer1(new Player());
-//            setData(new Data());
-        }
-
-//        else{
-//            System.out.println("lol");
-//            setCurrentScore(getPlayer1().getCurrentScore()); // Loading the values from Saved Files into current scene
-//            setNumCherry(getPlayer1().getCherriesCollected());
-////            setCurrentScore(data.getCherriesCollected());
-////            setNumCherry(data.getCurrentScore());
-//        }
-
         //root.getChildrenUnmodifiable().add(platform1);
-
+        //currentScore=0;
         currentScoreLabel.setText(Integer.toString(currentScore));
+
+
         platform1.setOpacity(1);
         platform1.setHeight(platformHeight);
         platform1.setWidth(platform1Details.getWidth());
@@ -231,19 +239,6 @@ public class SinglePlayerGameScreenController extends GameController implements 
         stage.show();
     }
 
-    public void initPlayer(int serial){ // Initialising the Player by checking if it's load save is present
-        if(getSaveGame(serial)==null | serial == 0) setPlayer(new Player());
-        else setPlayer(getSaveGame(serial));
-    }
-    public void setCurrentScoreAndShow(int currentScore){
-        setCurrentScore(currentScore);
-        currentScoreLabel.setText(String.valueOf(currentScore));
-    }
-
-    public void setCherryScoreAndShow(int numCherry){
-        setCherriesCollected(numCherry);
-    }
-
     public void poleExtendingTrue(){
 
         timeline=new Timeline(new KeyFrame(Duration.millis(50),event -> {
@@ -256,6 +251,16 @@ public class SinglePlayerGameScreenController extends GameController implements 
         timeline.setCycleCount(Animation.INDEFINITE);
 
         timeline.play();
+    }
+
+    public void setCurrentScoreAndShow(int num){
+        setCurrentScore(num);
+        currentScoreLabel.setText(String.valueOf(num));
+    }
+
+    public void setCherriesAndShow(int cherries){
+        setCherriesCollected(cherries);
+        cheeryLabel.setText(String.valueOf(cherries));
     }
 
     public void poleExtendingFalse(){
@@ -417,8 +422,9 @@ public class SinglePlayerGameScreenController extends GameController implements 
             System.out.println("platform: "+nextPlatform.getLayoutX());
             if(characterFlipped && (characterXPosition>=cherryPosition && characterXPosition<=(cherryPosition+23))){
                 if(!cherryUpdated){
-                    numCherry++;
-                    getPlayer1().setCherriesCollected(getCherriesCollected()+1); // Increasing the Number of Cherries by one on collecting
+                    numCherry = getPlayer1().getCherriesCollected()+1;
+                    getPlayer1().setCherriesCollected(getCherriesCollected()+1);
+                    //setCherriesCollected(getPlayer1().getCherriesCollected()+1);
                     cherryUpdated=true;
                 }
                 cherryImageView.setOpacity(0);
@@ -464,8 +470,13 @@ public class SinglePlayerGameScreenController extends GameController implements 
     public void moveCharacterAndPlatformToStart(Rectangle previousPlatform,Rectangle currentPlatform){
         cherryImageView.setOpacity(0);
         line.setOpacity(0);
-        currentScore++;
-        getPlayer1().setCurrentScore(getCurrentScore()+1); // Increasing the current score by 1 on changing platform
+
+        currentScore = (getPlayer1().getCurrentScore()+1);
+        getPlayer1().setCurrentScore(getCurrentScore()+1);
+
+        if(getBestScore()<currentScore){
+            setBestScore(currentScore);
+        }
         Timeline previousPlatformTimeline = new Timeline();
         KeyFrame previousPlatformEnd = new KeyFrame(Duration.millis(1000), new KeyValue(previousPlatform.layoutXProperty(), -1000));
         previousPlatformTimeline.getKeyFrames().add(previousPlatformEnd);
@@ -533,8 +544,29 @@ public class SinglePlayerGameScreenController extends GameController implements 
         characterFallTimeline.getKeyFrames().add(characterFallEnd);
         characterFallTimeline.play();
         characterFallTimeline.setOnFinished(actionEvent -> {
-            gameOverScreenAnchorPane.setLayoutX(0);
-            line.setOpacity(0);
+            //gameOverScreenAnchorPane.setLayoutX(0);
+
+            try {
+                FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("GameOverScreen.fxml"));
+                //Parent root = FXMLLoader.load(getClass().getResource("GameOverScreen.fxml"));
+                Parent root=fxmlLoader.load();
+                GameOverController gameController=fxmlLoader.getController();
+                //gameController.setNumberOfCherries(numCherry);
+                gameController.setCurrentScoreLabel(currentScore);
+                gameController.setCherries(numCherry);
+                gameController.setBestScore(getBestScore());
+                System.out.println(gameController.getScore());
+                Stage stage = (Stage) gameCharacterPane.getScene().getWindow(); // Or line.getScene().getWindow()
+                Scene scene = new Scene(root, 300, 500);
+
+                stage.setScene(scene);
+                stage.setResizable(false);
+                musicAdapter.muteSound(); // Stopping audio before changing scene
+                stage.show();
+                line.setOpacity(0);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 
@@ -605,6 +637,16 @@ public class SinglePlayerGameScreenController extends GameController implements 
 
     }
 
+
+    public void setNumCherryAndLabel(int numCherry){
+        this.numCherry=numCherry;
+        cheeryLabel.setText(String.valueOf(numCherry));
+    }
+    public void setCurrentScoreAndLabel(int currentScore){
+        this.currentScore=currentScore;
+        currentScoreLabel.setText(String.valueOf(currentScore));
+    }
+
     public void setMusicAdapter(){
         this.musicAdapter = new MusicAdapter(this.musicController,"game1.mp3");
     }
@@ -617,411 +659,5 @@ public class SinglePlayerGameScreenController extends GameController implements 
 
     public void muteUnmute() {
         musicAdapter.muteUnmute();
-    }
-
-    //Getters amd Setters
-
-    public Stage getStage() {
-        return stage;
-    }
-
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
-
-    @Override
-    public Scene getScene() {
-        return scene;
-    }
-
-    public void setScene(Scene scene) {
-        this.scene = scene;
-    }
-
-    public Parent getRoot() {
-        return root;
-    }
-
-    public void setRoot(Parent root) {
-        this.root = root;
-    }
-
-    public Line getLine() {
-        return line;
-    }
-
-    public void setLine(Line line) {
-        this.line = line;
-    }
-
-    public RotateTransition getRotatePole() {
-        return rotatePole;
-    }
-
-    public void setRotatePole(RotateTransition rotatePole) {
-        this.rotatePole = rotatePole;
-    }
-
-    public Timeline getRotateTimeline() {
-        return rotateTimeline;
-    }
-
-    public void setRotateTimeline(Timeline rotateTimeline) {
-        this.rotateTimeline = rotateTimeline;
-    }
-
-    public Rotate getLineRotation() {
-        return lineRotation;
-    }
-
-    public void setLineRotation(Rotate lineRotation) {
-        this.lineRotation = lineRotation;
-    }
-
-    public MusicController getMusicController() {
-        return musicController;
-    }
-
-    public void setMusicController(MusicController musicController) {
-        this.musicController = musicController;
-    }
-
-    public MusicAdapter getMusicAdapter() {
-        return musicAdapter;
-    }
-
-    public void setMusicAdapter(MusicAdapter musicAdapter) {
-        this.musicAdapter = musicAdapter;
-    }
-
-    public Button getFullScreenLineExtensionButton() {
-        return fullScreenLineExtensionButton;
-    }
-
-    public void setFullScreenLineExtensionButton(Button fullScreenLineExtensionButton) {
-        this.fullScreenLineExtensionButton = fullScreenLineExtensionButton;
-    }
-
-    public double getStartPoleX() {
-        return startPoleX;
-    }
-
-    public void setStartPoleX(double startPoleX) {
-        this.startPoleX = startPoleX;
-    }
-
-    public double getStartPoleY() {
-        return startPoleY;
-    }
-
-    public void setStartPoleY(double startPoleY) {
-        this.startPoleY = startPoleY;
-    }
-
-    public double getEndPoleX() {
-        return endPoleX;
-    }
-
-    public void setEndPoleX(double endPoleX) {
-        this.endPoleX = endPoleX;
-    }
-
-    public double getEndPoleY() {
-        return endPoleY;
-    }
-
-    public void setEndPoleY(double endPoleY) {
-        this.endPoleY = endPoleY;
-    }
-
-    @Override
-    public float getPoleLength() {
-        return (float) poleLength;
-    }
-
-    public void setPoleLength(double poleLength) {
-        this.poleLength = poleLength;
-    }
-
-    public boolean isClickHeld() {
-        return clickHeld;
-    }
-
-    public void setClickHeld(boolean clickHeld) {
-        this.clickHeld = clickHeld;
-    }
-
-    public boolean isClickReleased() {
-        return clickReleased;
-    }
-
-    public void setClickReleased(boolean clickReleased) {
-        this.clickReleased = clickReleased;
-    }
-
-    public boolean isPoleRotated() {
-        return poleRotated;
-    }
-
-    public void setPoleRotated(boolean poleRotated) {
-        this.poleRotated = poleRotated;
-    }
-
-    public boolean isCharacterFlipped() {
-        return characterFlipped;
-    }
-
-    public void setCharacterFlipped(boolean characterFlipped) {
-        this.characterFlipped = characterFlipped;
-    }
-
-    public boolean isCherryUpdated() {
-        return cherryUpdated;
-    }
-
-    public void setCherryUpdated(boolean cherryUpdated) {
-        this.cherryUpdated = cherryUpdated;
-    }
-
-    public boolean isGameOver() {
-        return gameOver;
-    }
-
-    public void setGameOver(boolean gameOver) {
-        this.gameOver = gameOver;
-    }
-
-    public Rectangle getPlatform1() {
-        return platform1;
-    }
-
-    public void setPlatform1(Rectangle platform1) {
-        this.platform1 = platform1;
-    }
-
-    public Rectangle getPlatform2() {
-        return platform2;
-    }
-
-    public void setPlatform2(Rectangle platform2) {
-        this.platform2 = platform2;
-    }
-
-    public Rectangle getCurrentPlatform() {
-        return currentPlatform;
-    }
-
-    public void setCurrentPlatform(Rectangle currentPlatform) {
-        this.currentPlatform = currentPlatform;
-    }
-
-    public int getCurrentPlatformNumber() {
-        return currentPlatformNumber;
-    }
-
-    public void setCurrentPlatformNumber(int currentPlatformNumber) {
-        this.currentPlatformNumber = currentPlatformNumber;
-    }
-
-    public int getPlatformHeight() {
-        return platformHeight;
-    }
-
-    public void setPlatformHeight(int platformHeight) {
-        this.platformHeight = platformHeight;
-    }
-
-    public double getGap() {
-        return gap;
-    }
-
-    public void setGap(double gap) {
-        this.gap = gap;
-    }
-
-    public Platform getPlatform1Details() {
-        return platform1Details;
-    }
-
-    public void setPlatform1Details(Platform platform1Details) {
-        this.platform1Details = platform1Details;
-    }
-
-    public Platform getPlatform2Details() {
-        return platform2Details;
-    }
-
-    public void setPlatform2Details(Platform platform2Details) {
-        this.platform2Details = platform2Details;
-    }
-
-    public Platform getCurrentPlatformDetails() {
-        return currentPlatformDetails;
-    }
-
-    public void setCurrentPlatformDetails(Platform currentPlatformDetails) {
-        this.currentPlatformDetails = currentPlatformDetails;
-    }
-
-    public double getNextPlatformWidth() {
-        return nextPlatformWidth;
-    }
-
-    public void setNextPlatformWidth(double nextPlatformWidth) {
-        this.nextPlatformWidth = nextPlatformWidth;
-    }
-
-    public double getNextPlatformPosition() {
-        return nextPlatformPosition;
-    }
-
-    public void setNextPlatformPosition(double nextPlatformPosition) {
-        this.nextPlatformPosition = nextPlatformPosition;
-    }
-
-    public int getActivePlatform() {
-        return activePlatform;
-    }
-
-    public void setActivePlatform(int activePlatform) {
-        this.activePlatform = activePlatform;
-    }
-
-    public Image getImage() {
-        return image;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
-    }
-
-    public ImageView getBackgroundImageView() {
-        return backgroundImageView;
-    }
-
-    public void setBackgroundImageView(ImageView backgroundImageView) {
-        this.backgroundImageView = backgroundImageView;
-    }
-
-    public double getTargetWidth() {
-        return targetWidth;
-    }
-
-    public void setTargetWidth(double targetWidth) {
-        this.targetWidth = targetWidth;
-    }
-
-    public double getTargetHeight() {
-        return targetHeight;
-    }
-
-    public void setTargetHeight(double targetHeight) {
-        this.targetHeight = targetHeight;
-    }
-
-    public double getScaleFactor() {
-        return scaleFactor;
-    }
-
-    public void setScaleFactor(double scaleFactor) {
-        this.scaleFactor = scaleFactor;
-    }
-
-    public AnchorPane getGamePane() {
-        return gamePane;
-    }
-
-    public void setGamePane(AnchorPane gamePane) {
-        this.gamePane = gamePane;
-    }
-
-    public AnchorPane getGameCharacterPane() {
-        return gameCharacterPane;
-    }
-
-    public void setGameCharacterPane(AnchorPane gameCharacterPane) {
-        this.gameCharacterPane = gameCharacterPane;
-    }
-
-    public AnchorPane getGameOverScreenAnchorPane() {
-        return gameOverScreenAnchorPane;
-    }
-
-    public void setGameOverScreenAnchorPane(AnchorPane gameOverScreenAnchorPane) {
-        this.gameOverScreenAnchorPane = gameOverScreenAnchorPane;
-    }
-
-    public Label getCurrentScoreLabel() {
-        return currentScoreLabel;
-    }
-
-    public void setCurrentScoreLabel(Label currentScoreLabel) {
-        this.currentScoreLabel = currentScoreLabel;
-    }
-
-    public Label getCheeryLabel() {
-        return cheeryLabel;
-    }
-
-    public void setCheeryLabel(Label cheeryLabel) {
-        this.cheeryLabel = cheeryLabel;
-    }
-
-    public ImageView getCherryImageView() {
-        return cherryImageView;
-    }
-
-    public void setCherryImageView(ImageView cherryImageView) {
-        this.cherryImageView = cherryImageView;
-    }
-
-    public double getCherryPosition() {
-        return cherryPosition;
-    }
-
-    public void setCherryPosition(double cherryPosition) {
-        this.cherryPosition = cherryPosition;
-    }
-
-    public int getNumCherry() {
-        return numCherry;
-    }
-
-    public void setNumCherry(int numCherry) {
-        this.numCherry = numCherry;
-    }
-
-    @Override
-    public int getCurrentScore() {
-        return currentScore;
-    }
-
-    @Override
-    public void setCurrentScore(int currentScore) {
-        this.currentScore = currentScore;
-    }
-
-    public Timeline getTimeline() {
-        return timeline;
-    }
-
-    public void setTimeline(Timeline timeline) {
-        this.timeline = timeline;
-    }
-
-    public int getNumRun() {
-        return numRun;
-    }
-
-    public void setNumRun(int numRun) {
-        this.numRun = numRun;
-    }
-
-    public Player getPlayer1() {
-        return player1;
-    }
-
-    public void setPlayer1(Player player) {
-        this.player1 = player;
     }
 }
