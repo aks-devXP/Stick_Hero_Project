@@ -101,6 +101,7 @@ public class SinglePlayerGameScreenController extends GameController implements 
     private int currentScore=0;
 
     Timeline timeline;
+    int numRun=1;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -257,14 +258,16 @@ public class SinglePlayerGameScreenController extends GameController implements 
         rotateTimeline.stop();
         characterFlipped=false;
         if(currentPlatformNumber==1){
-            movingCharacter(poleLength,platform1,platform2);
 //            currentPlatformNumber=2;
 //            currentPlatform=platform2;
+            movingCharacter(poleLength,platform1,platform2);
+
             //moveCharacterAndPlatformToStart(platform1,platform2);
         }else{
-            movingCharacter(poleLength,platform2,platform1);
 //            currentPlatformNumber=1;
 //            currentPlatform=platform1;
+            movingCharacter(poleLength,platform2,platform1);
+
             //moveCharacterAndPlatformToStart(platform2,platform1);
         }
     }
@@ -282,8 +285,16 @@ public class SinglePlayerGameScreenController extends GameController implements 
 
         else if(startPoleX+lineLength>=nextPlatform.getLayoutX()&&startPoleX+lineLength<=nextPlatform.getLayoutX()+nextPlatform.getWidth()){
             characterEnd=new KeyFrame(Duration.millis(1000),new KeyValue(gameCharacterPane.layoutXProperty(),gameCharacterPane.getLayoutX()+lineLength));
-            //characterEnd=new KeyFrame(Duration.millis(1000),new KeyValue(gameCharacterPane.layoutXProperty(),currentCharacterPosition+nextPlatform.getLayoutX()+nextPlatform.getWidth()-100));
+
+//            if(numRun==1||nextPlatform.getLayoutX()-currentPlatform.getWidth()<85){
+//                characterEnd=new KeyFrame(Duration.millis(1000),new KeyValue(gameCharacterPane.layoutXProperty(),gameCharacterPane.getLayoutX()+nextPlatform.getLayoutX()-50));
+//            }
+//            else{
+//                characterEnd=new KeyFrame(Duration.millis(1000),new KeyValue(gameCharacterPane.layoutXProperty(),gameCharacterPane.getLayoutX()+nextPlatform.getLayoutX()-85));
+//            }
             gameOver=false;
+            //characterEnd=new KeyFrame(Duration.millis(1000),new KeyValue(gameCharacterPane.layoutXProperty(),currentCharacterPosition+nextPlatform.getLayoutX()+nextPlatform.getWidth()-100));
+            //gameOver=false;
 
         }
 //        if(characterFlipped && (gameCharacterPane.getLayoutX()+15)>=nextPlatform.getLayoutX()){
@@ -315,10 +326,10 @@ public class SinglePlayerGameScreenController extends GameController implements 
                     gameCharacterPane.setRotate(0);
                     gameCharacterPane.setLayoutY(gameCharacterPane.getLayoutY()-2*rectangleHeight);
                 }
-                else if(gameCharacterPane.getLayoutX()>=nextPlatform.getLayoutX()){
-                    gameOver=true;
-
-                }
+//                else if(gameCharacterPane.getLayoutX()>=nextPlatform.getLayoutX()){
+//                    gameOver=true;
+//
+//                }
 
             }
 
@@ -327,6 +338,7 @@ public class SinglePlayerGameScreenController extends GameController implements 
         characterTranslateTimeline.getKeyFrames().add(characterEnd);
         gameCharacterPane.layoutXProperty().addListener((obs, oldVal, newVal) -> {
             double characterXPosition = newVal.doubleValue();
+            System.out.println("Current platform "+currentPlatformNumber);
             System.out.println("Character: "+gameCharacterPane.getLayoutX());
             System.out.println("platform: "+nextPlatform.getLayoutX());
             // Add your logic based on character's X position during animation here
@@ -339,6 +351,11 @@ public class SinglePlayerGameScreenController extends GameController implements 
 
         characterTranslateTimeline.setOnFinished(event -> {
             //fullScreenLineExtensionButton.setDisable(true);
+
+//            if(characterFlipped){
+//                characterFall();
+//            }
+
             if(currentPlatformNumber==1){
                 currentPlatformNumber=2;
                 this.currentPlatform=platform2;
@@ -348,7 +365,7 @@ public class SinglePlayerGameScreenController extends GameController implements 
                 this.currentPlatform=platform1;
             }
             System.out.println(gameCharacterPane.getLayoutX());
-            if(gameOver==true){
+            if(gameOver==true||characterFlipped){
                 characterFall();
             }
             else{
@@ -434,10 +451,12 @@ public class SinglePlayerGameScreenController extends GameController implements 
 
 
     public void initEverything(){
+        numRun++;
         startPoleX=currentPlatform.getLayoutX()+currentPlatform.getWidth();
         startPoleY=currentPlatform.getLayoutY();
         endPoleX=startPoleX;
         endPoleY=startPoleY;
+
         poleLength=0;
         line.setStartX(startPoleX);
         line.setStartY(startPoleY);
@@ -447,6 +466,7 @@ public class SinglePlayerGameScreenController extends GameController implements 
         line.setRotate(0);
         line.setOpacity(1);
         if(currentPlatformNumber==1){
+            //currentPlatform=platform1;
             nextPlatformWidth= randomWidth(currentPlatform.getWidth(),gap);
             nextPlatformPosition=randomPos(currentPlatform.getWidth(),nextPlatformWidth,gap);
             platform2.setOpacity(1);
@@ -456,6 +476,7 @@ public class SinglePlayerGameScreenController extends GameController implements 
             platform2.setLayoutY(platform2Details.getPositionY());
         }
         else{
+            //currentPlatform=platform2;
             nextPlatformWidth= randomWidth(currentPlatform.getWidth(),gap);
             nextPlatformPosition=randomPos(currentPlatform.getWidth(),nextPlatformWidth,gap);
 
