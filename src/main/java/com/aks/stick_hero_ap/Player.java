@@ -170,9 +170,9 @@ public class Player implements Serializable {
         return ThreadLocalRandom.current().nextDouble(lowerBound, upperBound + 1); // Used ThreadLocalRandom as it may be required in thread pool by multiple processes
     }
 
-    public double randomCherryX(){
-        double upperBound = 500; // upper bound of Position of Cherry - X axis
-        double lowerBound = 100; // lower bound of Position of Cherry - X axis
+    public double randomCherryX(double currentPlatformWidth,double nextPlatformLayoutX){
+        double upperBound = nextPlatformLayoutX-23; // upper bound of Position of Cherry - X axis
+        double lowerBound = currentPlatformWidth; // lower bound of Position of Cherry - X axis
         return ThreadLocalRandom.current().nextDouble(lowerBound, upperBound + 1); // Used ThreadLocalRandom as it may be required in thread pool by multiple processes
     }
 
@@ -203,7 +203,7 @@ public class Player implements Serializable {
 
     //Initialise Random Positions for Cherry
     void initCherry(){
-        setCherryX(randomCherryX()); // Generating Value for X-axis of Cherry
+        //setCherryX(randomCherryX()); // Generating Value for X-axis of Cherry
 
     }
 
