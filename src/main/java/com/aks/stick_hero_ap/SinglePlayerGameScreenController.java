@@ -98,6 +98,11 @@ public class SinglePlayerGameScreenController extends GameController implements 
     @FXML
     private Label currentScoreLabel;
 
+    @FXML
+    private ImageView cherryImageView;
+
+    double cherryPosition;
+
     private int currentScore=0;
 
     Timeline timeline;
@@ -284,7 +289,36 @@ public class SinglePlayerGameScreenController extends GameController implements 
         }
 
         else if(startPoleX+lineLength>=nextPlatform.getLayoutX()&&startPoleX+lineLength<=nextPlatform.getLayoutX()+nextPlatform.getWidth()){
-            characterEnd=new KeyFrame(Duration.millis(900),new KeyValue(gameCharacterPane.layoutXProperty(),gameCharacterPane.getLayoutX()+lineLength));
+            if(startPoleX+lineLength-nextPlatform.getLayoutX()>20 && startPoleX+lineLength-nextPlatform.getLayoutX()<=30){
+                characterEnd=new KeyFrame(Duration.millis(900),new KeyValue(gameCharacterPane.layoutXProperty(),gameCharacterPane.getLayoutX()+lineLength-20));
+            }
+            else if(startPoleX+lineLength-nextPlatform.getLayoutX()>30 && startPoleX+lineLength-nextPlatform.getLayoutX()<=40){
+                characterEnd=new KeyFrame(Duration.millis(900),new KeyValue(gameCharacterPane.layoutXProperty(),gameCharacterPane.getLayoutX()+lineLength-30));
+            }
+            else if(startPoleX+lineLength-nextPlatform.getLayoutX()>40 && startPoleX+lineLength-nextPlatform.getLayoutX()<=50){
+                characterEnd=new KeyFrame(Duration.millis(900),new KeyValue(gameCharacterPane.layoutXProperty(),gameCharacterPane.getLayoutX()+lineLength-40));
+            }
+            else if(startPoleX+lineLength-nextPlatform.getLayoutX()>50 && startPoleX+lineLength-nextPlatform.getLayoutX()<=60){
+                characterEnd=new KeyFrame(Duration.millis(900),new KeyValue(gameCharacterPane.layoutXProperty(),gameCharacterPane.getLayoutX()+lineLength-50));
+            }
+            else if(startPoleX+lineLength-nextPlatform.getLayoutX()>60 && startPoleX+lineLength-nextPlatform.getLayoutX()<=70){
+                characterEnd=new KeyFrame(Duration.millis(900),new KeyValue(gameCharacterPane.layoutXProperty(),gameCharacterPane.getLayoutX()+lineLength-60));
+            }
+            else if(startPoleX+lineLength-nextPlatform.getLayoutX()>70 && startPoleX+lineLength-nextPlatform.getLayoutX()<=80){
+                characterEnd=new KeyFrame(Duration.millis(900),new KeyValue(gameCharacterPane.layoutXProperty(),gameCharacterPane.getLayoutX()+lineLength-70));
+            }
+            else if(startPoleX+lineLength-nextPlatform.getLayoutX()>80 && startPoleX+lineLength-nextPlatform.getLayoutX()<=90){
+                characterEnd=new KeyFrame(Duration.millis(900),new KeyValue(gameCharacterPane.layoutXProperty(),gameCharacterPane.getLayoutX()+lineLength-80));
+            }
+            else if(startPoleX+lineLength-nextPlatform.getLayoutX()>90 && startPoleX+lineLength-nextPlatform.getLayoutX()<=100){
+                characterEnd=new KeyFrame(Duration.millis(900),new KeyValue(gameCharacterPane.layoutXProperty(),gameCharacterPane.getLayoutX()+lineLength-90));
+            }
+            else if(startPoleX+lineLength-nextPlatform.getLayoutX()>100){
+                characterEnd=new KeyFrame(Duration.millis(900),new KeyValue(gameCharacterPane.layoutXProperty(),gameCharacterPane.getLayoutX()+lineLength-100));
+            }
+            else{
+                characterEnd=new KeyFrame(Duration.millis(900),new KeyValue(gameCharacterPane.layoutXProperty(),gameCharacterPane.getLayoutX()+lineLength));
+            }
 
 //            if(numRun==1||nextPlatform.getLayoutX()-currentPlatform.getWidth()<85){
 //                characterEnd=new KeyFrame(Duration.millis(1000),new KeyValue(gameCharacterPane.layoutXProperty(),gameCharacterPane.getLayoutX()+nextPlatform.getLayoutX()-50));

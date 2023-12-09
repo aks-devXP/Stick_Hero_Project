@@ -8,7 +8,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/20" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aks.stick_hero_ap.LoadScreenController">
+<AnchorPane prefHeight="500.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.aks.stick_hero_ap.LoadScreenController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5e5e5e" height="40.0" layoutX="130.0" layoutY="446.0" opacity="0.33" stroke="BLACK" strokeType="INSIDE" width="40.0" />
       <ImageView fx:id="backgroundImageView" fitHeight="500.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" />
@@ -91,50 +91,52 @@
             <Font name="KohinoorLatin-Black" size="17.0" />
          </font>
       </Label>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="188.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="playImageView1" fitHeight="40.0" fitWidth="40.0" layoutX="188.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Play Button.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="240.0" layoutY="93.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="removeImageView1" fitHeight="40.0" fitWidth="40.0" layoutX="240.0" layoutY="93.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Remove Button.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="189.0" layoutY="176.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="playImageView2" fitHeight="40.0" fitWidth="40.0" layoutX="189.0" layoutY="176.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Play Button.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="241.0" layoutY="174.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="removeImageView2" fitHeight="40.0" fitWidth="40.0" layoutX="241.0" layoutY="174.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Remove Button.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="190.0" layoutY="259.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="playImageView3" fitHeight="40.0" fitWidth="40.0" layoutX="190.0" layoutY="259.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Play Button.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="242.0" layoutY="257.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="removeImageView3" fitHeight="40.0" fitWidth="40.0" layoutX="242.0" layoutY="257.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Remove Button.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="192.0" layoutY="339.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="playImageView4" fitHeight="40.0" fitWidth="40.0" layoutX="192.0" layoutY="339.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Play Button.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="246.0" layoutY="340.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="removeImageView4" fitHeight="40.0" fitWidth="40.0" layoutX="246.0" layoutY="340.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Remove Button.png" />
          </image>
       </ImageView>
       <Button fx:id="pauseScreenButton" layoutX="130.0" layoutY="446.0" mnemonicParsing="false" onAction="#switchToSinglePlayerHomeScreen" opacity="0.0" prefHeight="40.0" prefWidth="40.0" text="pauseScreenButton" />
-      <Button fx:id="gameScreenButton1" layoutX="188.0" layoutY="95.0" mnemonicParsing="false" onAction="#switchToSinglePlayerGameScreen" opacity="0.0" prefHeight="40.0" prefWidth="40.0" text="gameScreenButton1" />
-      <Button fx:id="gameScreenButton2" layoutX="189.0" layoutY="176.0" mnemonicParsing="false" onAction="#switchToSinglePlayerGameScreen" opacity="0.0" prefHeight="40.0" prefWidth="40.0" text="gameScreenButton2" />
-      <Button fx:id="gameScreenButton3" layoutX="190.0" layoutY="259.0" mnemonicParsing="false" onAction="#switchToSinglePlayerGameScreen" opacity="0.0" prefHeight="40.0" prefWidth="40.0" text="gameScreenButton3" />
-      <Button fx:id="gameScreenButton4" layoutX="192.0" layoutY="339.0" mnemonicParsing="false" onAction="#switchToSinglePlayerGameScreen" opacity="0.0" prefHeight="40.0" prefWidth="40.0" text="gameScreenButton4" />
+      <Rectangle fx:id="saveGameLabelBackground" arcHeight="5.0" arcWidth="5.0" fill="#e1e1e1" height="287.0" layoutX="22.0" layoutY="70.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="260.0" />
+      <Label fx:id="saveGameNotFoundLabel" alignment="CENTER" layoutX="22.0" layoutY="70.0" opacity="0.0" prefHeight="287.0" prefWidth="260.0" text="Save Game not Found" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="System Bold" size="38.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

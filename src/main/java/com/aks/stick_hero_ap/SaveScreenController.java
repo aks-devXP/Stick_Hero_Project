@@ -29,6 +29,9 @@ public class SaveScreenController extends PauseController {
     @FXML
     ImageView backgroundImageView;
 
+    @FXML
+    private ImageView saveImageView1,saveImageView2,saveImageView3,saveImageView4,removeImageView1,removeImageView2,removeImageView3,removeImageView4;
+
     double targetWidth = 300;
     double targetHeight = 500;
 
@@ -77,6 +80,32 @@ public class SaveScreenController extends PauseController {
         backgroundImageView.setFitWidth(targetWidth);
         backgroundImageView.setFitHeight(targetHeight);
         backgroundImageView.setPreserveRatio(false);
+
+        saveImageView1.setOnMouseClicked(mouseEvent -> {
+            saveGame(1);
+        });
+        saveImageView2.setOnMouseClicked(mouseEvent -> {
+            saveGame(2);
+        });
+        saveImageView3.setOnMouseClicked(mouseEvent -> {
+            saveGame(3);
+        });
+        saveImageView4.setOnMouseClicked(mouseEvent -> {
+            saveGame(4);
+        });
+
+        removeImageView1.setOnMouseClicked(mouseEvent -> {
+            removeSaveGame(1);
+        });
+        removeImageView2.setOnMouseClicked(mouseEvent -> {
+            removeSaveGame(2);
+        });
+        removeImageView3.setOnMouseClicked(mouseEvent -> {
+            removeSaveGame(3);
+        });
+        removeImageView4.setOnMouseClicked(mouseEvent -> {
+            removeSaveGame(4);
+        });
 
 //        BoxBlur blur=new BoxBlur(10,10,3);
 //        gamePane.setEffect(blur);
