@@ -27,7 +27,7 @@ public class PauseController extends GameController implements DisplayScreens,In
     private MusicController musicController;
     private MusicAdapter musicAdapter;
 
-    Image image= new Image(getClass().getResourceAsStream("Game Screenshot.jpg"));
+    Image image= new Image(getClass().getResourceAsStream("BackgroundImage1.jpg"));
 
     @FXML
     ImageView backgroundImageView;
@@ -57,6 +57,7 @@ public class PauseController extends GameController implements DisplayScreens,In
         backgroundImageView.setFitWidth(targetWidth);
         backgroundImageView.setFitHeight(targetHeight);
         backgroundImageView.setPreserveRatio(false);
+        //backgroundImageView.setOpacity(0);
         initialiseSound();
 
 //        BoxBlur blur=new BoxBlur(10,10,3);
