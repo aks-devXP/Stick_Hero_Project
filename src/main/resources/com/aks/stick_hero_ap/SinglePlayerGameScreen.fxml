@@ -21,6 +21,11 @@
             <Image url="@Cherry.png" />
          </image>
       </ImageView>
+      <ImageView fx:id="cherryImageView" fitHeight="40.0" fitWidth="40.0" layoutX="50.0" layoutY="60.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Cherry.png" />
+         </image>
+      </ImageView>
       <Label layoutX="232.0" layoutY="22.0" text="2">
          <font>
             <Font name="Corbel Bold" size="27.0" />

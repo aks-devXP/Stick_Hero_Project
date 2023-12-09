@@ -1,5 +1,6 @@
 package com.aks.stick_hero_ap;
 
+import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -7,9 +8,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -34,6 +38,15 @@ public class LoadScreenController extends GameController implements Initializabl
 
     @FXML
     ImageView backgroundImageView;
+
+    @FXML
+    private ImageView playImageView1,playImageView2,playImageView3,playImageView4,removeImageView1,removeImageView2,removeImageView3,removeImageView4;
+
+    @FXML
+    private Label saveGameNotFoundLabel;
+
+    @FXML
+    private Rectangle saveGameLabelBackground;
 
     double targetWidth=300;
     double targetHeight=500;
@@ -60,6 +73,59 @@ public class LoadScreenController extends GameController implements Initializabl
         backgroundImageView.setFitWidth(targetWidth);
         backgroundImageView.setFitHeight(targetHeight);
         backgroundImageView.setPreserveRatio(false);
+        saveGameNotFoundLabel.setLayoutX(1000);
+        saveGameLabelBackground.setLayoutX(1000);
+
+        playImageView1.setOnMouseClicked(mouseEvent -> {
+            try{
+                getSaveGame(1);
+            }
+            catch (Exception e){
+                FadeTransition labelFadeTransition=new FadeTransition();
+                labelFadeTransition.setNode(saveGameNotFoundLabel);
+                labelFadeTransition.setDuration(Duration.seconds(1));
+                labelFadeTransition.setCycleCount(1);
+                labelFadeTransition.setAutoReverse(true);
+                labelFadeTransition.setFromValue(0);
+                labelFadeTransition.setToValue(1);
+                labelFadeTransition.play();
+            }
+        });
+        playImageView2.setOnMouseClicked(mouseEvent -> {
+            getSaveGame(2);
+        });
+        playImageView3.setOnMouseClicked(mouseEvent -> {
+            try{
+                getSaveGame(3);
+            }
+            catch (Exception e){
+                FadeTransition labelFadeTransition=new FadeTransition();
+                saveGameNotFoundLabel.setOpacity(1);
+                labelFadeTransition.setNode(saveGameNotFoundLabel);
+                labelFadeTransition.setDuration(Duration.seconds(1));
+                labelFadeTransition.setCycleCount(1);
+                labelFadeTransition.setAutoReverse(true);
+                labelFadeTransition.setFromValue(0);
+                labelFadeTransition.setToValue(1);
+                labelFadeTransition.play();
+            }
+        });
+        playImageView4.setOnMouseClicked(mouseEvent -> {
+            getSaveGame(4);
+        });
+
+        removeImageView1.setOnMouseClicked(mouseEvent -> {
+            removeSaveGame(1);
+        });
+        removeImageView2.setOnMouseClicked(mouseEvent -> {
+            removeSaveGame(2);
+        });
+        removeImageView3.setOnMouseClicked(mouseEvent -> {
+            removeSaveGame(3);
+        });
+        removeImageView4.setOnMouseClicked(mouseEvent -> {
+            removeSaveGame(4);
+        });
 
 //        BoxBlur blur=new BoxBlur(10,10,3);
 //        gamePane.setEffect(blur);
@@ -135,8 +201,38 @@ public class LoadScreenController extends GameController implements Initializabl
         try{
             in = new ObjectInputStream(new FileInputStream(val+".txt"));
             player = (Player) in.readObject();
+
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Unable to Retrieve Save Game File due to: " + e.getMessage());
+            saveGameNotFoundLabel.setLayoutX(22);
+            saveGameLabelBackground.setLayoutX(22);
+            FadeTransition labelFadeTransition=new FadeTransition();
+            FadeTransition backgroundFadeTransition=new FadeTransition();
+            //saveGameNotFoundLabel.setOpacity(1);
+            labelFadeTransition.setNode(saveGameNotFoundLabel);
+            backgroundFadeTransition.setNode(saveGameLabelBackground);
+            backgroundFadeTransition.setDuration(Duration.seconds(1));
+            backgroundFadeTransition.setAutoReverse(true);
+            backgroundFadeTransition.setCycleCount(2);
+            backgroundFadeTransition.setFromValue(0);
+            backgroundFadeTransition.setToValue(1);
+            labelFadeTransition.setDuration(Duration.seconds(1));
+
+            labelFadeTransition.setCycleCount(2);
+            labelFadeTransition.setAutoReverse(true);
+            labelFadeTransition.setFromValue(0);
+            labelFadeTransition.setToValue(1);
+            labelFadeTransition.setOnFinished(event -> {
+                System.out.println("After Fade Transition");
+                saveGameNotFoundLabel.setLayoutX(1000);
+            });
+            backgroundFadeTransition.setOnFinished(actionEvent -> {
+                saveGameLabelBackground.setLayoutX(1000);
+            });
+
+            System.out.println("Before Fade Transition");
+            labelFadeTransition.play();
+            backgroundFadeTransition.play();
         }
         return player;
     }
@@ -149,6 +245,7 @@ public class LoadScreenController extends GameController implements Initializabl
 //            System.out.println("Save File for Slot" + serial + " Deleted Successfully");
         } catch (IOException e) {
             System.out.println("Unable to Delete Save Game due to: " + e.getMessage());
+
         }
     }
 
