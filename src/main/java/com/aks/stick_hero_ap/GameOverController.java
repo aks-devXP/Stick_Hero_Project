@@ -80,6 +80,7 @@ public class GameOverController extends GameController implements DisplayScreens
         backgroundImageView.setFitWidth(targetWidth);
         backgroundImageView.setFitHeight(targetHeight);
         backgroundImageView.setPreserveRatio(false);
+        backgroundImageView.setOpacity(0);
         initialiseSound();
 
 //        BoxBlur blur=new BoxBlur(10,10,3);
