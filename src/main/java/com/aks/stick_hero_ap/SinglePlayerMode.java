@@ -21,7 +21,7 @@ public class SinglePlayerMode extends GameController implements DisplayScreens,S
 
     @Override
     public void addSaveGame(int serial, Player player) {
-        addSaveSlot(serial,player);
+        addSaveSlots();
     }
 
     @Override

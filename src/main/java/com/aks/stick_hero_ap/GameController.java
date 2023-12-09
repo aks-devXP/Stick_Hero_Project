@@ -10,6 +10,9 @@ import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 public class GameController extends Player implements DisplayScreens{
     private Stage stage;
@@ -23,7 +26,6 @@ public class GameController extends Player implements DisplayScreens{
     void startTwoPlayer(){ //Implement Logics for Two Player Mode
 
     };
-
     private Player[] saveSlots = {null,null,null,null}; // Storing Save Slots for Single Player Mode
 
     public Player[] getSaveSlots() {
@@ -35,12 +37,30 @@ public class GameController extends Player implements DisplayScreens{
     }
 
     //Assuming that we would always put 1-4 in serial
-    public void addSaveSlot(int serial, Player player1) {
-        getSaveSlots()[serial-1] = player1; //Save new Player into Save Slot Array
-    }
 
     public void removeSaveSlot(int serial){
         getSaveSlots()[serial-1] = null; //Change Save Slot back to null
+    }
+
+    public Player getSaveGame(int serial){ // Pass values from 1-4
+        Player player = null;
+        ObjectInputStream in = null;
+        String val = String.valueOf(serial);
+        try{
+            in = new ObjectInputStream(new FileInputStream("Saves\\" + val + ".txt"));
+            player = (Player) in.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Unable to Retrieve Save Game File due to: " + e.getMessage());
+            return null; // If the file is not found return null
+        }
+        return player; // Return object of Player
+    }
+
+    public void addSaveSlots(){ // Function to save all the saves into SaveSlots.
+        for(int i = 0; i<4; i++){
+            getSaveSlots()[i] = getSaveGame(i+1);
+            System.out.println("Completed All the Saves into Save Slots.");
+        }
     }
 
     public Player getPlayer(){
