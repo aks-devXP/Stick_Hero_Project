@@ -22,6 +22,7 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.EventObject;
 import java.util.ResourceBundle;
 
 public class SinglePlayerGameScreenController extends GameController implements Initializable,Sound {
@@ -94,7 +95,7 @@ public class SinglePlayerGameScreenController extends GameController implements 
     AnchorPane gamePane;
 
     @FXML
-    private AnchorPane gameCharacterPane,gameOverScreenAnchorPane;
+    private AnchorPane gameCharacterPane;
 
     @FXML
     private Label currentScoreLabel,cheeryLabel;
@@ -102,11 +103,24 @@ public class SinglePlayerGameScreenController extends GameController implements 
     @FXML
     private ImageView cherryImageView;
 
+    @FXML
+    private Button restartButton;
+
     double cherryPosition;
 
     int numCherry=0;
 
     private int currentScore=0;
+
+    public int getBestScore() {
+        return bestScore;
+    }
+
+    public void setBestScore(int bestScore) {
+        this.bestScore = bestScore;
+    }
+
+    private int bestScore=0;
 
     Timeline timeline;
     int numRun=1;
@@ -117,14 +131,14 @@ public class SinglePlayerGameScreenController extends GameController implements 
         //pausePane.setVisible(true);
         //gamePane.setVisible(false);
         initialiseSound(); // Setting up Sound
-        gameOverScreenAnchorPane.setLayoutX(-1000);
+        //gameOverScreenAnchorPane.setLayoutX(-1000);
         //gameOverScreenAnchorPane.
         backgroundImageView.setImage(image);
         backgroundImageView.setFitWidth(targetWidth);
         backgroundImageView.setFitHeight(targetHeight);
         backgroundImageView.setPreserveRatio(false);
         //root.getChildrenUnmodifiable().add(platform1);
-        currentScore=0;
+        //currentScore=0;
         currentScoreLabel.setText(Integer.toString(currentScore));
 
 
@@ -434,6 +448,9 @@ public class SinglePlayerGameScreenController extends GameController implements 
         cherryImageView.setOpacity(0);
         line.setOpacity(0);
         currentScore++;
+        if(getBestScore()<currentScore){
+            setBestScore(currentScore);
+        }
         Timeline previousPlatformTimeline = new Timeline();
         KeyFrame previousPlatformEnd = new KeyFrame(Duration.millis(1000), new KeyValue(previousPlatform.layoutXProperty(), -1000));
         previousPlatformTimeline.getKeyFrames().add(previousPlatformEnd);
@@ -501,8 +518,29 @@ public class SinglePlayerGameScreenController extends GameController implements 
         characterFallTimeline.getKeyFrames().add(characterFallEnd);
         characterFallTimeline.play();
         characterFallTimeline.setOnFinished(actionEvent -> {
-            gameOverScreenAnchorPane.setLayoutX(0);
-            line.setOpacity(0);
+            //gameOverScreenAnchorPane.setLayoutX(0);
+
+            try {
+                FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("GameOverScreen.fxml"));
+                //Parent root = FXMLLoader.load(getClass().getResource("GameOverScreen.fxml"));
+                Parent root=fxmlLoader.load();
+                GameOverController gameController=fxmlLoader.getController();
+                //gameController.setNumberOfCherries(numCherry);
+                gameController.setCurrentScoreLabel(currentScore);
+                gameController.setCherries(numCherry);
+                gameController.setBestScore(getBestScore());
+                System.out.println(gameController.getScore());
+                Stage stage = (Stage) gameCharacterPane.getScene().getWindow(); // Or line.getScene().getWindow()
+                Scene scene = new Scene(root, 300, 500);
+
+                stage.setScene(scene);
+                stage.setResizable(false);
+                musicAdapter.muteSound(); // Stopping audio before changing scene
+                stage.show();
+                line.setOpacity(0);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 
