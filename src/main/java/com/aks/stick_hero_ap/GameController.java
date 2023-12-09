@@ -63,14 +63,6 @@ public class GameController extends Player implements DisplayScreens{
         }
     }
 
-    public Player getPlayer(){
-        return player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
     public Scene getScene() {
         return scene;
     }
