@@ -51,47 +51,7 @@
             <Font name="Arial Rounded MT Bold" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="95.0" layoutY="89.0" prefHeight="25.0" prefWidth="82.0" text="Score: 10">
-         <font>
-            <Font name="KohinoorLatin-Black" size="17.0" />
-         </font>
-      </Label>
-      <Label layoutX="95.0" layoutY="112.0" prefHeight="25.0" prefWidth="82.0" text="Cherry: 5">
-         <font>
-            <Font name="KohinoorLatin-Black" size="17.0" />
-         </font>
-      </Label>
-      <Label layoutX="97.0" layoutY="172.0" prefHeight="25.0" prefWidth="82.0" text="Score: 10">
-         <font>
-            <Font name="KohinoorLatin-Black" size="17.0" />
-         </font>
-      </Label>
-      <Label layoutX="97.0" layoutY="195.0" prefHeight="25.0" prefWidth="82.0" text="Cherry: 5">
-         <font>
-            <Font name="KohinoorLatin-Black" size="17.0" />
-         </font>
-      </Label>
-      <Label layoutX="95.0" layoutY="254.0" prefHeight="25.0" prefWidth="82.0" text="Score: 10">
-         <font>
-            <Font name="KohinoorLatin-Black" size="17.0" />
-         </font>
-      </Label>
-      <Label layoutX="95.0" layoutY="277.0" prefHeight="25.0" prefWidth="82.0" text="Cherry: 5">
-         <font>
-            <Font name="KohinoorLatin-Black" size="17.0" />
-         </font>
-      </Label>
-      <Label layoutX="97.0" layoutY="335.0" prefHeight="25.0" prefWidth="82.0" text="Score: 10">
-         <font>
-            <Font name="KohinoorLatin-Black" size="17.0" />
-         </font>
-      </Label>
-      <Label layoutX="97.0" layoutY="358.0" prefHeight="25.0" prefWidth="82.0" text="Cherry: 5">
-         <font>
-            <Font name="KohinoorLatin-Black" size="17.0" />
-         </font>
-      </Label>
-      <ImageView fx:id="saveImageView1" fitHeight="40.0" fitWidth="40.0" layoutX="188.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="saveImageView1" fitHeight="40.0" fitWidth="40.0" layoutX="134.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Save Button.png" />
          </image>
@@ -101,7 +61,7 @@
             <Image url="@Remove Button.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="saveImageView2" fitHeight="40.0" fitWidth="40.0" layoutX="189.0" layoutY="176.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="saveImageView2" fitHeight="40.0" fitWidth="40.0" layoutX="134.0" layoutY="176.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Save Button.png" />
          </image>
@@ -111,7 +71,7 @@
             <Image url="@Remove Button.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="saveImageView3" fitHeight="40.0" fitWidth="40.0" layoutX="190.0" layoutY="259.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="saveImageView3" fitHeight="40.0" fitWidth="40.0" layoutX="134.0" layoutY="259.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Save Button.png" />
          </image>
@@ -121,7 +81,7 @@
             <Image url="@Remove Button.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="saveImageView4" fitHeight="40.0" fitWidth="40.0" layoutX="194.0" layoutY="339.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="saveImageView4" fitHeight="40.0" fitWidth="40.0" layoutX="134.0" layoutY="339.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@Save Button.png" />
          </image>

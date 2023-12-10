@@ -235,8 +235,12 @@ public class SinglePlayerGameScreenController extends GameController implements 
     }
 
     public void switchToPauseMenuScreen(ActionEvent event) throws IOException {
-
-        Parent root= FXMLLoader.load(getClass().getResource("PauseMenuScreen.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("PauseMenuScreen.fxml"));
+        //Parent root= FXMLLoader.load(getClass().getResource("PauseMenuScreen.fxml"));
+        Parent root=fxmlLoader.load();
+        PauseController pauseController=fxmlLoader.getController();
+        pauseController.setCurrentScore(currentScore);
+        pauseController.setCherries(numCherry);
         stage=(Stage)((Node)event.getSource()).getScene().getWindow();
         scene=new Scene(root,300,500);
         stage.setScene(scene);
@@ -338,6 +342,7 @@ public class SinglePlayerGameScreenController extends GameController implements 
 
             //moveCharacterAndPlatformToStart(platform2,platform1);
         }
+        pauseButton.setDisable(true);
     }
 
 
@@ -528,6 +533,7 @@ public class SinglePlayerGameScreenController extends GameController implements 
                 currentPlatform.setWidth(100);
                 currentPlatform.setLayoutX(0);
                 gameCharacterPane.setLayoutX(currentPlatform.getWidth()-25);
+                pauseButton.setDisable(false);
                 initEverything();
                 //System.out.println(currentPlatform.getWidth()+"+"+currentPlatform.getLayoutX());
             });
@@ -547,6 +553,7 @@ public class SinglePlayerGameScreenController extends GameController implements 
                 currentPlatform.setWidth(currentPlatform.getWidth());
                 currentPlatform.setLayoutX(0);
                 gameCharacterPane.setLayoutX(currentPlatform.getWidth()-25);
+                pauseButton.setDisable(false);
                 initEverything();
             });
         }

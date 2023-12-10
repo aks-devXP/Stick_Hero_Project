@@ -27,6 +27,26 @@ public class PauseController extends SinglePlayerGameScreenController implements
     private MusicController musicController;
     private MusicAdapter musicAdapter;
 
+    @Override
+    public int getCurrentScore() {
+        return currentScore;
+    }
+
+    @Override
+    public void setCurrentScore(int currentScore) {
+        this.currentScore = currentScore;
+    }
+
+    public int getCherries() {
+        return cherries;
+    }
+
+    public void setCherries(int cherries) {
+        this.cherries = cherries;
+    }
+
+    private int currentScore=0,cherries=0;
+
     Image image= new Image(getClass().getResourceAsStream("BackgroundImage1.jpg"));
 
     @FXML
@@ -69,7 +89,13 @@ public class PauseController extends SinglePlayerGameScreenController implements
 
     public void switchToSinglePlayerGameScreen(ActionEvent event) throws IOException {
 
-        Parent root= FXMLLoader.load(getClass().getResource("SinglePlayerGameScreen.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("SinglePlayerGameScreen.fxml"));
+
+        //Parent root= FXMLLoader.load(getClass().getResource("SinglePlayerGameScreen.fxml"));
+        Parent root=fxmlLoader.load();
+        SinglePlayerGameScreenController singlePlayerGameScreenController=fxmlLoader.getController();
+        singlePlayerGameScreenController.setCurrentScoreAndShow(currentScore);
+        singlePlayerGameScreenController.setCherriesAndShow(cherries);
         stage=(Stage)((Node)event.getSource()).getScene().getWindow();
         scene=new Scene(root,300,500);
         stage.setScene(scene);
