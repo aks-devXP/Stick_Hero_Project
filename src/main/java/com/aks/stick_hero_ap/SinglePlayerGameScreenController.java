@@ -140,7 +140,7 @@ public class SinglePlayerGameScreenController extends GameController implements 
         Loaded = loaded;
     }
 
-    public static Player getPlayerInstance1(){
+    public static Player getPlayerInstance1(){ //Singleton Design Pattern
         if(getPlayer1() == null){
             setPlayer1(new Player());
         }
