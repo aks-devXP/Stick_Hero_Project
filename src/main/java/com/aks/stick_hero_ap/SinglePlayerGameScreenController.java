@@ -54,7 +54,21 @@ public class SinglePlayerGameScreenController extends GameController implements 
 
     private double startPoleX, startPoleY, endPoleX, endPoleY, poleLength=0;
 
-    private boolean clickHeld=false,clickReleased=false, poleRotated=false, characterFlipped=false,cherryUpdated=false;
+    private boolean clickHeld=false;
+    private boolean clickReleased=false;
+    private boolean poleRotated=false;
+    private boolean characterFlipped=false;
+    private boolean cherryUpdated=false;
+
+    public boolean getWasPaused() {
+        return wasPaused;
+    }
+
+    public void setWasPaused(boolean wasPaused) {
+        this.wasPaused = wasPaused;
+    }
+
+    private boolean wasPaused=false;
 
     private boolean gameOver=false; //This gameOver will be used in movingCharacter function
     private boolean Loaded;
@@ -153,7 +167,7 @@ public class SinglePlayerGameScreenController extends GameController implements 
         //pausePane.setVisible(true);
         //gamePane.setVisible(false);
         initialiseSound(); // Setting up Sound
-        if(!isLoaded()) {
+        if(!isLoaded()||!wasPaused) {
             //setPlayer1(new Player());
             getPlayerInstance1();
         };
@@ -268,12 +282,12 @@ public class SinglePlayerGameScreenController extends GameController implements 
     }
 
     public void setCurrentScoreAndShow(int num){
-        setCurrentScore(num);
+        this.currentScore=num;
         currentScoreLabel.setText(String.valueOf(num));
     }
 
     public void setCherriesAndShow(int cherries){
-        setCherriesCollected(cherries);
+        this.numCherry=cherries;
         cheeryLabel.setText(String.valueOf(cherries));
     }
 

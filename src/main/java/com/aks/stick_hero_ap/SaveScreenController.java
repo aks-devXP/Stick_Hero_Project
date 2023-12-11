@@ -116,7 +116,14 @@ public class SaveScreenController extends PauseController {
 
     public void switchToPauseMenuScreen(ActionEvent event) throws IOException {
 
-        Parent root = FXMLLoader.load(getClass().getResource("PauseMenuScreen.fxml"));
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("PauseMenuScreen.fxml"));
+
+        //Parent root = FXMLLoader.load(getClass().getResource("PauseMenuScreen.fxml"));
+        Parent root=fxmlLoader.load();
+        PauseController pauseController=fxmlLoader.getController();
+        pauseController.setCherries(getPlayer1().getCherriesCollected());
+        pauseController.setCurrentScore(getPlayer1().getCurrentScore());
+        pauseController.setPlayer1(getPlayer1());
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root, 300, 500);
         stage.setScene(scene);
