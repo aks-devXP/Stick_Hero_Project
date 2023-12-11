@@ -439,7 +439,7 @@ public class SinglePlayerGameScreenController extends GameController implements 
                 if(!cherryUpdated){
                     if(isLoaded()) numCherry = getPlayer1().getCherriesCollected()+1;
                     else numCherry++;
-                    getPlayer1().setCherriesCollected(getCherriesCollected()+1);
+                    getPlayer1().setCherriesCollected(getPlayer1().getCherriesCollected()+1);
                     //setCherriesCollected(getPlayer1().getCherriesCollected()+1);
                     cherryUpdated=true;
                 }
@@ -491,7 +491,7 @@ public class SinglePlayerGameScreenController extends GameController implements 
 
         }
         else currentScore++;
-        getPlayer1().setCurrentScore(getCurrentScore()+1);
+        getPlayer1().setCurrentScore(getPlayer1().getCurrentScore()+1);
 
         if(getBestScore()<currentScore){
             setBestScore(currentScore);

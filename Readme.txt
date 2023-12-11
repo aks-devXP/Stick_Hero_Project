@@ -14,3 +14,5 @@ Assumption:
 1. During Movement of Character pausing the game might lead to end of the game run.
 2. High score is set to zero after re-executing the Driver Class.(After termination of program)
 3. Very quick flipping might lead to skipping cherries sometimes.
+
+Error Handling: We have done Multiple error handling for manipulation and switching of scenes, getting resources for fxml loader etc.
