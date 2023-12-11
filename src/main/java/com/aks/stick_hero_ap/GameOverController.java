@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class GameOverController extends GameController implements DisplayScreens,Initializable,Sound {
+public class GameOverController extends GameController implements Initializable,Sound {
     private Stage stage;
     private Scene scene;
     private Parent root;
