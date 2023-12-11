@@ -97,25 +97,7 @@ public class LoadScreenController extends GameController implements Initializabl
             try{
                 p1 = getSaveGame(1);
                 //data = getSaveGame2(1);
-                if(p1 != null) { // If Save Game is Found then Load it into Player Object in Single Player Game Screen
-                    isLoaded=true;
-                    //ActionEvent event=new ActionEvent();
-                    FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("SinglePlayerGameScreen.fxml"));
-                    //Parent root= FXMLLoader.load(getClass().getResource("SinglePlayerGameScreen.fxml"));
-                    Parent root=fxmlLoader.load();
-                    SinglePlayerGameScreenController controller = fxmlLoader.getController();
-                    controller.setCurrentScoreAndShow(p1.getCurrentScore());
-                    controller.setCherriesAndShow(p1.getCherriesCollected());
-                    controller.setPlayer1(p1);
-                    controller.setLoaded(true);
-
-                    stage=(Stage)loadScreenAnchorPane.getScene().getWindow();
-                    scene=new Scene(root,300,500);
-                    stage.setScene(scene);
-                    stage.setResizable(false);
-                    musicAdapter.muteSound(); // stopping audio before changing scene
-                    stage.show();
-                }
+                initSaveGame();
             }
             catch (Exception e){
                 FadeTransition labelFadeTransition=new FadeTransition();
@@ -131,52 +113,25 @@ public class LoadScreenController extends GameController implements Initializabl
         playImageView2.setOnMouseClicked(mouseEvent -> {
             p1 = getSaveGame(2);
             if(p1 != null) { // If Save Game is Found then Load it into Player Object in Single Player Game Screen
-                isLoaded=true;
-                //ActionEvent event=new ActionEvent();
-                FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("SinglePlayerGameScreen.fxml"));
-                //Parent root= FXMLLoader.load(getClass().getResource("SinglePlayerGameScreen.fxml"));
-                Parent root= null;
                 try {
-                    root = fxmlLoader.load();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    initSaveGame();
+                } catch (Exception e){
+                    FadeTransition labelFadeTransition=new FadeTransition();
+                    saveGameNotFoundLabel.setOpacity(1);
+                    labelFadeTransition.setNode(saveGameNotFoundLabel);
+                    labelFadeTransition.setDuration(Duration.seconds(1));
+                    labelFadeTransition.setCycleCount(1);
+                    labelFadeTransition.setAutoReverse(true);
+                    labelFadeTransition.setFromValue(0);
+                    labelFadeTransition.setToValue(1);
+                    labelFadeTransition.play();
                 }
-                SinglePlayerGameScreenController controller = fxmlLoader.getController();
-                controller.setCurrentScoreAndShow(p1.getCurrentScore());
-                controller.setCherriesAndShow(p1.getCherriesCollected());
-                controller.setPlayer1(p1);
-                controller.setLoaded(true);
-
-                stage=(Stage)loadScreenAnchorPane.getScene().getWindow();
-                scene=new Scene(root,300,500);
-                stage.setScene(scene);
-                stage.setResizable(false);
-                musicAdapter.muteSound(); // stopping audio before changing scene
-                stage.show();
             }
         });
         playImageView3.setOnMouseClicked(mouseEvent -> {
             try{
                 p1 = getSaveGame(3);
-                if(p1 != null) { // If Save Game is Found then Load it into Player Object in Single Player Game Screen
-                    isLoaded=true;
-                    //ActionEvent event=new ActionEvent();
-                    FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("SinglePlayerGameScreen.fxml"));
-                    //Parent root= FXMLLoader.load(getClass().getResource("SinglePlayerGameScreen.fxml"));
-                    Parent root=fxmlLoader.load();
-                    SinglePlayerGameScreenController controller = fxmlLoader.getController();
-                    controller.setCurrentScoreAndShow(p1.getCurrentScore());
-                    controller.setCherriesAndShow(p1.getCherriesCollected());
-                    controller.setPlayer1(p1);
-                    controller.setLoaded(true);
-
-                    stage=(Stage)loadScreenAnchorPane.getScene().getWindow();
-                    scene=new Scene(root,300,500);
-                    stage.setScene(scene);
-                    stage.setResizable(false);
-                    musicAdapter.muteSound(); // stopping audio before changing scene
-                    stage.show();
-                }
+                initSaveGame();
             }
             catch (Exception e){
                 FadeTransition labelFadeTransition=new FadeTransition();
@@ -192,29 +147,18 @@ public class LoadScreenController extends GameController implements Initializabl
         });
         playImageView4.setOnMouseClicked(mouseEvent -> {
             p1 = getSaveGame(4);
-            if(p1 != null) { // If Save Game is Found then Load it into Player Object in Single Player Game Screen
-                isLoaded=true;
-                //ActionEvent event=new ActionEvent();
-                FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("SinglePlayerGameScreen.fxml"));
-                //Parent root= FXMLLoader.load(getClass().getResource("SinglePlayerGameScreen.fxml"));
-                Parent root= null;
-                try {
-                    root = fxmlLoader.load();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                SinglePlayerGameScreenController controller = fxmlLoader.getController();
-                controller.setCurrentScoreAndShow(p1.getCurrentScore());
-                controller.setCherriesAndShow(p1.getCherriesCollected());
-                controller.setPlayer1(p1);
-                controller.setLoaded(true);
-
-                stage=(Stage)loadScreenAnchorPane.getScene().getWindow();
-                scene=new Scene(root,300,500);
-                stage.setScene(scene);
-                stage.setResizable(false);
-                musicAdapter.muteSound(); // stopping audio before changing scene
-                stage.show();
+            try {
+                initSaveGame();
+            } catch (Exception e) {
+                FadeTransition labelFadeTransition=new FadeTransition();
+                saveGameNotFoundLabel.setOpacity(1);
+                labelFadeTransition.setNode(saveGameNotFoundLabel);
+                labelFadeTransition.setDuration(Duration.seconds(1));
+                labelFadeTransition.setCycleCount(1);
+                labelFadeTransition.setAutoReverse(true);
+                labelFadeTransition.setFromValue(0);
+                labelFadeTransition.setToValue(1);
+                labelFadeTransition.play();
             }
         });
 
@@ -234,6 +178,28 @@ public class LoadScreenController extends GameController implements Initializabl
 //        BoxBlur blur=new BoxBlur(10,10,3);
 //        gamePane.setEffect(blur);
 
+    }
+
+    private void initSaveGame() throws IOException {
+        if(p1 != null) { // If Save Game is Found then Load it into Player Object in Single Player Game Screen
+            isLoaded=true;
+            //ActionEvent event=new ActionEvent();
+            FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("SinglePlayerGameScreen.fxml"));
+            //Parent root= FXMLLoader.load(getClass().getResource("SinglePlayerGameScreen.fxml"));
+            Parent root=fxmlLoader.load();
+            SinglePlayerGameScreenController controller = fxmlLoader.getController();
+            controller.setCurrentScoreAndShow(p1.getCurrentScore());
+            controller.setCherriesAndShow(p1.getCherriesCollected());
+            controller.setPlayer1(p1);
+            controller.setLoaded(true);
+
+            stage=(Stage)loadScreenAnchorPane.getScene().getWindow();
+            scene=new Scene(root,300,500);
+            stage.setScene(scene);
+            stage.setResizable(false);
+            musicAdapter.muteSound(); // stopping audio before changing scene
+            stage.show();
+        }
     }
 
     public void switchToSinglePlayerGameScreen(ActionEvent event) throws IOException {
