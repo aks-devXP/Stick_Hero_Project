@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class PauseController extends SinglePlayerGameScreenController implements DisplayScreens,Initializable,SaveData,Sound {
+public class PauseController extends SinglePlayerGameScreenController implements Initializable,SaveData,Sound {
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -177,21 +177,6 @@ public class PauseController extends SinglePlayerGameScreenController implements
     void unpause(){};
 
     void save(int savePoleLength, boolean saveIsMoving, boolean saveIsFlipped, boolean saveIsGameOver, int saveCherriesCollected, int saveScore, Platform saveFirstPlatform, Platform saveSecondPlatform, double savePlatformDistance, double savePlayerPosition) {
-    }
-
-    @Override
-    public void display() {
-
-    }
-
-    @Override
-    public void nextDisplay() {
-
-    }
-
-    @Override
-    public void prevDisplay() {
-
     }
 
     @Override // Save Game in the slots

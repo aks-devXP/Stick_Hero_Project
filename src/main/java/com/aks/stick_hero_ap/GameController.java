@@ -14,7 +14,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
-public class GameController extends Player implements DisplayScreens{
+public class GameController extends Player{
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -69,19 +69,5 @@ public class GameController extends Player implements DisplayScreens{
 
     public void makeScene(){
         this.scene = new Scene(new Pane()); //temp scene
-    }
-
-    @Override
-    public void display() {
-    }
-
-    @Override
-    public void nextDisplay() {
-
-    }
-
-    @Override
-    public void prevDisplay() {
-
     }
 }

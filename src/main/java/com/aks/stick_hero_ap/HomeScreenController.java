@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class HomeScreenController extends HomeScreen implements Sound,DisplayScreens, Initializable {
+public class HomeScreenController extends HomeScreen implements Sound,Initializable {
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -115,17 +115,4 @@ public class HomeScreenController extends HomeScreen implements Sound,DisplayScr
     void singlePlayer(){};
     void twoPlayer(){};
 
-    @Override
-    public void display() {
-    }
-
-    @Override
-    public void nextDisplay() {
-
-    }
-
-    @Override
-    public void prevDisplay() {
-
-    }
 }
