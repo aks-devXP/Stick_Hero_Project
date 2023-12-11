@@ -33,7 +33,7 @@
       </ImageView>
       <Button fx:id="resumeButton" layoutX="127.0" layoutY="66.0" mnemonicParsing="false" onAction="#switchToSinglePlayerGameScreen" opacity="0.0" prefHeight="66.0" prefWidth="47.0" text="ResumeButton" />
       <Button fx:id="homeButton" layoutX="50.0" layoutY="300.0" mnemonicParsing="false" onAction="#switchToHomeScreen" opacity="0.0" prefHeight="40.0" prefWidth="40.0" text="HomeButton" />
-      <Button fx:id="restartButton" layoutX="211.0" layoutY="300.0" mnemonicParsing="false" onAction="#switchToSinglePlayerGameScreen" opacity="0.0" prefHeight="40.0" prefWidth="40.0" text="RestartButton" />
+      <Button fx:id="restartButton" layoutX="211.0" layoutY="300.0" mnemonicParsing="false" onAction="#switchToSinglePlayerGameScreenAndInitialise" opacity="0.0" prefHeight="40.0" prefWidth="40.0" text="RestartButton" />
       <Button fx:id="saveGameButton" layoutX="50.0" layoutY="162.0" mnemonicParsing="false" onAction="#switchToSaveGameScreen" opacity="0.0" prefHeight="69.0" prefWidth="201.0" text="saveGameButton" />
    </children>
 </AnchorPane>

@@ -96,6 +96,11 @@ public class PauseController extends SinglePlayerGameScreenController implements
         SinglePlayerGameScreenController singlePlayerGameScreenController=fxmlLoader.getController();
         singlePlayerGameScreenController.setCurrentScoreAndShow(currentScore);
         singlePlayerGameScreenController.setCherriesAndShow(cherries);
+        singlePlayerGameScreenController.setWasPaused(true);
+//        Player p1=singlePlayerGameScreenController.getPlayerInstance();
+//        p1.setCherriesCollected(cherries);
+//        p1.setCurrentScore(currentScore);
+
         stage=(Stage)((Node)event.getSource()).getScene().getWindow();
         scene=new Scene(root,300,500);
         stage.setScene(scene);
@@ -103,6 +108,24 @@ public class PauseController extends SinglePlayerGameScreenController implements
         musicAdapter.muteSound(); // Stopping the current audio before changing scene
         stage.show();
     }
+
+
+    public void switchToSinglePlayerGameScreenAndInitialise(ActionEvent event) throws IOException {
+
+        FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("SinglePlayerGameScreen.fxml"));
+
+        //Parent root= FXMLLoader.load(getClass().getResource("SinglePlayerGameScreen.fxml"));
+        Parent root=fxmlLoader.load();
+
+        stage=(Stage)((Node)event.getSource()).getScene().getWindow();
+        scene=new Scene(root,300,500);
+        stage.setScene(scene);
+        stage.setResizable(false);
+        musicAdapter.muteSound(); // Stopping the current audio before changing scene
+        stage.show();
+    }
+
+
 
     public void switchToHomeScreen(ActionEvent event) throws IOException {
         musicAdapter.muteSound();
