@@ -107,11 +107,6 @@ public class SaveScreenController extends PauseController {
         removeImageView4.setOnMouseClicked(mouseEvent -> {
             removeSaveGame(4);
         });
-
-//        BoxBlur blur=new BoxBlur(10,10,3);
-//        gamePane.setEffect(blur);
-
-
     }
 
     public void switchToPauseMenuScreen(ActionEvent event) throws IOException {
@@ -123,7 +118,7 @@ public class SaveScreenController extends PauseController {
         PauseController pauseController=fxmlLoader.getController();
         pauseController.setCherries(getPlayer1().getCherriesCollected());
         pauseController.setCurrentScore(getPlayer1().getCurrentScore());
-        pauseController.setPlayer1(getPlayer1());
+        setPlayer1(getPlayer1());
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root, 300, 500);
         stage.setScene(scene);

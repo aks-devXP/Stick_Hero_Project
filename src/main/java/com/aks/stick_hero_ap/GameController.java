@@ -14,7 +14,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
-public class GameController extends Player{
+public class GameController{
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -42,26 +42,26 @@ public class GameController extends Player{
         getSaveSlots()[serial-1] = null; //Change Save Slot back to null
     }
 
-    public Player getSaveGame(int serial){ // Pass values from 1-4
-        Player player = null;
-        ObjectInputStream in = null;
-        String val = String.valueOf(serial);
-        try{
-            in = new ObjectInputStream(new FileInputStream("Saves\\" + val + ".txt"));
-            player = (Player) in.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Unable to Retrieve Save Game File due to: " + e.getMessage());
-            return null; // If the file is not found return null
-        }
-        return player; // Return object of Player
-    }
+//    public Player getSaveGame(int serial){ // Pass values from 1-4
+//        Player player = null;
+//        ObjectInputStream in = null;
+//        String val = String.valueOf(serial);
+//        try{
+//            in = new ObjectInputStream(new FileInputStream("Saves\\" + val + ".txt"));
+//            player = (Player) in.readObject();
+//        } catch (IOException | ClassNotFoundException e) {
+//            System.out.println("Unable to Retrieve Save Game File due to: " + e.getMessage());
+//            return null; // If the file is not found return null
+//        }
+//        return player; // Return object of Player
+//    }
 
-    public void addSaveSlots(){ // Function to save all the saves into SaveSlots.
-        for(int i = 0; i<4; i++){
-            getSaveSlots()[i] = getSaveGame(i+1);
-            System.out.println("Completed All the Saves into Save Slots.");
-        }
-    }
+//    public void addSaveSlots(){ // Function to save all the saves into SaveSlots.
+//        for(int i = 0; i<4; i++){
+//            getSaveSlots()[i] = getSaveGame(i+1);
+//            System.out.println("Completed All the Saves into Save Slots.");
+//        }
+//    }
 
     public Scene getScene() {
         return scene;

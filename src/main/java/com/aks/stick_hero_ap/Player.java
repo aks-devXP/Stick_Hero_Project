@@ -30,15 +30,22 @@ public class Player implements Serializable {
     private double platformDistance;
     private double platformPosition;
 
+//    public Player_PLT() {
+//        new Platform();
+//    }
+
     public static Player getPlayer() {
         return player;
+    }
+
+    private Player(){
     }
 
     public static void setPlayer(Player player) {
         Player.player = player;
     }
 
-    public Player getPlayerInstance(){ //Singleton Method
+    public static Player getPlayerInstance(){ //Singleton Method
         if(player == null){
             player = new Player();
         }
@@ -184,57 +191,6 @@ public class Player implements Serializable {
         return ThreadLocalRandom.current().nextDouble(lowerBound, upperBound + 1); // Used ThreadLocalRandom as it may be required in thread pool by multiple processes
     }
 
-
-
-    //Initialise Both Platforms with Random Values
-    void initPlatforms(){
-        //double width1 = randomWidth(); // Generating Random Width of Platform 1
-        //double width2 = randomWidth(); // For Platform 2 (Random Width)
-        //double start1 = randomPos(); // Generating Random Starting for Platform 1
-        //double start2 = randomPos(); // For Platform 2 (Random Starting)
-        //double end1 = randomPos();
-        //double end2 = randomPos();
-        double height = 20; // Fixed Height of All platforms
-        //firstPlatform = new Platform(width1,height,start1,end1);
-        //secondPlatform = new Platform(width2,height,start2,end2);
-    }
-
-    // Initialising Second Platform After Moving
-    void newPlatform(){
-        //double width = randomWidth();
-        //double start = randomPos();
-        //double end = randomPos();
-        double height = 20; // Fixed Height for All Platforms
-        firstPlatform = secondPlatform; // Second Platform becomes First Platform after Moving towards it
-        //secondPlatform = new Platform(width,height,start,end); // Second Platform is Re-Generated with Random Values
-    }
-
-    //Initialise Random Positions for Cherry
-    void initCherry(){
-        //setCherryX(randomCherryX()); // Generating Value for X-axis of Cherry
-
-    }
-
-    // Flips the Player whenever Function is Called
-    void flipPlayer() {setFlipped(!isFlipped());}
-    void getPosition(){};
-    int getScore(){
-        return 0;
-    };
-    int getCherry(){
-        return 0;
-    };
-
-    void setPosition(double X, double Y){};
-    void setCherry(){};
-    void setFallenStatus(){};
-    void setScore(){};
-
-    void revivePlayer(){
-        if(!isAlive()){
-            setAlive(true);
-        }
-    }
     private Scene getScene() {
         return new Scene(new StackPane());
     }

@@ -29,7 +29,7 @@ import java.util.ResourceBundle;
 This class basically handles all of the functions for the singleplayergamescreen, it is the controller for the single player game screen
  */
 
-public class SinglePlayerGameScreenController extends GameController implements Initializable,Sound {
+public class SinglePlayerGameScreenController  implements Initializable,Sound {
 
     public Stage getStage() {
         return stage;
@@ -37,11 +37,6 @@ public class SinglePlayerGameScreenController extends GameController implements 
 
     public void setStage(Stage stage) {
         this.stage = stage;
-    }
-
-    @Override
-    public Scene getScene() {
-        return scene;
     }
 
     public void setScene(Scene scene) {
@@ -253,15 +248,15 @@ public class SinglePlayerGameScreenController extends GameController implements 
         this.pauseButton = pauseButton;
     }
 
-    @Override
-    public int getCurrentScore() {
-        return currentScore;
-    }
-
-    @Override
-    public void setCurrentScore(int currentScore) {
-        this.currentScore = currentScore;
-    }
+//    @Override
+//    public int getCurrentScore() {
+//        return currentScore;
+//    }
+//
+//    @Override
+//    public void setCurrentScore(int currentScore) {
+//        this.currentScore = currentScore;
+//    }
 
     private Line line = new Line();   //This line is the pole that extends and then drops
 
@@ -362,8 +357,6 @@ public class SinglePlayerGameScreenController extends GameController implements 
     @FXML
     private Button restartButton,pauseButton;
 
-
-
     double cherryPosition;
 
     int numCherry=0;
@@ -393,7 +386,7 @@ public class SinglePlayerGameScreenController extends GameController implements 
 
     public static Player getPlayerInstance1(){ //Singleton Design Pattern
         if(getPlayer1() == null){
-            setPlayer1(new Player());
+            setPlayer1(Player.getPlayerInstance());
         }
         return getPlayer1();
     }
@@ -407,7 +400,7 @@ public class SinglePlayerGameScreenController extends GameController implements 
         of the next platform and the position of the player and also the pole.
          */
         initialiseSound(); // Setting up Sound
-        if(!isLoaded()||!wasPaused) {
+        if(!isLoaded() || !wasPaused) {
             //setPlayer1(new Player());
             getPlayerInstance1();
         };
@@ -419,18 +412,18 @@ public class SinglePlayerGameScreenController extends GameController implements 
 
         currentScoreLabel.setText(Integer.toString(currentScore));
 
-
         platform1.setOpacity(1);
         platform1.setHeight(platformHeight);
         platform1.setWidth(platform1Details.getWidth());
         platform1.setLayoutX(platform1Details.getPositionX());
         platform1.setLayoutY(platform1Details.getPositionY());
+        //System.out.println("VAL -> " + platform1Details.getPlayerInstance().getPositionY());
         currentPlatformDetails=platform1Details;
         currentPlatform=platform1;
 
         currentPlatformNumber=1;
-        nextPlatformWidth= randomWidth(currentPlatformDetails.getWidth(),gap);
-        nextPlatformPosition=randomPos(currentPlatform.getWidth(),nextPlatformWidth,gap);
+        nextPlatformWidth= player1.randomWidth(currentPlatformDetails.getWidth(),gap);
+        nextPlatformPosition= player1.randomPos(currentPlatform.getWidth(),nextPlatformWidth,gap);
         platform2.setOpacity(1);
         platform2.setWidth(nextPlatformWidth);
         platform2.setHeight(platformHeight);
@@ -443,7 +436,7 @@ public class SinglePlayerGameScreenController extends GameController implements 
         gameCharacterPane.setLayoutX(35);    //-15 as 10 is the width of the character + 5 for proper gap between stick and player
         gameCharacterPane.setLayoutY(330);   //-20 as 20 is the height of the character
         cherryImageView.setLayoutY(350);
-        cherryPosition=randomCherryX(currentPlatform.getWidth(),platform2.getLayoutX());
+        cherryPosition = player1.randomCherryX(currentPlatform.getWidth(),platform2.getLayoutX());
         cherryImageView.setLayoutX(cherryPosition);
         cheeryLabel.setText(String.valueOf(numCherry));
 
@@ -472,9 +465,6 @@ public class SinglePlayerGameScreenController extends GameController implements 
             poleExtendingFalse();
 
         });
-
-
-
     }
 
 
@@ -775,7 +765,7 @@ public class SinglePlayerGameScreenController extends GameController implements 
                 this.currentPlatform=platform1;
             }
             System.out.println(gameCharacterPane.getLayoutX());
-            if(gameOver==true||characterFlipped){
+            if(gameOver || characterFlipped){
                 characterFall();
             }
             else{
@@ -948,8 +938,8 @@ public class SinglePlayerGameScreenController extends GameController implements 
         cherryUpdated=false;
         if(currentPlatformNumber==1){
             //currentPlatform=platform1;
-            nextPlatformWidth= randomWidth(currentPlatform.getWidth(),gap);
-            nextPlatformPosition=randomPos(currentPlatform.getWidth(),nextPlatformWidth,gap);
+            nextPlatformWidth= player1.randomWidth(currentPlatform.getWidth(),gap);
+            nextPlatformPosition = player1.randomPos(currentPlatform.getWidth(),nextPlatformWidth,gap);
             platform2.setOpacity(1);
             platform2.setWidth(nextPlatformWidth);
             platform2.setHeight(platformHeight);
@@ -957,14 +947,14 @@ public class SinglePlayerGameScreenController extends GameController implements 
             platform2.setLayoutY(platform2Details.getPositionY());
             cherryImageView.setOpacity(1);
             cherryImageView.setLayoutY(350);
-            cherryPosition=randomCherryX(platform1.getWidth(),platform2.getLayoutX());
+            cherryPosition = player1.randomCherryX(platform1.getWidth(),platform2.getLayoutX());
             cherryImageView.setLayoutX(cherryPosition);
 
         }
         else{
             //currentPlatform=platform2;
-            nextPlatformWidth= randomWidth(currentPlatform.getWidth(),gap);
-            nextPlatformPosition=randomPos(currentPlatform.getWidth(),nextPlatformWidth,gap);
+            nextPlatformWidth= player1.randomWidth(currentPlatform.getWidth(),gap);
+            nextPlatformPosition = player1.randomPos(currentPlatform.getWidth(),nextPlatformWidth,gap);
 
             platform1.setOpacity(1);
             platform1.setWidth(nextPlatformWidth);
@@ -973,7 +963,7 @@ public class SinglePlayerGameScreenController extends GameController implements 
             platform1.setLayoutY(platform1Details.getPositionY());
             cherryImageView.setOpacity(1);
             cherryImageView.setLayoutY(350);
-            cherryPosition=randomCherryX(platform2.getWidth(),platform1.getLayoutX());
+            cherryPosition = player1.randomCherryX(platform2.getWidth(),platform1.getLayoutX());
             cherryImageView.setLayoutX(cherryPosition);
         }
 
