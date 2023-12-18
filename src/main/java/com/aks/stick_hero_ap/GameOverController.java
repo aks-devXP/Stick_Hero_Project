@@ -34,7 +34,7 @@ public class GameOverController extends GameController implements Initializable,
         this.numberOfCherries = numberOfCherries;
     }
 
-    @Override
+//    @Override
     public int getScore() {
         return score;
     }

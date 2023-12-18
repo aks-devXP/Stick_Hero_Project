@@ -8,13 +8,13 @@ class PlayerTest {
 
     @Test
     void getPlayerInstance() { // The singleton design pattern would always return a new object
-        Player player = new Player();
+        Player player = Player.getPlayerInstance();
         assertEquals(null,player.getPlayerInstance());
     }
 
     @Test
     void Test2(){
-        Player player = new Player(); // The Player has Null set as object type initially
+        Player player = Player.getPlayer(); // The Player has Null set as object type initially
         assertEquals(null,player.getPlayer());
     }
 }

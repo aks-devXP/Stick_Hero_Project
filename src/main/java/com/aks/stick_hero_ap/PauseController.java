@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class PauseController extends SinglePlayerGameScreenController implements Initializable,SaveData,Sound {
+public class PauseController extends SinglePlayerGameScreenController implements Initializable,Sound {
     private Stage stage;
     private Scene scene;
     private Parent root;
@@ -27,12 +27,12 @@ public class PauseController extends SinglePlayerGameScreenController implements
     private MusicController musicController;
     private MusicAdapter musicAdapter;
 
-    @Override
+    //@Override
     public int getCurrentScore() {
         return currentScore;
     }
 
-    @Override
+    //@Override
     public void setCurrentScore(int currentScore) {
         this.currentScore = currentScore;
     }
@@ -73,7 +73,6 @@ public class PauseController extends SinglePlayerGameScreenController implements
         //gamePane.setVisible(false);
 
         backgroundImageView.setImage(image);
-
         backgroundImageView.setFitWidth(targetWidth);
         backgroundImageView.setFitHeight(targetHeight);
         backgroundImageView.setPreserveRatio(false);
@@ -175,24 +174,6 @@ public class PauseController extends SinglePlayerGameScreenController implements
 
     void pause(){};
     void unpause(){};
-
-    void save(int savePoleLength, boolean saveIsMoving, boolean saveIsFlipped, boolean saveIsGameOver, int saveCherriesCollected, int saveScore, Platform saveFirstPlatform, Platform saveSecondPlatform, double savePlatformDistance, double savePlayerPosition) {
-    }
-
-    @Override // Save Game in the slots
-    public void addSaveGame(int serial, Player player){
-        //addSaveSlot(serial,player);
-    }
-
-    @Override // Deleting the Save Game from Slots
-    public void removeSaveGame(int serial) {
-        removeSaveSlot(serial);
-    }
-
-    @Override // Load Game from Slots (Would not be used here)
-    public Player getSaveGame(int serial) {
-        return getSaveSlots()[serial-1];
-    }
 
     public void setMusicAdapter(){
         this.musicAdapter = new MusicAdapter(this.musicController,"paused.mp3");

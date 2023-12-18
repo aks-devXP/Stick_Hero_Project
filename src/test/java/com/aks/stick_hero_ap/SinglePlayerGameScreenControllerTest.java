@@ -9,12 +9,12 @@ class SinglePlayerGameScreenControllerTest {
     @Test
     void getPlayerInstance() { // The singleton design pattern would always return a new object thus false
         SinglePlayerGameScreenController singlePlayerGameScreenController = new SinglePlayerGameScreenController();
-        assertEquals(null,singlePlayerGameScreenController.getPlayerInstance());
+        assertNull(SinglePlayerGameScreenController.getPlayerInstance1());
     }
 
     @Test
     void Test2(){ // The object is initially a null object thus test would return true
         SinglePlayerGameScreenController singlePlayerGameScreenController = new SinglePlayerGameScreenController();
-        assertEquals(null,singlePlayerGameScreenController.getPlayer());
+        assertEquals(null, SinglePlayerGameScreenController.getPlayer1());
     }
 }

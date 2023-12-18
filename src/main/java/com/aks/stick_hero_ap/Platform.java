@@ -1,27 +1,43 @@
 package com.aks.stick_hero_ap;
 
-public class Platform extends Player {
+public class Platform{
+    private static Player player;
     private double width;
     private double height;
     private double startPosition;
     private double endPosition;
 
-    @Override
+    public static Player getPlayer() {
+        return player;
+    }
+
+    public static void setPlayer(Player player) {
+        Platform.player = player;
+    }
+
+    public Player getPlayerInstance(){
+        if(player == null){
+            setPlayer(Player.getPlayerInstance());
+        }
+        return player;
+    }
+
+    //@Override
     public double getPositionX() {
         return positionX;
     }
 
-    @Override
+    //@Override
     public void setPositionX(double positionX) {
         this.positionX = positionX;
     }
 
-    @Override
+    //@Override
     public double getPositionY() {
         return positionY;
     }
 
-    @Override
+    //@Override
     public void setPositionY(double positionY) {
         this.positionY = positionY;
     }
@@ -37,7 +53,8 @@ public class Platform extends Player {
         this.positionY=positionY;
     }
 
-    public Platform(){}       //empty constructor
+    public Platform(){
+    }       //empty constructor
 
     public double getEndPosition() {
         return endPosition;
