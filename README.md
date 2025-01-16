@@ -1,54 +1,19 @@
 # Stick_Hero_Project
-This is AP-Project-1 Submission from Group Number: 42
-Group Members: Akanksh Semar (2022046), Akshat Gian(2022051)
+The Final Project Submission by Akanksh(2022046) & Akshat(2022051) in Group-42 for AP course.
 
-The PDF files have Skeleton Screens and UML Diagram in each file.
-The Script/Source code for both skeleton screens as well as skeleton code/Class are also included in the folder - 2022046_2022051
+Command to run code - 1. javac HomeScreen.java -> java -cp . HomeScreen by going into CMD in the same directory as java files. (Have to Setup Java fx and java environment in system prior to this)
 
-Some Clarifications:
-1. We have used Game's original background as Placeholder in our Diagram.
-2. We have used some Copyright-free & free to use assets for non-commercial purpose from the internet.
+Design Patterns Used:
+1. Singleton (In SinglePlayerGameScreenController to get instance of Player)
+2. Adapter (In Music Adapter, to play different music for different scenes)
 
+Junit Tests: SinglePlayerGameScreenControllerTest & PlayerTest to demonstrate singleton pattern.
 
+Backgrounds, Buttons & Sounds: Non-Copyrighted Entities are used which are free to use for personal purposes, taken from the web.
 
-In the UML Diagram:-
+Assumption:
+1. During Movement of Character pausing the game might lead to end of the game run.
+2. High score is set to zero after re-executing the Driver Class.(After termination of program)
+3. Very quick flipping might lead to skipping cherries sometimes.
 
-//Association
-Player -> Platform
-
-//Composition
-TwoPlayerMode -> Player 
-TwoPlayerMode -> Platform 
-
-//Dependency
-PauseController -> Player
-
-
-//Interfaces
-GameController                   -> DisplayScreens 
-GameController                   -> MusicPlayer   
-GameOverController               -> DisplayScreens  
-GameOverController               -> MusicPlayer
-HomeScreenController             -> DisplayScreens
-HomeScreenController             -> MusicPlayer
-PauseController                  -> DisplayScreens
-PauseController                  -> MusicPlayer
-SinglePlayerMode                 -> DisplayScreens
-SinglePlayerMode                 -> MusicPlayer 
-TwoPlayerMode                    -> DisplayScreens
-TwoPlayerMode                    -> MusicPlayer
-
-
-//Inheritance
-GameController                   -> HomeScreenController
-GameOverController               -> GameController
-HomeScreenController             -> HomeScreen
-LoadScreenController             -> HomeScreenController
-PauseController                  -> GameController
-Platform                         -> Player
-SaveScreenController             -> PauseController
-SinglePlayerGameScreenController -> SinglePlayerMode
-SinglePlayerHomeScreenController -> SinglePlayerMode
-SinglePlayerMode                 -> GameController
-TwoPlayerMode                    -> GameController
-
+Error Handling: We have done Multiple error handling for manipulation and switching of scenes, getting resources for fxml loader etc.
